@@ -1,0 +1,15 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+
+includes:
+  precommit: .taskfiles/precommit-tasks.yaml
+
+tasks:
+
+  default:
+    silent: true
+    cmds: ["task -l"]

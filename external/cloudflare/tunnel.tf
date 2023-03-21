@@ -15,10 +15,10 @@ resource "cloudflare_tunnel_config" "config" {
 
   config {
 
-   ## Requires no TLS verify but the current terraform provider doesn't allow this
-   #origin_request {
-   #   no_tls_verify = true
-   # }
+    ## Requires no TLS verify but the current terraform provider doesn't allow this
+    #origin_request {
+    #   no_tls_verify = true
+    # }
     dynamic "ingress_rule" {
       for_each = local.ingress_rules
       iterator = item

@@ -1,12 +1,13 @@
+---
 apiVersion: metal.sidero.dev/v1alpha1
 kind: ServerClass
 metadata:
   name: worker-serverclass
 spec:
   configPatches:
-  - op: replace
-    path: /machine/install/disk
-    value: /dev/nvme0n1
+    - op: replace
+      path: /machine/install/disk
+      value: /dev/nvme0n1
   selector:
     matchLabels: null
     matchExpressions: null
