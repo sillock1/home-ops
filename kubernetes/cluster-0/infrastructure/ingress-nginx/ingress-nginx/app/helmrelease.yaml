@@ -32,9 +32,9 @@ spec:
         - name: TZ
           value: Europe/London
       metrics:
-        enabled: true
+        enabled: false
         serviceMonitor:
-          enabled: true
+          enabled: false
           namespace: ingress-nginx
           namespaceSelector:
             any: true
