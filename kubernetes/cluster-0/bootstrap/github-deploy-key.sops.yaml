@@ -1,0 +1,29 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-deploy-key
+    namespace: flux-system
+stringData:
+    identity: ENC[AES256_GCM,data:HPqLAzI8K5GNCmUsTsigih1uDiSYatz9UuS9jRxIWHZQACCoj1ubRhyN/qcPFgyiq9nL44Lui3kswXA+6uMgjDSYEvlhPbU2qGrtWDk2NHM8MimYeTkCHDvmX1zEpKQOgV6jxV7Dl0yUU506OZ8m9z1N6thBIKJzps2bqfHS0vn5YU973n6V+l91JwaO5QiDABJgNQ1R2pB1sPgMs1VZUPRHFuASNXDg7Gu4KelDVfFmjVxUwFLunCNEvSLePzDmiVJagC2kB3hqENH1X6Yv45s/yUFjDip/tA39EparNgO181bEue/e1JJVU/gDdZkqg/OxdatqplHckuSHe5bcdX6HV/Hcn3kDOx8YRccQdixyv4RB7vyO+gJJTO721Fb6/IOp0iBScAVm+U5Z3p1Nqq65bDPN2vrq8KaqW9znwVy3u0CWQMbc1S5aAF+a4YPydDCsqt7ttjk37b0uwJ+08Lukw6woIwfsmBorf1yhU8zBEBovEiT3TzkEXPhBe0nZQRDT,iv:QKwiOKEL0WVR9Kcxsg9QI5cO15ZOsuweqkBxMAHtOEs=,tag:dq7rxdTFipV3pogQoI1FrQ==,type:str]
+    known_hosts: ENC[AES256_GCM,data:Z8Ganx6xCLFNrKCZgIThgpteqEBffRmcdM8c5o9l4ZiTVMuAqggXJMPWvwuZEq8PswV+llVPiksdfkSyTcsVNNWptDLj2YeWGe9+34wUlqzDow2uH0Yxd50TQw==,iv:G1bUI9fBxvzUFnXJm3bqsm9x+3E+C1Xcc6pdpWrrvV0=,tag:yFYKRhprQVHYCDZlCp1QEg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTSUFpOXJRa295VnVjUW9G
+            YnNMcEpoSlRkNXM2bkxldGtvYjZBazFiM2l3CnJxYS9Rd0FONENnTXduanE3a1VF
+            MkNVUlQvOWkyM0U1eU83Rm95UTRMbFkKLS0tIDBrdERDcUZwRC94Y3VhQmVJQWdp
+            NDJhd2RqWHlKeExEWDAzUytaZHFScHMKmmgtoNfgqAD1GNbArSX3rzdDjgeNLLrg
+            hWP3HLhGyIP0HbxuMWv+B4oCbbCpJbQcZQO0Ita40uAcTNN8MjyyoQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-22T16:58:35Z"
+    mac: ENC[AES256_GCM,data:vyrLfFoGyeyMT1S7+OrNBxK6Lyy2Ou9KVMocTmg8KHZtnF3im9IHaNBm62KmST6oziVNOqX4eR7zyBZs9OHxwd/AT1x8yhGtWGiXN9WGsJZ/Hg4egCB5Cl2zUxNwZbuwnUGpOHfXWcB/f88OwIb4y2LamCcOpMnu+/VTsltVPPM=,iv:Ygduzu/fompWMrDFQZQXK1Ozs66DYaiHbD+6Eb64yQ4=,tag:F6fpTYrgyju0QRspdAZW4A==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
