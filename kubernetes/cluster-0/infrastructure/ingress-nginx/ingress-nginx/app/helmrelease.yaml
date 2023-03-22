@@ -45,6 +45,7 @@ spec:
         limits:
           memory: 500Mi
       service:
+        externalIPs: ["${SVC_NGINX_ADDR}"]
         externalTrafficPolicy: Local
       ingressClassResource:
         default: true

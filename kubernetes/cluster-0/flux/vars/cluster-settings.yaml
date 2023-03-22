@@ -4,4 +4,4 @@ metadata:
   namespace: flux-system
   name: cluster-settings
 data:
-  placeholder: ""
+  SVC_NGINX_ADDR: "192.168.3.201"
