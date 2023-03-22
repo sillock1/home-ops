@@ -5,6 +5,8 @@ metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-infrastructure
   interval: 30m
   path: ./kubernetes/cluster-0/apps
   prune: true

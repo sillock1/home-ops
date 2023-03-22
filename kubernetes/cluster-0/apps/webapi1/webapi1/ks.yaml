@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-webapi1
+  namespace: webapi1
+spec:
+  path: ./kubernetes/apps/webapi1/webapi1/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: webapi1
+      namespace: webapi1
+  interval: 10m
+  retryInterval: 1m
+  timeout: 3m
