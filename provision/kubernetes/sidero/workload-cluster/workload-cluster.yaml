@@ -1,3 +1,4 @@
+---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
@@ -27,7 +28,7 @@ metadata:
   namespace: default
 spec:
   controlPlaneEndpoint:
-    host: 192.168.2.40 #HAProxy endpoint
+    host: 192.168.2.40 # HAProxy endpoint
     port: 6443
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3

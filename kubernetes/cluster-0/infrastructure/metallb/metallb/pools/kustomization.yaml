@@ -1,0 +1,12 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: metallb-system
+resources:
+  - ./address-pool.yaml
+  - ./l2-advertisement.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/name: metallb-pools
+      app.kubernetes.io/instance: metallb-pools
+      app.kubernetes.io/part-of: metallb

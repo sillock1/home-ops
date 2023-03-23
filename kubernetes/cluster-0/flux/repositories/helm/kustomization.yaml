@@ -3,3 +3,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./ingress-nginx.yaml
+  - ./jetstack.yaml
+  - ./external-dns.yaml
+  - ./external-secrets.yaml
+  - ./onepassword-connect.yaml
+  - ./metallb.yaml
+  - ./mongodb.yaml
+  - ./rook-ceph.yaml
