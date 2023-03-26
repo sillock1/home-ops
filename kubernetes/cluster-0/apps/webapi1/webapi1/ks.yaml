@@ -3,7 +3,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: cluster-apps-webapi1
-  namespace: webapi1
+  namespace: flux-system
 spec:
   path: ./kubernetes/apps/webapi1/webapi1/app
   prune: true
