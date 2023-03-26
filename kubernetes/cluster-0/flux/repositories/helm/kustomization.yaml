@@ -10,3 +10,5 @@ resources:
   - ./metallb.yaml
   - ./mongodb.yaml
   - ./rook-ceph.yaml
+  - ./prometheus-community.yaml
+  - ./grafana.yaml
