@@ -12,3 +12,4 @@ resources:
   - ./rook-ceph.yaml
   - ./prometheus-community.yaml
   - ./grafana.yaml
+  - ./bitnami.yaml
