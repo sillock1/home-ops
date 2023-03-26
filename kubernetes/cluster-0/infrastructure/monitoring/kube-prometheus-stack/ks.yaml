@@ -5,9 +5,6 @@ metadata:
   name: cluster-infrastructure-kube-prometheus-stack
   namespace: flux-system
 spec:
-  dependsOn:
-  #  - name: cluster-infrastructure-external-secrets-stores
-    - name: cluster-infrastructure-thanos
   path: ./kubernetes/cluster-0/infrastructure/monitoring/kube-prometheus-stack/app
   prune: true
   sourceRef:
