@@ -5,8 +5,6 @@ metadata:
   name: cluster-infrastructure-thanos
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-infrastructure-external-secrets-stores
   path: ./kubernetes/cluster-0/infrastructure/monitoring/thanos/app
   prune: true
   sourceRef:
