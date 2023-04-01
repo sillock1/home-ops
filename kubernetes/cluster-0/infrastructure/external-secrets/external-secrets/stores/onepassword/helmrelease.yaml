@@ -17,6 +17,5 @@ spec:
         namespace: flux-system
   values:
     connect:
-      api:
-        credentialsName: onepassword-connect-secret
-        credentialsKey: 1password-credentials.json
+      credentialsName: onepassword-connect-secret
+      credentialsKey: 1password-credentials.json
