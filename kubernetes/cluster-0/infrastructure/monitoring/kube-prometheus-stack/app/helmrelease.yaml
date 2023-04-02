@@ -30,7 +30,7 @@ spec:
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      enabled: false
+      enabled: true
     grafana:
       enabled: false
       forceDeployDashboards: true
