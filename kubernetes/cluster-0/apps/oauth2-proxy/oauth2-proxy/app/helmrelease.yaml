@@ -3,12 +3,12 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: external-secrets
-  namespace: dotbot
+  namespace: oauth2-proxy
 spec:
   interval: 15m
   chart:
     spec:
-      chart: dotbot
+      chart: oauth2-proxy
       version: 6.10.1
       sourceRef:
         kind: HelmRepository
