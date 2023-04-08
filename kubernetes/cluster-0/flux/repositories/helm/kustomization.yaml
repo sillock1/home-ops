@@ -13,4 +13,5 @@ resources:
   - ./prometheus-community.yaml
   - ./grafana.yaml
   - ./bitnami.yaml
-  - ./bjw-s.yaml
+  - ./sillock-inc.yaml
+  - ./oauth2-proxy.yaml

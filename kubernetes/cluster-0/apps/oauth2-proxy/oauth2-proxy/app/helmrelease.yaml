@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-secrets
+  namespace: dotbot
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: dotbot
+      version: 6.10.1
+      sourceRef:
+        kind: HelmRepository
+        name: oauth2-proxy
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    config:
+      existingSecret: oauth2-proxy
+    ingress:
+      enabled: true
+      className: nginx
+      path: /oauth2
+      pathType: prefix
+      backend:
+        service:
+          name: oauth2-proxy
+          port:
+            number: 4180
+      hosts:
+        - sillock.co.uk
+      annotations:
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
+      tls:
+        - secretName: oauth2-proxy-tls-certificate
+          hosts:
+            - sillock.co.uk
