@@ -32,7 +32,7 @@ spec:
       enabled: true
       className: nginx
       path: /oauth2
-      pathType: prefix
+      pathType: Prefix
       backend:
         service:
           name: oauth2-proxy
