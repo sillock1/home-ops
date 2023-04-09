@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: external-secrets
+  name: oauth2-proxy
   namespace: oauth2-proxy
 spec:
   interval: 15m
