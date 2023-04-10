@@ -28,6 +28,13 @@ spec:
   values:
     config:
       existingSecret: oauth2-proxy
+      configFile: |
+        email_domains = [ "*" ]
+        upstreams = [ "file:///dev/null" ]
+        cookie_secure = "true"
+        cookie_domains = [ ".sillock.co.uk" ]
+        whitelist_domains = [ ".sillock.co.uk"]
+        provider = "github"
     ingress:
       enabled: true
       className: nginx
