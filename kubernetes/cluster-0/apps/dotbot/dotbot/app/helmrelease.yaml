@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: dotbot
-      version: 0.1.1
+      version: 0.1.2
       sourceRef:
         kind: HelmRepository
         name: sillock-inc
@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      tag: "db7d1b2f63b0f6f23ac89d144829fd1345a62f8b"
     extraEnv:
       - name: ASPNETCORE_URLS
         value: http://+:80
