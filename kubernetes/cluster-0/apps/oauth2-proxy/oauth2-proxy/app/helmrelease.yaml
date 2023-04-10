@@ -31,7 +31,7 @@ spec:
     ingress:
       enabled: true
       className: nginx
-      path: /oauth2
+      path: /
       pathType: Prefix
       backend:
         service:
@@ -39,11 +39,11 @@ spec:
           port:
             number: 4180
       hosts:
-        - sillock.co.uk
+        - oauth2.sillock.co.uk
       annotations:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
       tls:
         - secretName: oauth2-proxy-tls-certificate
           hosts:
-            - sillock.co.uk
+            - oauth2.sillock.co.uk
