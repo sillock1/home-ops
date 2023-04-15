@@ -8,7 +8,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   interval: 10m
-  path: "./kubernetes/cluster-0/infrastructure/monitoring/grafana/app"
+  path: ./kubernetes/cluster-0/infrastructure/monitoring/grafana/app
   prune: false
   sourceRef:
     kind: GitRepository
