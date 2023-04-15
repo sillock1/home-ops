@@ -26,6 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    extraArgs:
+      github-user: "sillock1"
+      email-domain: "*"
     config:
       existingSecret: oauth2-proxy
       configFile: |
