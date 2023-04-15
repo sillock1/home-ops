@@ -29,6 +29,7 @@ spec:
     extraArgs:
       github-user: "sillock1"
       email-domain: "*"
+      scope: "user:email"
     config:
       existingSecret: oauth2-proxy
       configFile: |
