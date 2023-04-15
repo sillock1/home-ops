@@ -79,7 +79,7 @@ spec:
       GF_SECURITY_COOKIE_SAMESITE: grafana
       GF_SERVER_ROOT_URL: "https://grafana.sillock.co.uk"
 
-    envFromSecret: grafana-secrets
+    envFromSecret: grafana-secret
 
     grafana.ini:
       analytics:
@@ -135,10 +135,6 @@ spec:
       - vonage-status-panel
       - grafana-worldmap-panel
       - grafana-clock-panel
-
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: grafana
-      secret.reloader.stakater.com/reload: grafana-secrets
 
     rbac:
       pspEnabled: false
