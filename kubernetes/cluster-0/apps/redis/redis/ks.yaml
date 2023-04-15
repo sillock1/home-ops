@@ -9,7 +9,7 @@ spec:
     - name: cluster-infrastructure-external-secrets-stores
     - name: cluster-infrastructure-ceph-cluster
   path: ./kubernetes/cluster-0/apps/redis/redis/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes

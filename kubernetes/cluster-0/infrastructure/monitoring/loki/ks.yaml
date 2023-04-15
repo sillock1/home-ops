@@ -9,7 +9,7 @@ spec:
     - name: cluster-infrastructure-external-secrets-stores
     - name: cluster-infrastructure-rook-ceph-cluster
   path: ./kubernetes/cluster-0/infrastructure/monitoring/loki/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes

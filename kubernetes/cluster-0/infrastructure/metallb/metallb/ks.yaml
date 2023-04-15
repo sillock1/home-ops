@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/cluster-0/infrastructure/metallb/metallb/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: cluster-infrastructure-metallb
   path: ./kubernetes/cluster-0/infrastructure/metallb/metallb/pools
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes

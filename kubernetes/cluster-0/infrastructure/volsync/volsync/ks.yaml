@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cluster-infrastructure-snapshot-controller
   path: ./kubernetes/cluster-0/infrastructure/volsync/volsync/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes

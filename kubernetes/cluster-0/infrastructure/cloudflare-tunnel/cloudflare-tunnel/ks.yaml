@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
   path: ./kubernetes/cluster-0/infrastructure/cloudflare-tunnel/cloudflare-tunnel/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/cluster-0/infrastructure/cert-manager/cert-manager/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
@@ -29,7 +29,7 @@ spec:
     - name: cluster-infrastructure-cert-manager
     - name: cluster-infrastructure-external-secrets-stores
   path: ./kubernetes/cluster-0/infrastructure/cert-manager/cert-manager/issuers
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes

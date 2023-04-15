@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cluster-infrastructure-rook-ceph
   path: ./kubernetes/cluster-0/infrastructure/mongodb/mongodb/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
@@ -30,7 +30,7 @@ spec:
   dependsOn:
     - name: cluster-infrastructure-mongodb
   path: ./kubernetes/cluster-0/infrastructure/mongodb/mongodb/operator
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
