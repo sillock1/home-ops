@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
-    - name: cluster-infrastructure-ceph-cluster
+    - name: cluster-infrastructure-rook-ceph-cluster
   path: ./kubernetes/cluster-0/apps/redis/redis/app
   prune: false
   sourceRef:
