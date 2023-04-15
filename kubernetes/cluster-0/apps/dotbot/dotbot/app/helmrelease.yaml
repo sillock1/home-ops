@@ -61,7 +61,7 @@ spec:
         - name: dotbot-api.sillock.co.uk
           path: /
           pathType: Prefix
-          tls: false
+          tls: true
           tlsHosts:
             - dotbot-api.sillock.co.uk
           tlsSecret: dotbot-tls-certificate
