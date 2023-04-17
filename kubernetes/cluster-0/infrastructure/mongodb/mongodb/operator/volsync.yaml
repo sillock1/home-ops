@@ -34,7 +34,7 @@ spec:
     schedule: "*/60 * * * *"
   restic:
     pruneIntervalDays: 15
-    repository: restic-config
+    repository: mongodb-restic-secret
     retain:
       hourly: 1
       daily: 1
@@ -54,7 +54,7 @@ spec:
     schedule: "*/60 * * * *"
   restic:
     pruneIntervalDays: 15
-    repository: restic-config
+    repository: mongodb-restic-secret
     retain:
       hourly: 1
       daily: 1
@@ -74,7 +74,7 @@ spec:
     schedule: "*/60 * * * *"
   restic:
     pruneIntervalDays: 15
-    repository: restic-config
+    repository: mongodb-restic-secret
     retain:
       hourly: 1
       daily: 1
