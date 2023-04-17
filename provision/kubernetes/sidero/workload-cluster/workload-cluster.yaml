@@ -58,6 +58,20 @@ spec:
         - op: replace
           path: /machine/install/disk
           value: /dev/sda
+        - op: add
+          path: /machine/install/extensions/-
+          value:
+            image: ghcr.io/siderolabs/drbd:9.2.0-v1.3.0
+        - op: add
+          path: /machine/kernel/modules/-
+          value:
+            name: drbd
+            parameters:
+              - usermode_helper=disabled
+        - op: add
+          path: /machine/kernel/modules/-
+          value:
+            name: drbd_transport_tcp
   infrastructureTemplate:
     apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
     kind: MetalMachineTemplate
@@ -79,6 +93,20 @@ spec:
         - op: replace
           path: /machine/install/disk
           value: /dev/nvme0n1
+        - op: add
+          path: /machine/install/extensions/-
+          value:
+            image: ghcr.io/siderolabs/drbd:9.2.0-v1.3.0
+        - op: add
+          path: /machine/kernel/modules/-
+          value:
+            name: drbd
+            parameters:
+              - usermode_helper=disabled
+        - op: add
+          path: /machine/kernel/modules/-
+          value:
+            name: drbd_transport_tcp
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineDeployment

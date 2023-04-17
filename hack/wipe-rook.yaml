@@ -2,18 +2,75 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe
+  name: disk-wipe-talos-8tf-1ll
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: HOSTNAME
+  nodeName: talos-8tf-1ll
   containers:
     - name: disk-wipe
-      image: ubuntu
+      image: busybox
       securityContext:
         privileged: true
       command: ["/bin/sh", "-c"]
       args:
-        [
-          "dd if=/dev/zero of=/dev/sda bs=512 count=1"
-        ]
+        - dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda;
+          rm -rf /mnt/host_var/lib/rook;
+          sleep 1000000;
+      volumeMounts:
+        - mountPath: /mnt/host_var
+          name: host-var
+  volumes:
+    - name: host-var
+      hostPath:
+        path: /var
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-talos-opi-h5e
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: talos-opi-h5e
+  containers:
+    - name: disk-wipe
+      image: busybox
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        - dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda;
+          rm -rf /mnt/host_var/lib/rook
+      volumeMounts:
+        - mountPath: /mnt/host_var
+          name: host-var
+  volumes:
+    - name: host-var
+      hostPath:
+        path: /var
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: disk-wipe-talos-ubj-n3n
+  namespace: kube-system
+spec:
+  restartPolicy: Never
+  nodeName: talos-ubj-n3n
+  containers:
+    - name: disk-wipe
+      image: busybox
+      securityContext:
+        privileged: true
+      command: ["/bin/sh", "-c"]
+      args:
+        - dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda;
+          rm -rf /mnt/host_var/lib/rook;
+      volumeMounts:
+        - mountPath: /mnt/host_var
+          name: host-var
+  volumes:
+    - name: host-var
+      hostPath:
+        path: /var

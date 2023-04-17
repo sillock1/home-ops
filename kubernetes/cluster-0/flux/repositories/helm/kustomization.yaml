@@ -16,4 +16,3 @@ resources:
   - ./sillock-inc.yaml
   - ./oauth2-proxy.yaml
   - ./backube.yaml
-  - ./piraeus.yaml
