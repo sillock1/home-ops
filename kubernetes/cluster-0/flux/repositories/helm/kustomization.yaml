@@ -16,3 +16,5 @@ resources:
   - ./sillock-inc.yaml
   - ./oauth2-proxy.yaml
   - ./backube.yaml
+  - ./k8s-gateway.yaml
+  - ./bjw-s.yaml
