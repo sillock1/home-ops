@@ -18,7 +18,6 @@ spec:
         RESTIC_PASSWORD: '{{ .RESTIC_PASSWORD }}'
         AWS_ACCESS_KEY_ID: '{{ .AWS_ACCESS_KEY_ID }}'
         AWS_SECRET_ACCESS_KEY: '{{ .AWS_SECRET_ACCESS_KEY }}'
-        CERTIFICATE: '{{ .CERTIFICATE }}'
   dataFrom:
     - extract:
         key: volsync-restic-template
@@ -34,9 +33,6 @@ spec:
   trigger:
     schedule: "0 0 * * *"
   restic:
-    customCA:
-      secretName: mongodb-restic-secret
-      key: CERTIFICATE
     copyMethod: Snapshot
     pruneIntervalDays: 10
     repository: mongodb-restic-secret
