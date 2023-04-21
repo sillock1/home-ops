@@ -6,7 +6,7 @@ metadata:
 spec:
   members: 3
   type: ReplicaSet
-  version: "4.4.0"
+  version: "6.0.5"
   security:
     authentication:
       modes: ["SCRAM"]
@@ -38,14 +38,6 @@ spec:
       template:
         spec:
           containers:
-            - name: mongod
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 100Mi
-                limits:
-                  cpu: 1
-                  memory: 1Gi
             - name: mongodb-agent
               resources:
                 requests:
@@ -62,11 +54,3 @@ spec:
               requests:
                 storage: 10Gi
             storageClassName: ceph-block
-        - metadata:
-            name: logs-volume
-          spec:
-            accessModes: ["ReadWriteOnce"]
-            storageClassName: ceph-block
-            resources:
-              requests:
-                storage: 2G
