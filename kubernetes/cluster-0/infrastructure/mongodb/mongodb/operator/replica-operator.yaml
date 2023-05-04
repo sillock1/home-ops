@@ -56,6 +56,8 @@ spec:
       volumeClaimTemplates:
         - metadata:
             name: data-volume
+            labels:
+              app.kubernetes.io/name: mongodb
           spec:
             accessModes: ["ReadWriteOnce"]
             resources:

@@ -7,7 +7,7 @@ vars:
 
 includes:
   precommit: .taskfiles/precommit-tasks.yaml
-
+  volsync: .taskfiles/VolSync/Tasks.yaml
 tasks:
 
   default:

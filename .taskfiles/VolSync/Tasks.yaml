@@ -1,0 +1,95 @@
+---
+version: "3"
+
+x-task-vars: &task-vars
+  appname: '{{.appname}}'
+  rsrc: '{{.rsrc}}'
+  controller: '{{.controller}}'
+  namespace: '{{.namespace}}'
+  claim: '{{.claim}}'
+  ts: '{{.ts}}'
+  kustomization: '{{.kustomization}}'
+
+vars:
+  destinationTemplate: "{{.ROOT_DIR}}/.taskfiles/VolSync/ReplicationDestination.tmpl.yaml"
+  wipeJobTemplate: "{{.ROOT_DIR}}/.taskfiles/VolSync/WipeJob.tmpl.yaml"
+  waitForJobScript: "{{.ROOT_DIR}}/.taskfiles/VolSync/wait-for-job.sh"
+  listJobTemplate: "{{.ROOT_DIR}}/.taskfiles/VolSync/ListJob.tmpl.yaml"
+  unlockJobTemplate: "{{.ROOT_DIR}}/.taskfiles/VolSync/UnlockJob.tmpl.yaml"
+  ts: '{{now | date "150405"}}'
+
+tasks:
+  restore:
+    desc: Trigger a Restic ReplicationSource restore (ex. task vs:restore rsrc=plex [namespace=default])
+    cmds:
+      - task: restore-suspend-app
+        vars: *task-vars
+      - task: restore-wipe-job
+        vars: *task-vars
+      - task: restore-volsync-job
+        vars: *task-vars
+      - task: restore-resume-app
+        vars: *task-vars
+    vars:
+      rsrc: '{{ or .rsrc (fail "Variable `rsrc` is required") }}'
+      namespace: '{{.namespace | default "default"}}'
+      # 1) Query to find the Flux Kustomization associated with the ReplicationSource (rsrc)
+      kustomization:
+        sh: |
+          kubectl -n {{.namespace}} get replicationsource {{.rsrc}} \
+            -o jsonpath="{.metadata.labels.kustomize\.toolkit\.fluxcd\.io/name}"
+      # 2) Query to find the Claim associated with the ReplicationSource (rsrc)
+      claim:
+        sh: |
+          kubectl -n {{.namespace}} get replicationsource {{.rsrc}} \
+            -o jsonpath="{.spec.sourcePVC}"
+      # 3) Query to find the controller associated with the PersistentVolumeClaim (claim)
+      controller:
+        sh: |
+          podname=$(kubectl describe pvc -n {{.namespace}} {{.claim}} | grep -E "Used By" | cut -d ':' -f2 | awk '{$1=$1};1')
+          workload=$(kubectl describe pod -n {{.namespace}} $podname | grep -E "Controlled By" | cut -d ':' -f2 | awk '{$1=$1};1')
+          echo $workload
+    env: *task-vars
+    preconditions:
+      - sh: test -f {{.wipeJobTemplate}}
+      - sh: test -f {{.destinationTemplate}}
+      - sh: test -f {{.waitForJobScript}}
+
+  # Suspend the Flux ks and hr
+  restore-suspend-app:
+    internal: true
+    cmds:
+      - flux -n flux-system suspend kustomization {{.kustomization}}
+      - flux -n {{.namespace}} suspend helmrelease {{.appname}}
+      - kubectl -n {{.namespace}} scale {{.controller}} --replicas 0
+      - kubectl -n {{.namespace}} wait pod --for delete --selector="app.kubernetes.io/name={{.appname}}" --timeout=2m
+    env: *task-vars
+
+  # Wipe the PVC of all data
+  restore-wipe-job:
+    internal: true
+    cmds:
+      - envsubst < <(cat {{.wipeJobTemplate}}) | kubectl apply -f -
+#      - bash {{.waitForJobScript}} wipe-{{.appname}}-{{.ts}} {{.namespace}}
+      - kubectl -n {{.namespace}} wait job/wipe-{{.appname}}-{{.ts}} --for condition=complete --timeout=120m
+      - kubectl -n {{.namespace}} logs job/wipe-{{.appname}}-{{.ts}} --container wipe
+      - kubectl -n {{.namespace}} delete job wipe-{{.appname}}-{{.ts}}
+    env: *task-vars
+
+  # Create VolSync replicationdestination CR to restore data
+  restore-volsync-job:
+    internal: true
+    cmds:
+      - envsubst < <(cat {{.destinationTemplate}}) | kubectl apply -f -
+      - bash {{.waitForJobScript}} volsync-dst-{{.appname}}-{{.ts}} {{.namespace}}
+      - kubectl -n {{.namespace}} wait job/volsync-dst-{{.appname}}-{{.ts}} --for condition=complete --timeout=120m
+      - kubectl -n {{.namespace}} delete replicationdestination {{.appname}}-{{.ts}}
+    env: *task-vars
+
+  # Resume Flux ks and hr
+  restore-resume-app:
+    internal: true
+    cmds:
+      - flux -n {{.namespace}} resume helmrelease {{.appname}}
+      - flux -n flux-system resume kustomization {{.kustomization}}
+    env: *task-vars
