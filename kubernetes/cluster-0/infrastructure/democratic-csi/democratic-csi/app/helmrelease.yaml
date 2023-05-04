@@ -32,3 +32,14 @@ spec:
       config:
         driver: freenas-iscsi
       existingConfigSecret: zfs-democratic-csi-driver-config
+    #talos config
+    node:
+      hostPID: true
+      driver:
+        extraEnv:
+          - name: ISCSIADM_HOST_STRATEGY
+            value: nsenter
+          - name: ISCSIADM_HOST_PATH
+            value: /usr/local/sbin/iscsiadm
+        iscsiDirHostPath: /usr/local/etc/iscsi
+        iscsiDirHostPathType: ""
