@@ -25,3 +25,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  values:
+    csiDriver:
+      name: "sillock.co.uk.democratic-csi.iscsi"
+    driver:
+      config:
+        driver: freenas-iscsi
+      existingConfigSecret: zfs-democratic-csi-driver-config
