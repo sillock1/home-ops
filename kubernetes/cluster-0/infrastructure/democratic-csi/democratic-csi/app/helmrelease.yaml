@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    csiDriver:
+      name: "sillock.co.uk.democratic-csi.iscsi"
     driver:
       config:
         driver: freenas-iscsi
