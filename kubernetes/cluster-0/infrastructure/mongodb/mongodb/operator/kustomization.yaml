@@ -4,7 +4,8 @@ kind: Kustomization
 namespace: mongodb
 resources:
   - ./replica-operator.yaml
-  - ./volsync.yaml
+  - ./volsync-database.yaml
+  - ./volsync-logs.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: mongodb-replica
