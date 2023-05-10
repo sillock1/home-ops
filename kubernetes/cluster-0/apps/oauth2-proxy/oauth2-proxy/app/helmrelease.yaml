@@ -36,7 +36,7 @@ spec:
         whitelist_domains = [ ".sillock.co.uk"]
         provider = "github"
         scope = "user:email read:org"
-        github_user = "sillock1"
+        github_users = ["sillock1"]
         github_org = "123904705"
         github_team = "developers"
     ingress:
