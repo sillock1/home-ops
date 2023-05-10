@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email
     nginx.ingress.kubernetes.io/auth-signin: https://oauth.sillock.co.uk/oauth2/start
     nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
     - host: dotbot-api.sillock.co.uk
