@@ -33,3 +33,40 @@ spec:
       scramCredentialsSecretName: dotbot-scram
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
+  statefulSet:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mongod
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
+                limits:
+                  cpu: 2
+                  memory: 2Gi
+            - name: mongodb-agent
+              resources:
+                requests:
+                  memory: 50Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+      volumeClaimTemplates:
+        - metadata:
+            name: data-volume
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: ceph-block
+        - metadata:
+            name: logs-volume
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            storageClassName: ceph-block
+            resources:
+              requests:
+                storage: 5G

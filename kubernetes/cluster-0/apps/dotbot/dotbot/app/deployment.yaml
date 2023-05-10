@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotbot
+spec:
+  selector:
+    matchLabels:
+      app: dotbot
+  template:
+    metadata:
+      labels:
+        app: dotbot
+    spec:
+      containers:
+        - name: dotbot
+          image: fhcr.io/sillock-inc/dobot:v0.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80
+            - name: Discord__BotToken
+              valueFrom:
+                secretKeyRef:
+                  name: dotbot-creds
+                  key: discord_token
+            - name: MongoDbSettings__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: dotbot-creds
+                  key: mongodb_connection_string
+            - name: MongoDbSettings__DatabaseName
+              valueFrom:
+                secretKeyRef:
+                  name: dotbot-creds
+                  key: mongodb_db_name
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: 500m
