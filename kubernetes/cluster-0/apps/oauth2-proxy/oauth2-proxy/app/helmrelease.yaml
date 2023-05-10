@@ -26,10 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    extraArgs:
-      github-user: "sillock1"
-      email-domain: "*"
-      scope: "user:email"
     config:
       existingSecret: oauth2-proxy
       configFile: |
@@ -39,6 +35,9 @@ spec:
         cookie_domains = [ ".sillock.co.uk" ]
         whitelist_domains = [ ".sillock.co.uk"]
         provider = "github"
+        scope = "user:email read:org"
+        github-org = "sillock-inc"
+        github-team = "developers"
     ingress:
       enabled: true
       className: nginx
