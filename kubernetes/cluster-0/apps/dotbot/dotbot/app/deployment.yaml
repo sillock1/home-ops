@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: dotbot
-          image: ghcr.io/sillock-inc/dotbot:v0.1.1
+          image: ghcr.io/sillock-inc/dotbot:v0.1.2
           imagePullPolicy: IfNotPresent
           env:
             - name: ASPNETCORE_URLS
