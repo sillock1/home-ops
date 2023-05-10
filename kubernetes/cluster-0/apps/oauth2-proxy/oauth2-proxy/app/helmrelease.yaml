@@ -36,8 +36,8 @@ spec:
         whitelist_domains = [ ".sillock.co.uk"]
         provider = "github"
         scope = "user:email read:org"
-        github-org = "sillock-inc"
-        github-team = "developers"
+        github_org = "sillock-inc"
+        github_team = "developers"
     ingress:
       enabled: true
       className: nginx
