@@ -72,7 +72,7 @@ spec:
       GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
-      GF_GRAFANA_NET_URL: https://grafana.net
+      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
       GF_LOG_FILTERS: rendering:debug
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_SECURITY_ALLOW_EMBEDDING: true
@@ -98,9 +98,6 @@ spec:
         token_url: # Set by env vars
         api_url: # Set by env vars
         use_pkce: true
-
-      grafana_net:
-        url: https://grafana.net
       log:
         mode: console
       paths:
