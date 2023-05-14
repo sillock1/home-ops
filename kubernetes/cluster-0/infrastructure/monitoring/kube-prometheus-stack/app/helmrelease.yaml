@@ -79,7 +79,10 @@ spec:
             action: drop
     kubeControllerManager:
       enabled: true
-      endpoints: ["192.168.3.20", "192.168.3.21", "192.168.3.22"]
+      endpoints: &cp
+        - 192.168.3.20
+        - 192.168.3.21
+        - 192.168.3.22
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate metrics
@@ -88,12 +91,13 @@ spec:
             action: keep
     kubeEtcd:
       enabled: true
-      endpoints: ["192.168.3.20", "192.168.3.21", "192.168.3.22"]
+      endpoints: *cp
     kubeProxy:
-      enabled: false
+      enabled: true
+      endpoints: *cp
     kubeScheduler:
       enabled: true
-      endpoints: ["192.168.3.20", "192.168.3.21", "192.168.3.22"]
+      endpoints: *cp
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate metrics
@@ -129,9 +133,9 @@ spec:
         resources:
           requests:
             cpu: 587m
-            memory: 4993M
+            memory: 100M
           limits:
-            memory: 5977M
+            memory: 3M
         retention: 2d
         retentionSize: "6GB"
         ruleSelectorNilUsesHelmValues: false
