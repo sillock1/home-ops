@@ -84,6 +84,7 @@ spec:
     grafana.ini:
       analytics:
         check_for_updates: false
+        check_for_plugin_updates: false
       auth:
         oauth_auto_login: true
       auth.basic:
@@ -92,30 +93,34 @@ spec:
         enabled: true
         name: Auth0
         scopes: "openid profile email"
-        client_id: # Set by env vars
-        client_secret: # Set by env vars
-        auth_url: # Set by env vars
-        token_url: # Set by env vars
-        api_url: # Set by env vars
         use_pkce: true
-      log:
-        mode: console
+      auth.anonymous:
+        enabled: false
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
         plugins: /var/lib/grafana/plugins
         provisioning: /etc/grafana/provisioning
-      server:
-        root_url: https://grafana.sillock.co.uk
 
     imageRenderer:
       enabled: true
-
+    sidecar:
+      dashboards:
+        enabled: true
+        labelValue: ""
+        searchNamespace: ALL
+      datasources:
+        enabled: true
+        labelValue: ""
+        searchNamespace: ALL
+      logLevel: INFO
+    serviceMonitor:
+      enabled: true
     ingress:
       enabled: true
       ingressClassName: nginx
       annotations:
-        nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+        hajimari.io/icon: simple-icons:grafana
       hosts:
         - &host grafana.sillock.co.uk
       tls:
@@ -142,17 +147,3 @@ spec:
       requests:
         cpu: 23m
         memory: 127M
-
-    serviceMonitor:
-      enabled: true
-
-    sidecar:
-      dashboards:
-        enabled: true
-        labelValue: ""
-        searchNamespace: ALL
-      datasources:
-        enabled: true
-        labelValue: ""
-        searchNamespace: ALL
-      logLevel: INFO
