@@ -34,16 +34,16 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
       auth:
-        oauth_auto_login: true
+        oauth_auto_login: false
       auth.basic:
         enabled: false
       auth.generic_oauth:
-        enabled: true
+        enabled: false
         name: Auth0
         scopes: "openid profile email"
         use_pkce: true
       auth.anonymous:
-        enabled: false
+        enabled: true
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
