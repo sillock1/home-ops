@@ -55,7 +55,7 @@ spec:
     prometheus:
       servicemonitor:
         # -- Enable ServiceMonitor for Prometheus-Operator for scrape metric-endpoint
-        enabled: true
+        enabled: false
         # -- Extra Labels on ServiceMonitor for selector of Prometheus Instance
         labels: {}
       rules:
