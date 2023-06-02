@@ -34,6 +34,18 @@ spec:
     dendrite_config:
       global:
         server_name: "localhost"
+      client_api:
+        # -- Prevents new users from being able to register on this homeserver, except when
+        # using the registration shared secret below.
+        registration_disabled: true
+
+        # Prevents new guest accounts from being created. Guest registration is also
+        # disabled implicitly by setting 'registration_disabled' above.
+        guests_disabled: true
+
+        # -- If set, allows registration by anyone who knows the shared secret, regardless of
+        # whether registration is otherwise disabled.
+        registration_shared_secret: "${DENDRITE_REGISTRATION_SECRET}"
 
     ingress:
       # -- Create an ingress for a monolith deployment
@@ -55,7 +67,7 @@ spec:
     prometheus:
       servicemonitor:
         # -- Enable ServiceMonitor for Prometheus-Operator for scrape metric-endpoint
-        enabled: false
+        enabled: true
         # -- Extra Labels on ServiceMonitor for selector of Prometheus Instance
         labels: {}
       rules:
