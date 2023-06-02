@@ -19,3 +19,4 @@ resources:
   - ./k8s-gateway.yaml
   - ./bjw-s.yaml
   - ./democratic-csi.yaml
+  - ./dendrite.yaml

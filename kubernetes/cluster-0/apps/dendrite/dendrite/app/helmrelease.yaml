@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dendrite
+  namespace: dendrite
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: dendrite
+      version: 0.12.3
+      sourceRef:
+        kind: HelmRepository
+        name: dendrite
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    postgresql:
+      enabled: true # this installs Postgres
+      primary:
+        persistence:
+          size: 10Gi # defines the size for $PGDATA
+    dendrite_config:
+      global:
+        server_name: "localhost"
+
+    ingress:
+      # -- Create an ingress for a monolith deployment
+      enabled: true
+      hosts:
+        - matrix.sillock.co.uk
+      className: nginx
+      hostName: matrix.sillock.co.uk
+      # -- Extra, custom annotations
+      annotations:
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+      tls:
+        - secretName: matrix-tls-certificate
+          hosts:
+            - matrix.sillock.co.uk
+
+    prometheus:
+      servicemonitor:
+        # -- Enable ServiceMonitor for Prometheus-Operator for scrape metric-endpoint
+        enabled: true
+        # -- Extra Labels on ServiceMonitor for selector of Prometheus Instance
+        labels: {}
+      rules:
+        # -- Enable PrometheusRules for Prometheus-Operator for setup alerting
+        enabled: false
+        # -- Extra Labels on PrometheusRules for selector of Prometheus Instance
+        labels: {}
+        # -- additional alertrules (no default alertrules are provided)
+        additionalRules: []
