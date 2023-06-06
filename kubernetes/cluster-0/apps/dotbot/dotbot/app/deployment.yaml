@@ -12,6 +12,10 @@ spec:
       labels:
         app: dotbot
     spec:
+      volumes:
+        - name: dotbot-mongo-storage
+          persistentVolumeClaim:
+            claimName: dotbot-pv-claim
       containers:
         - name: dotbot
           image: ghcr.io/sillock-inc/dotbot:v0.1.2
@@ -38,3 +42,13 @@ spec:
             limits:
               memory: "500Mi"
               cpu: 500m
+        - name: dotbot-db
+          image: mongo:6.0.6
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 1
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /data/db
+              name: dotbot-mongo-storage
