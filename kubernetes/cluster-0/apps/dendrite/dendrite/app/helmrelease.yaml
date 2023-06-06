@@ -33,7 +33,7 @@ spec:
           size: 10Gi # defines the size for $PGDATA
     dendrite_config:
       global:
-        server_name: "localhost"
+        server_name: "sillock.co.uk"
       client_api:
         # -- Prevents new users from being able to register on this homeserver, except when
         # using the registration shared secret below.
