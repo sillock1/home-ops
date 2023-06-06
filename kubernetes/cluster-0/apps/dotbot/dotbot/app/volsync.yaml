@@ -21,3 +21,24 @@ spec:
   dataFrom:
     - extract:
         key: volsync-restic-template
+
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: dotbot-database
+  namespace: dotbot
+spec:
+  sourcePVC: dotbot-pv-claim
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: dotbot-restic-secret
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: ceph-block
+    retain:
+      daily: 10
+      within: 3d
