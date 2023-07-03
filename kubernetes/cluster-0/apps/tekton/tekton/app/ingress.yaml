@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tekton-dashboard
-  namespace: tekton
+  namespace: tekton-dashboard
   annotations:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
     external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
@@ -13,7 +13,6 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth
     cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
-  ingressClassName: nginx
   rules:
     - host: &host tekton.sillock.co.uk
       http:
