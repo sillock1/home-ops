@@ -20,3 +20,6 @@ resources:
   - ./bjw-s.yaml
   - ./democratic-csi.yaml
   - ./dendrite.yaml
+  - ./intel.yaml
+  - ./node-feature-discovery.yaml
+  - ./weaveworks.yaml
