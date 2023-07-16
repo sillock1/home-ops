@@ -18,7 +18,6 @@ resources:
   - ./backube.yaml
   - ./k8s-gateway.yaml
   - ./bjw-s.yaml
-  - ./democratic-csi.yaml
   - ./dendrite.yaml
   - ./intel.yaml
   - ./node-feature-discovery.yaml
