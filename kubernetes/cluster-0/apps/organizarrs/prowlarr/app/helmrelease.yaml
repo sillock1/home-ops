@@ -48,7 +48,7 @@ spec:
     env:
       TZ: Europe/London
       PROWLARR__INSTANCE_NAME: Prowlarr
-      PROWLARR__PORT: &port 80
+      PROWLARR__PORT: &port 8080
       PROWLARR__LOG_LEVEL: info
       PROWLARR__AUTHENTICATION_METHOD: External
     envFrom: *envFrom
@@ -56,7 +56,8 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 80
+            targetPort: *port
     probes:
       liveness: &probes
         enabled: true
