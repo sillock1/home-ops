@@ -39,12 +39,13 @@ spec:
     env:
       TZ: Europe/London
       LOG_LEVEL: "info"
-      PORT: &port 80
+      PORT: &port 8080
     service:
       main:
         ports:
           http:
-            port: *port
+            port: 80
+            targetPort: *port
     ingress:
       main:
         enabled: true

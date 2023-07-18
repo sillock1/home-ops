@@ -42,7 +42,7 @@ spec:
       TZ: America/New_York
       PUSHOVER_DEBUG: "false"
       SONARR__INSTANCE_NAME: Sonarr
-      SONARR__PORT: &port 80
+      SONARR__PORT: &port 8080
       SONARR__LOG_LEVEL: info
     envFrom:
       - secretRef:
@@ -51,7 +51,8 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 80
+            targetPort: *port
     probes:
       liveness: &probes
         enabled: true
