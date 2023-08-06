@@ -1,0 +1,179 @@
+---
+clusterName: ${clusterName}
+
+talosVersion: v1.4.7
+kubernetesVersion: 1.27.3
+endpoint: "https://${clusterName}.pill.ac:6443"
+
+cniConfig:
+  name: none
+
+additionalApiServerCertSans:
+  - ${clusterEndpointIP}
+
+additionalMachineCertSans:
+  - ${clusterEndpointIP}
+  - ${clusterName}.pill.ac
+
+nodes:
+  - hostname: polaris.pill.ac
+    ipAddress: 10.1.7.20
+    controlPlane: true
+    installDisk: /dev/sda
+    disableSearchDomain: true
+    networkInterfaces:
+      - interface: eth0
+        mtu: 0
+        dhcp: true
+  - hostname: rigel.pill.ac
+    ipAddress: 10.1.7.21
+    controlPlane: true
+    installDisk: /dev/sda
+    disableSearchDomain: true
+    networkInterfaces:
+      - interface: eth0
+        mtu: 0
+        dhcp: true
+  - hostname: sirius.pill.ac
+    ipAddress: 10.1.7.22
+    controlPlane: true
+    installDisk: /dev/sda
+    disableSearchDomain: true
+    networkInterfaces:
+      - interface: eth0
+        mtu: 0
+        dhcp: true
+  - hostname: mercury.pill.ac
+    ipAddress: 10.1.7.30
+    controlPlane: true
+    installDisk: /dev/nvme0n1
+    disableSearchDomain: true
+    networkInterfaces:
+      - interface: eth0
+        mtu: 0
+        dhcp: true
+  - hostname: venus.pill.ac
+    ipAddress: 10.1.7.31
+    controlPlane: true
+    installDisk: /dev/nvme0n1
+    disableSearchDomain: true
+    networkInterfaces:
+      - interface: eth0
+        mtu: 0
+        dhcp: true
+  - hostname: earth.pill.ac
+    ipAddress: 10.1.7.32
+    controlPlane: true
+    installDisk: /dev/nvme0n1
+    disableSearchDomain: true
+    networkInterfaces:
+      - interface: eth0
+        mtu: 0
+        dhcp: true
+controlPlane:
+  inlinePatch:
+    cluster:
+      allowSchedulingOnMasters: true
+      apiServer:
+        certSANs:
+          - ${clusterEndpointIP}
+          - cluster.pill.ac
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+      controllerManager:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+      discovery:
+        registries:
+          service:
+            disabled: true
+      proxy:
+        disabled: true
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+      scheduler:
+        extraArgs:
+          feature-gates: MixedProtocolLBService=true
+    machine:
+      certSANs:
+        - ${clusterEndpointIP}
+        - cluster.pill.ac
+      install:
+        extraKernelArgs:
+          - talos.logging.kernel=udp://vector.pill.ac:6050/
+        extensions:
+          - image: ghcr.io/siderolabs/i915-ucode:20230310
+          - image: ghcr.io/siderolabs/intel-ucode:20230512
+          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+      logging:
+        destinations:
+          - endpoint: udp://vector.pill.ac:6051/
+            format: json_lines
+      kubelet:
+        extraArgs:
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true,EphemeralContainers=True
+          rotate-server-certificates: "true"
+      sysctls:
+        fs.inotify.max_user_watches: "1048576"
+        fs.inotify.max_user_instances: "8192"
+      time:
+        disabled: false
+        servers:
+          - 10.1.1.1
+      files:
+        - content: |
+            [plugins]
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+
+worker:
+  inlinePatch:
+    cluster:
+      discovery:
+        registries:
+          service:
+            disabled: true
+    machine:
+      certSANs:
+        - ${clusterEndpointIP}
+        - cluster.pill.ac
+      time:
+        disabled: false
+        servers:
+          - 10.1.1.1
+      install:
+        extraKernelArgs:
+          - talos.logging.kernel=udp://vector.pill.ac:6050/
+        extensions:
+          - image: ghcr.io/siderolabs/i915-ucode:20230310
+          - image: ghcr.io/siderolabs/intel-ucode:20230512
+          - image: ghcr.io/siderolabs/drbd:9.2.0-v1.3.7
+          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
+      logging:
+        destinations:
+          - endpoint: udp://vector.pill.ac:6051/
+            format: json_lines
+      kubelet:
+        extraArgs:
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true,EphemeralContainers=True
+          rotate-server-certificates: "true"
+      sysctls:
+        fs.inotify.max_user_watches: "1048576"
+        fs.inotify.max_user_instances: "8192"
+      files:
+        - content: |
+            [plugins]
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+  patches:
+    - |-
+      - op: add
+        path: /machine/nodeLabels
+        value:
+          kubernetes.io/role: worker

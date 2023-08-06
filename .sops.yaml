@@ -1,23 +1,12 @@
 ---
 creation_rules:
-  - path_regex: kubernetes/.*\.sops\.ya?ml
+  - path_regex: k8s/(global|clusters)/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData)$"
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: kubernetes/.*\.sops\.ini
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: kubernetes/.*\.sops\.toml
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: kubernetes/.*\.sops\.json
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: provision/.*\.sops\.ya?ml
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+    # Personal, Flux
+    age: >-
+      age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+
+  - path_regex: .*\.sops\.ya?ml
+    # Personal
+    age: >-
+      age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
