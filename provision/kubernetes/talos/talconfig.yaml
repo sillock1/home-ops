@@ -103,7 +103,7 @@ controlPlane:
           - talos.logging.kernel=udp://vector.pill.ac:6050/
         extensions:
           - image: ghcr.io/siderolabs/i915-ucode:20230310
-          - image: ghcr.io/siderolabs/intel-ucode:20230512
+          - image: ghcr.io/siderolabs/intel-ucode:20230613
           - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
       logging:
         destinations:
@@ -149,7 +149,7 @@ worker:
           - talos.logging.kernel=udp://vector.pill.ac:6050/
         extensions:
           - image: ghcr.io/siderolabs/i915-ucode:20230310
-          - image: ghcr.io/siderolabs/intel-ucode:20230512
+          - image: ghcr.io/siderolabs/intel-ucode:20230613
           - image: ghcr.io/siderolabs/drbd:9.2.0-v1.3.7
           - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
       logging:
