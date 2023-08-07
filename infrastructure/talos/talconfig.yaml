@@ -77,7 +77,7 @@ controlPlane:
       apiServer:
         certSANs:
           - ${clusterEndpointIP}
-          - cluster.pill.ac
+          - ${clusterName}.pill.ac
         extraArgs:
           feature-gates: MixedProtocolLBService=true
       controllerManager:
@@ -97,7 +97,7 @@ controlPlane:
     machine:
       certSANs:
         - ${clusterEndpointIP}
-        - cluster.pill.ac
+        - ${clusterName}.pill.ac
       install:
         extraKernelArgs:
           - talos.logging.kernel=udp://vector.pill.ac:6050/
@@ -139,7 +139,7 @@ worker:
     machine:
       certSANs:
         - ${clusterEndpointIP}
-        - cluster.pill.ac
+        - ${clusterName}.pill.ac
       time:
         disabled: false
         servers:
