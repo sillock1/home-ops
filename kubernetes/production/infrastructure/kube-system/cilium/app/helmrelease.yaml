@@ -37,6 +37,16 @@ spec:
           serviceMonitor:
             enabled: true
 
+      ui:
+        ingress:
+          enabled: true
+          className: "internal-nginx"
+          hosts:
+            - &host hubble-cluster-production.pill.ac
+          tls:
+            - hosts:
+                - *host
+
     prometheus:
       serviceMonitor:
         enabled: true
