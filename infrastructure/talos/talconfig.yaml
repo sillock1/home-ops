@@ -45,7 +45,7 @@ nodes:
         dhcp: true
   - hostname: mercury.pill.ac
     ipAddress: 10.1.7.30
-    controlPlane: true
+    controlPlane: false
     installDisk: /dev/nvme0n1
     disableSearchDomain: true
     networkInterfaces:
@@ -54,7 +54,7 @@ nodes:
         dhcp: true
   - hostname: venus.pill.ac
     ipAddress: 10.1.7.31
-    controlPlane: true
+    controlPlane: false
     installDisk: /dev/nvme0n1
     disableSearchDomain: true
     networkInterfaces:
@@ -63,7 +63,7 @@ nodes:
         dhcp: true
   - hostname: earth.pill.ac
     ipAddress: 10.1.7.32
-    controlPlane: true
+    controlPlane: false
     installDisk: /dev/nvme0n1
     disableSearchDomain: true
     networkInterfaces:
@@ -75,6 +75,7 @@ controlPlane:
     cluster:
       allowSchedulingOnMasters: true
       apiServer:
+        admissionControl: []
         certSANs:
           - ${clusterEndpointIP}
           - ${clusterName}.pill.ac
@@ -83,10 +84,6 @@ controlPlane:
       controllerManager:
         extraArgs:
           feature-gates: MixedProtocolLBService=true
-      discovery:
-        registries:
-          service:
-            disabled: true
       proxy:
         disabled: true
         extraArgs:
@@ -99,19 +96,12 @@ controlPlane:
         - ${clusterEndpointIP}
         - ${clusterName}.pill.ac
       install:
-        extraKernelArgs:
-          - talos.logging.kernel=udp://vector.pill.ac:6050/
         extensions:
           - image: ghcr.io/siderolabs/i915-ucode:20230310
           - image: ghcr.io/siderolabs/intel-ucode:20230512
-          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
-      logging:
-        destinations:
-          - endpoint: udp://vector.pill.ac:6051/
-            format: json_lines
       kubelet:
         extraArgs:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true,EphemeralContainers=True
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
           rotate-server-certificates: "true"
       sysctls:
         fs.inotify.max_user_watches: "1048576"
@@ -131,11 +121,6 @@ controlPlane:
 
 worker:
   inlinePatch:
-    cluster:
-      discovery:
-        registries:
-          service:
-            disabled: true
     machine:
       certSANs:
         - ${clusterEndpointIP}
@@ -145,20 +130,12 @@ worker:
         servers:
           - 10.1.7.1
       install:
-        extraKernelArgs:
-          - talos.logging.kernel=udp://vector.pill.ac:6050/
         extensions:
           - image: ghcr.io/siderolabs/i915-ucode:20230310
           - image: ghcr.io/siderolabs/intel-ucode:20230512
-          - image: ghcr.io/siderolabs/drbd:9.2.0-v1.3.7
-          - image: ghcr.io/siderolabs/iscsi-tools:v0.1.4
-      logging:
-        destinations:
-          - endpoint: udp://vector.pill.ac:6051/
-            format: json_lines
       kubelet:
         extraArgs:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true,EphemeralContainers=True
+          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
           rotate-server-certificates: "true"
       sysctls:
         fs.inotify.max_user_watches: "1048576"
