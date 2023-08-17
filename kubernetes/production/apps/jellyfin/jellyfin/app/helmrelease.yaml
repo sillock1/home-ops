@@ -70,7 +70,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: &host jellyfin.sillock.co.uk
+          - host: &host jellyfin.sillock.io
             paths:
               - path: /
                 pathType: Prefix
@@ -93,7 +93,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: truenas.sillock.co.uk
+        server: truenas.sillock.io
         path: /mnt/Pool/media
         mountPath: /media
         readOnly: true

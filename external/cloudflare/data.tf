@@ -1,4 +1,4 @@
 data "cloudflare_zone" "sillock" {
   account_id = var.cloudflare_account_id
-  name       = "sillock.co.uk"
+  name       = "sillock.io"
 }

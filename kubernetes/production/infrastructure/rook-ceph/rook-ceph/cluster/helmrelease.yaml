@@ -36,7 +36,7 @@ spec:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             192.168.0.0/16
         host:
-          name: &host rook.sillock.co.uk
+          name: &host rook.sillock.io
           path: /
     cephClusterSpec:
       resources:

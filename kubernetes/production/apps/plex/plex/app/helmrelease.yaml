@@ -54,10 +54,10 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-          external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
+          external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.io"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
-          - host: &host plex.sillock.co.uk
+          - host: &host plex.sillock.io
             paths:
               - path: /
                 pathType: Prefix
@@ -81,7 +81,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: truenas.sillock.co.uk
+        server: truenas.sillock.io
         path: /mnt/Pool/media
         mountPath: /media
         readOnly: true

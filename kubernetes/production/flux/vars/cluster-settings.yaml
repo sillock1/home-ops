@@ -1,8 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: flux-system
-  name: cluster-settings
-data:
-  SVC_NGINX_ADDR: "192.168.3.201"

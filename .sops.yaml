@@ -10,3 +10,6 @@ creation_rules:
     # Personal
     age: >-
       age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+  - path_regex: kubernetes/.*\.sops\.(env|ini|json|toml)
+    age: >-
+      age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc

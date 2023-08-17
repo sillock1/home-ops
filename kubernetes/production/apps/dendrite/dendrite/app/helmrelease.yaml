@@ -51,18 +51,18 @@ spec:
       # -- Create an ingress for a monolith deployment
       enabled: true
       hosts:
-        - matrix.sillock.co.uk
+        - matrix.sillock.io
       className: nginx
-      hostName: matrix.sillock.co.uk
+      hostName: matrix.sillock.io
       # -- Extra, custom annotations
       annotations:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.io"
         cert-manager.io/cluster-issuer: "letsencrypt-production"
       tls:
         - secretName: matrix-tls-certificate
           hosts:
-            - matrix.sillock.co.uk
+            - matrix.sillock.io
 
     prometheus:
       servicemonitor:

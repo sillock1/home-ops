@@ -5,7 +5,7 @@
     lameduck 5s
   }
   ready
-  k8s_gateway sillock.co.uk {
+  k8s_gateway sillock.io {
     apex  k8s-gateway.k8s-gateway
     resources Ingress Service
     ttl 300

@@ -75,10 +75,10 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.sillock.co.uk/css/base/sonarr/nord.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.sillock.io/css/base/sonarr/nord.css"></head>';
             sub_filter_once on;
         hosts:
-          - host: &host "{{ .Release.Name }}.sillock.co.uk"
+          - host: &host "{{ .Release.Name }}.sillock.io"
             paths:
               - path: /
                 pathType: Prefix
@@ -100,7 +100,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: truenas.sillock.co.uk
+        server: truenas.sillock.io
         path: /mnt/Pool/media
         mountPath: /media
       scripts:

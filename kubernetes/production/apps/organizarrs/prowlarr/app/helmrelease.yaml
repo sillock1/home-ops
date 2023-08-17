@@ -80,10 +80,10 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.sillock.co.uk/css/base/prowlarr/nord.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.sillock.io/css/base/prowlarr/nord.css"></head>';
             sub_filter_once on;
         hosts:
-          - host: &host prowlarr.sillock.co.uk
+          - host: &host prowlarr.sillock.io
             paths:
               - path: /
                 pathType: Prefix

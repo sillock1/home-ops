@@ -11,7 +11,7 @@ data:
     endpoints:
       - name: theme-park
         group: external
-        url: https://theme-park.sillock.co.uk
+        url: https://theme-park.sillock.io
         interval: 1m
         client:
           dns-resolver: tcp://1.1.1.1:53
