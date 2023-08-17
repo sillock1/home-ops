@@ -10,9 +10,12 @@ tasks:
   install:
     desc: Install Flux into your cluster
     cmds:
-      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/production/bootstrap
-      - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+      - sops --decrypt --in-place {{.KUBERNETES_DIR}}/production/bootstrap/age-key.sops.yaml
+      - sops --decrypt --in-place {{.KUBERNETES_DIR}}/production/bootstrap/github-deploy-key.sops.yaml
       - sops --decrypt --in-place {{.KUBERNETES_DIR}}/production/flux/vars/cluster-secrets.sops.env
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/production/bootstrap
       - kubectl apply --kustomize {{.KUBERNETES_DIR}}/production/flux/vars
-      - sops --encrypt --in-place {{.KUBERNETES_DIR}}/production/flux/vars/cluster-secrets.sops.env
       - kubectl apply --kustomize {{.KUBERNETES_DIR}}/production/flux/config
+      - sops --encrypt --in-place {{.KUBERNETES_DIR}}/production/bootstrap/age-key.sops.yaml
+      - sops --encrypt --in-place {{.KUBERNETES_DIR}}/production/bootstrap/github-deploy-key.sops.yaml
+      - sops --encrypt --in-place {{.KUBERNETES_DIR}}/production/flux/vars/cluster-secrets.sops.env
