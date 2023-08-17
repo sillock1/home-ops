@@ -13,8 +13,8 @@ includes:
   precommit: .taskfiles/precommit-tasks.yaml
   cluster: .taskfiles/cluster-tasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
-tasks:
 
+tasks:
   default:
     silent: true
     cmds: ["task -l"]
