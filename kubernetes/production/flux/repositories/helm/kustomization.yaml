@@ -8,7 +8,6 @@ resources:
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./onepassword-connect.yaml
-  - ./metallb.yaml
   - ./mongodb.yaml
   - ./rook-ceph.yaml
   - ./prometheus-community.yaml
@@ -25,3 +24,4 @@ resources:
   - ./weaveworks.yaml
   - ./cloudnative-pg.yaml
   - ./postfinance.yaml
+  - ./democratic-csi.yaml

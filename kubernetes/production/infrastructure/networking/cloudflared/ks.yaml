@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-infrastructure-cloudflared
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: "./kubernetes/production/infrastructure/network/cloudflared/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  wait: false
+  dependsOn:
+    - name: cluster-infrastructure-external-secrets-stores
+    - name: cluster-infrastructure-externaldns-shared
+    - name: cluster-infrastructure-nginx-external

@@ -32,8 +32,8 @@ spec:
         email_domains = [ "*" ]
         upstreams = [ "file:///dev/null" ]
         cookie_secure = "true"
-        cookie_domains = [ ".sillock.co.uk" ]
-        whitelist_domains = [ ".sillock.co.uk"]
+        cookie_domains = [ ".sillock.io" ]
+        whitelist_domains = [ ".sillock.io"]
         provider = "github"
         scope = "user:email read:org"
         github_users = ["sillock1"]
@@ -50,12 +50,12 @@ spec:
           port:
             number: 4180
       hosts:
-        - oauth.sillock.co.uk
+        - oauth.sillock.io
       annotations:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.co.uk"
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.io"
         cert-manager.io/cluster-issuer: "letsencrypt-production"
       tls:
         - secretName: oauth2-proxy-tls-certificate
           hosts:
-            - oauth.sillock.co.uk
+            - oauth.sillock.io
