@@ -31,10 +31,7 @@ spec:
       createPrometheusRules: true
     ingress:
       dashboard:
-        ingressClassName: nginx
-        annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            192.168.0.0/16
+        ingressClassName: internal
         host:
           name: &host rook.sillock.io
           path: /

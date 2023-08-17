@@ -174,7 +174,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: external
       annotations:
         hajimari.io/icon: simple-icons:grafana
       hosts:

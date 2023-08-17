@@ -107,7 +107,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         annotations:
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
