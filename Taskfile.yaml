@@ -1,12 +1,17 @@
-# https://taskfile.dev
 ---
-version: '3'
+version: "3"
 
 vars:
+  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+
+env:
+  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/age.key"
 
 includes:
   precommit: .taskfiles/precommit-tasks.yaml
+  cluster: .taskfiles/cluster-tasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
 tasks:
 
