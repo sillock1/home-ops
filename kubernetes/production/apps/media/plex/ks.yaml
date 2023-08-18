@@ -2,12 +2,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-jellyfin
+  name: cluster-apps-plex
   namespace: flux-system
 spec:
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
-  path: ./kubernetes/production/apps/jellyfin/jellyfin/app
+    - name: cluster-infrastructure-volsync
+  path: ./kubernetes/production/apps/media/plex/app
   prune: true
   sourceRef:
     kind: GitRepository

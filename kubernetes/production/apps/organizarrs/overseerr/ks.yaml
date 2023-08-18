@@ -5,6 +5,8 @@ metadata:
   name: cluster-apps-overseerr
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-infrastructure-volsync
   path: ./kubernetes/production/apps/organizarrs/overseerr/app
   prune: true
   sourceRef:
