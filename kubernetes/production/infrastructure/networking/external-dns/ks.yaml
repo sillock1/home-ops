@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
-  path: ./kubernetes/production/infrastructure/external-dns/external-dns/app
+  path: ./kubernetes/production/infrastructure/networking/external-dns/app
   prune: false
   sourceRef:
     kind: GitRepository
