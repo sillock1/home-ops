@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-cloudnative-pg-cluster
     - name: cluster-infrastructure-external-secrets-stores
+    - name: cluster-infrastructure-volsync
   path: ./kubernetes/production/apps/organizarrs/sonarr/app
   prune: true
   sourceRef:
