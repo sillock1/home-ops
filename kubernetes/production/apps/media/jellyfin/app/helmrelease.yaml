@@ -27,11 +27,11 @@ spec:
     keepHistory: false
   dependsOn:
     - name: intel-device-plugin-gpu
-      namespace: intel-device-plugin-gpu
+      namespace: system
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
-      namespace: volsync
+      namespace: system
   values:
     controller:
       type: statefulset
@@ -39,7 +39,7 @@ spec:
       repository: ghcr.io/onedr0p/jellyfin
       tag: 10.8.10@sha256:1ef614db6a4c589777eb48bc9004d573b9c09f0d6d573a509041c6060f3a956b
     env:
-      TZ: America/New_York
+      TZ: Europe/London
     service:
       main:
         type: LoadBalancer
