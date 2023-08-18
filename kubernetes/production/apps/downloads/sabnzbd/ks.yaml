@@ -7,6 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
+    - name: cluster-infrastructure-volsync
   path: ./kubernetes/production/apps/downloads/sabnzbd/app
   prune: true
   sourceRef:
