@@ -25,3 +25,4 @@ resources:
   - ./cloudnative-pg.yaml
   - ./postfinance.yaml
   - ./democratic-csi.yaml
+  - ./piraeus.yaml
