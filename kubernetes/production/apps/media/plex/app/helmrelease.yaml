@@ -27,11 +27,11 @@ spec:
     keepHistory: false
   dependsOn:
     - name: intel-device-plugin-gpu
-      namespace: kube-system
+      namespace: system
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
-      namespace: volsync
+      namespace: system
   values:
     controller:
       type: statefulset
@@ -52,9 +52,6 @@ spec:
         enabled: true
         ingressClassName: external
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-          external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.io"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
           - host: &host plex.sillock.io
@@ -64,7 +61,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: plex-tls-certificate
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

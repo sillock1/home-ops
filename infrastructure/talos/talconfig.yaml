@@ -73,7 +73,7 @@ nodes:
 controlPlane:
   inlinePatch:
     cluster:
-      allowSchedulingOnMasters: true
+      allowSchedulingOnMasters: false
       apiServer:
         admissionControl: []
         certSANs:
