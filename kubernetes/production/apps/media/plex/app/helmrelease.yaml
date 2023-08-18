@@ -81,7 +81,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: truenas.sillock.io
+        server: nas.pill.ac
         path: /mnt/Pool/media
         mountPath: /media
         readOnly: true
