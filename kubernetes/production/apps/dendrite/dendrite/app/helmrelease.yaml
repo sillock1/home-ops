@@ -33,7 +33,7 @@ spec:
           size: 10Gi # defines the size for $PGDATA
     dendrite_config:
       global:
-        server_name: "localhost"
+        server_name: "sillock-dendrite"
       client_api:
         # -- Prevents new users from being able to register on this homeserver, except when
         # using the registration shared secret below.
@@ -51,18 +51,12 @@ spec:
       # -- Create an ingress for a monolith deployment
       enabled: true
       hosts:
-        - matrix.sillock.io
-      className: nginx
-      hostName: matrix.sillock.io
-      # -- Extra, custom annotations
-      annotations:
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.sillock.io"
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        - &host matrix.sillock.io
+      className: external
+      hostName: *host
       tls:
-        - secretName: matrix-tls-certificate
-          hosts:
-            - matrix.sillock.io
+        - hosts:
+            - *host
 
     prometheus:
       servicemonitor:
