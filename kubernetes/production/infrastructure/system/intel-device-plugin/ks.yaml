@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-infrastructure-node-feature-discovery
-  path: ./kubernetes/production/infrastructure/intel-device-plugin/intel-device-plugin/app
+  path: ./kubernetes/production/infrastructure/system/intel-device-plugin/app
   prune: true
   sourceRef:
     kind: GitRepository
