@@ -26,8 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: local-path-provisioner
-      namespace: local-path-provisioner
+    - name: democratic-csi
+      namespace: system
   values:
     crds:
       create: true
