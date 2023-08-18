@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos-8tf-1ll
+  name: disk-wipe-mercury
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos-8tf-1ll
+  nodeName: mercury
   containers:
     - name: disk-wipe
       image: busybox
@@ -16,7 +16,6 @@ spec:
       args:
         - dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda;
           rm -rf /mnt/host_var/lib/rook;
-          sleep 1000000;
       volumeMounts:
         - mountPath: /mnt/host_var
           name: host-var
@@ -28,11 +27,11 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos-opi-h5e
+  name: disk-wipe-venus
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos-opi-h5e
+  nodeName: venus
   containers:
     - name: disk-wipe
       image: busybox
@@ -53,11 +52,11 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: disk-wipe-talos-ubj-n3n
+  name: disk-wipe-earth
   namespace: kube-system
 spec:
   restartPolicy: Never
-  nodeName: talos-ubj-n3n
+  nodeName: earth
   containers:
     - name: disk-wipe
       image: busybox
