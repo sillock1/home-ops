@@ -5,6 +5,8 @@ metadata:
   name: cluster-infrastructure-democratic-csi-local-path
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-infrastructure-snapshot-controller
   path: ./kubernetes/production/infrastructure/system/democratic-csi/local-path
   sourceRef:
     kind: GitRepository
