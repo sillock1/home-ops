@@ -5,3 +5,8 @@ namespace: system
 resources:
   - ./helmrelease.yaml
   - ./nodefeaturerule.yaml
+commonAnnotations:
+  meta.helm.sh/release-name: intel-device-plugins-gpu
+  meta.helm.sh/release-namespace: system
+commonLabels:
+  app.kubernetes.io/managed-by: Helm
