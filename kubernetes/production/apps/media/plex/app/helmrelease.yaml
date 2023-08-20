@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: plex
-  namespace: plex
+  namespace: media
 spec:
   interval: 30m
   chart:
@@ -52,7 +52,7 @@ spec:
         enabled: true
         ingressClassName: external
         annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          external-dns.alpha.kubernetes.io/target: external.sillock.io
         hosts:
           - host: &host plex.sillock.io
             paths:
@@ -71,7 +71,7 @@ spec:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 100Gi
+        size: 30Gi
         storageClass: ceph-block
     persistence:
       media:
@@ -84,22 +84,9 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-      local:
-        enabled: true
-        type: emptyDir
-        mountPath: /.local
     nodeSelector:
       node-role.kubernetes.io/worker: "true"
       intel.feature.node.kubernetes.io/gpu: "true"
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values: ["frigate"]
-            topologyKey: kubernetes.io/hostname
     resources:
       requests:
         gpu.intel.com/i915: 1
@@ -108,15 +95,3 @@ spec:
       limits:
         gpu.intel.com/i915: 1
         memory: 8000Mi
-    sidecars:
-      auto-languages:
-        image: docker.io/remirigal/plex-auto-languages:v1.2.3
-        imagePullPolicy: IfNotPresent
-        env:
-          - { name: PLEX_URL, value: http://localhost:32400 }
-          - { name: REFRESH_LIBRARY_ON_SCAN, value: "false" }
-        envFrom:
-          - secretRef:
-              name: plex-auto-languages-secret
-        volumeMounts:
-          - { name: local, mountPath: /.local }
