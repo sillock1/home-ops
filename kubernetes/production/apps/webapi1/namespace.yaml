@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: webapi1
-  labels:
-    kustomize.toolkit.fluxcd.io/prune: disabled
