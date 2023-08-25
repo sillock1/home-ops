@@ -4,6 +4,5 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./dendrite/ks.yaml
-  - ./dotbot/ks.yaml
-  - ./theme-park/ks.yaml
+  - ./cloudnative-pg/ks.yaml
+  - ./redis/ks.yaml
