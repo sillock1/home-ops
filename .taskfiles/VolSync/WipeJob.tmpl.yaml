@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "wipe-${rsrc}-${ts}"
+  name: "wipe-${rsrc}-${claim}-${ts}"
   namespace: "${namespace}"
 spec:
   ttlSecondsAfterFinished: 3600
@@ -12,11 +12,13 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: wipe
-          image: alpine:3.17.3
+          image: public.ecr.aws/docker/library/busybox:latest
           command: ["/bin/sh", "-c", "cd /config; find . -delete"]
           volumeMounts:
             - name: config
               mountPath: /config
+          securityContext:
+            privileged: true
       volumes:
         - name: config
           persistentVolumeClaim:
