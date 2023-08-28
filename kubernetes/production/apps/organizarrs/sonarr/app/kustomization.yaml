@@ -5,7 +5,7 @@ namespace: organizarrs
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./volsync.yaml
+  - ./pvc.yaml
   - ./gatus.yaml
 configMapGenerator:
   - name: sonarr-configmap
