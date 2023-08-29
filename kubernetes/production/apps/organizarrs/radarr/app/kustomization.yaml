@@ -5,6 +5,7 @@ namespace: organizarrs
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./pvc.yaml
   - ./gatus.yaml
 configMapGenerator:
   - name: radarr-configmap
