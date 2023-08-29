@@ -16,7 +16,6 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -28,18 +27,15 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: system
   values:
     initContainers:
       01-init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
+        image: ghcr.io/onedr0p/postgres-init:14.8
         imagePullPolicy: IfNotPresent
         envFrom: &envFrom
           - secretRef:
               name: radarr-secret
     controller:
-      type: statefulset
       annotations:
         reloader.stakater.com/auto: "true"
     image:
@@ -48,18 +44,18 @@ spec:
     env:
       TZ: Europe/London
       PUSHOVER_DEBUG: "false"
-      PUSHOVER_APP_URL: &host "radarr.sillock.io"
+      RADARR__AUTHENTICATION_METHOD: External
+      RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
       RADARR__INSTANCE_NAME: Radarr
-      RADARR__PORT: &port 8080
-      RADARR__APPLICATION_URL: "https://radarr.sillock.io"
+      RADARR__PORT: &port 80
       RADARR__LOG_LEVEL: info
+      RADARR__THEME: dark
     envFrom: *envFrom
     service:
       main:
         ports:
           http:
-            port: 80
-            targetPort: *port
+            port: *port
     probes:
       liveness: &probes
         enabled: true
@@ -79,13 +75,8 @@ spec:
       main:
         enabled: true
         ingressClassName: internal
-        annotations:
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.sillock.io/css/base/radarr/nord.css"></head>';
-            sub_filter_once on;
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.sillock.io"
             paths:
               - path: /
                 pathType: Prefix
@@ -97,14 +88,10 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [10000]
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 15Gi
-        storageClass: ceph-block
     persistence:
+      config:
+        enabled: true
+        existingClaim: radarr-config
       media:
         enabled: true
         type: nfs
