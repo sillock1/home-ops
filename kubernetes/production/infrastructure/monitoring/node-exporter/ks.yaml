@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-infrastructure-node-exporter
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./kubernetes/production/infrastructure/monitoring/node-exporter/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  wait: false
+  dependsOn:
+    - name: cluster-infrastructure-kube-prometheus-stack
