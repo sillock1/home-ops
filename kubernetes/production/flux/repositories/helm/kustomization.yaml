@@ -26,3 +26,5 @@ resources:
   - ./postfinance.yaml
   - ./democratic-csi.yaml
   - ./piraeus.yaml
+  - ./opentelemetry.yaml
+  - ./jaegertracing.yaml

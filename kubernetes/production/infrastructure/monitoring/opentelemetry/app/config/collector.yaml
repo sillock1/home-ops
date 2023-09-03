@@ -1,0 +1,120 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: my-collector
+spec:
+  mode: daemonset
+  hostNetwork: true
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+      kubeletstats:
+        collection_interval: 10s
+        auth_type: 'serviceAccount'
+        endpoint: '${env:K8S_NODE_NAME}:10250'
+        insecure_skip_verify: true
+        metric_groups:
+          - node
+          - pod
+          - container
+      filelog:
+        include:
+          - /var/log/pods/*/*/*.log
+          include_file_name: false
+          include_file_path: true
+          operators:
+          - id: get-format
+              routes:
+              - expr: body matches "^\\{"
+              output: parser-docker
+              - expr: body matches "^[^ Z]+ "
+              output: parser-crio
+              - expr: body matches "^[^ Z]+Z"
+              output: parser-containerd
+              type: router
+          - id: parser-crio
+              output: extract_metadata_from_filepath
+              regex: ^(?P<time>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$
+              timestamp:
+              layout: 2006-01-02T15:04:05.999999999Z07:00
+              layout_type: gotime
+              parse_from: attributes.time
+              type: regex_parser
+          - id: parser-containerd
+              output: extract_metadata_from_filepath
+              regex: ^(?P<time>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$
+              timestamp:
+              layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+              parse_from: attributes.time
+              type: regex_parser
+          - id: parser-docker
+              output: extract_metadata_from_filepath
+              timestamp:
+              layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+              parse_from: attributes.time
+              type: json_parser
+          - id: extract_metadata_from_filepath
+              parse_from: attributes["log.file.path"]
+              regex: ^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]+)\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log$
+              type: regex_parser
+          - from: attributes.stream
+              to: attributes["log.iostream"]
+              type: move
+          - from: attributes.container_name
+              to: resource["k8s.container.name"]
+              type: move
+          - from: attributes.namespace
+              to: resource["k8s.namespace.name"]
+              type: move
+          - from: attributes.pod_name
+              to: resource["k8s.pod.name"]
+              type: move
+          - from: attributes.restart_count
+              to: resource["k8s.container.restart_count"]
+              type: move
+          - from: attributes.uid
+              to: resource["k8s.pod.uid"]
+              type: move
+          - from: attributes.log
+              to: body
+              type: move
+          start_at: beginning
+
+    processors:
+      attributes:
+        actions:
+          - action: insert
+            key: loki.attribute.labels
+            value: log.file.name
+      batch:
+
+    exporters:
+      logging:
+        loglevel: debug
+      # Logs
+      loki:
+        endpoint: http://loki:3100/loki/api/v1/push
+      # Metrics
+      prometheusremotewrite:
+        endpoint: http://prometheus:9411/api/prom/push
+      # Traces
+      jaeger:
+        endpoint: http://jaeger:14250
+        tls:
+          insecure: true
+
+    service:
+      pipelines:
+        logs:
+          receivers: [filelog,otlp]
+          exporters: [logging,loki]
+        metrics:
+          receivers: [kubeletstats,otlp]
+          exporters: [prometheusremotewrite]
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [jaeger]
