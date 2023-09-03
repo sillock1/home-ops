@@ -23,8 +23,8 @@ spec:
           network:
       kubeletstats:
         collection_interval: 10s
-        auth_type: 'serviceAccount'
-        endpoint: '${env:K8S_NODE_NAME}:10250'
+        auth_type: none
+        endpoint: '10.5.0.2:10250'
         insecure_skip_verify: true
         metric_groups:
           - node
@@ -55,10 +55,10 @@ spec:
         endpoint: http://loki:3100/loki/api/v1/push
       # Metrics
       prometheusremotewrite:
-        endpoint: http://prometheus:9411/api/prom/push
+        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
       # Traces
       jaeger:
-        endpoint: http://jaeger:14250
+        endpoint: http://jaeger-collector:14250
         tls:
           insecure: true
 
