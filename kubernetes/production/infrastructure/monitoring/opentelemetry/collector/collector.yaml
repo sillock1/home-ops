@@ -23,11 +23,11 @@ spec:
       filelog:
         include:
           - /var/log/pods/*/*/*.log
-          include_file_name: false
-          include_file_path: true
-          operators:
+        include_file_name: false
+        include_file_path: true
+        operators:
           - id: get-format
-              routes:
+            routes:
               - expr: body matches "^\\{"
               output: parser-docker
               - expr: body matches "^[^ Z]+ "
@@ -81,7 +81,7 @@ spec:
           - from: attributes.log
               to: body
               type: move
-          start_at: beginning
+        start_at: beginning
 
     processors:
       attributes:
