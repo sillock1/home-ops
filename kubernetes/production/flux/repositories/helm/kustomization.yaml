@@ -27,4 +27,4 @@ resources:
   - ./democratic-csi.yaml
   - ./piraeus.yaml
   - ./opentelemetry.yaml
-  - ./jaegertracing.yaml
+  - ./jaeger.yaml
