@@ -7,3 +7,5 @@ resources:
   - ./grafana/ks.yaml
   - ./thanos/ks.yaml
   - ./loki/ks.yaml
+  - ./opentelemetry/ks.yaml
+  - ./jaeger/ks.yaml
