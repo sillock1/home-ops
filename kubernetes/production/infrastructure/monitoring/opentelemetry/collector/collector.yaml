@@ -5,12 +5,6 @@ metadata:
 spec:
   mode: daemonset
   hostNetwork: true
-  presets:
-    logsCollection:
-      enabled: true
-      includeCollectorLogs: true
-    kubernetesAttributes:
-      enabled: true
   config: |
     receivers:
       otlp:
