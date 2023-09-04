@@ -2,13 +2,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: otel-operator
+  name: otel-collector
   namespace: monitoring
 spec:
   interval: 5m
   chart:
     spec:
-      chart: opentelemetry-operator
+      chart: opentelemetry-collector
       version: 0.36.0
       sourceRef:
         kind: HelmRepository
@@ -38,3 +38,60 @@ spec:
   uninstall:
     keepHistory: false
   maxHistory: 3
+  values:
+    mode: daemonset
+    presets:
+      logsCollection:
+        enabled: true
+      kubernetesAttributes:
+        enabled: true
+      kubeletMetrics:
+        enabled: true
+      clusterMetrics:
+        enabled: true
+      kubernetesEvents:
+        enabled: true
+      hostMetrics:
+        enabled: true
+    config:
+      receivers:
+        otlp:
+          protocols:
+            grpc:
+            http:
+      processors:
+        resource:
+          attributes:
+            - action: insert
+              key: loki.format
+              value: raw
+            - action: insert
+              key: loki.resource.labels
+              value: pod, namespace, container, cluster, filename
+
+      exporters:
+        logging:
+          loglevel: debug
+        # Logs
+        loki:
+          endpoint: http://loki:3100/loki/api/v1/push
+        # Metrics
+        prometheusremotewrite:
+          endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+        # Traces
+        jaeger:
+          endpoint: http://jaeger-collector:14250
+          tls:
+            insecure: true
+
+      service:
+        pipelines:
+          logs:
+            receivers: [filelog, otlp]
+            exporters: [logging, loki]
+          metrics:
+            receivers: [hostmetrics, kubeletstats, otlp]
+            exporters: [prometheusremotewrite]
+          traces:
+            receivers: [otlp]
+            exporters: [jaeger]
