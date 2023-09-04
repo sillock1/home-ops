@@ -49,6 +49,8 @@ spec:
         enabled: true
       hostMetrics:
         enabled: true
+    podSecurityContext:
+      privileged: true
     config:
       receivers:
         otlp:
@@ -73,7 +75,7 @@ spec:
 
       exporters:
         logging:
-          loglevel: debug
+          verbosity: detailed
         # Logs
         loki:
           endpoint: http://loki:3100/loki/api/v1/push
