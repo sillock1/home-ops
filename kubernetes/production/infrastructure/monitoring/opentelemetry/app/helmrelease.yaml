@@ -47,10 +47,6 @@ spec:
         enabled: true
       kubeletMetrics:
         enabled: true
-      clusterMetrics:
-        enabled: true
-      kubernetesEvents:
-        enabled: true
       hostMetrics:
         enabled: true
     config:
