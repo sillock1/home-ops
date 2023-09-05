@@ -36,7 +36,7 @@ spec:
       memory: 50Mi
     limits:
       cpu: 1000m
-      memory: 1G
+      memory: 500Mi
   config: |
     exporters:
       otlphttp/jaeger:
