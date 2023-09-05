@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - collector.yaml
+  - rbac.yaml
