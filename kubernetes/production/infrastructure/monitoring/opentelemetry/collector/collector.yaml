@@ -5,12 +5,35 @@ metadata:
 spec:
   mode: daemonset
   hostNetwork: true
+  volumes:
+    - name: hostfs
+      hostPath:
+        path: /
+    - name: varlogpods
+      hostPath:
+        path: /var/log/pods
+  volumeMounts:
+    - name: hostfs
+      mountPath: /hostfs
+      readOnly: true
+      mountPropagation: HostToContainer
+    - name: varlogpods
+      mountPath: /var/log/pods
+      readOnly: true
+  env:
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.nodeName
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
   config: |
     exporters:
-      jaeger:
-        endpoint: http://jaeger-collector:14250
-        tls:
-          insecure: true
+      otlp/jaeger:
+        endpoint: http://jaeger-collector:4137
       logging:
         verbosity: detailed
       loki:
@@ -185,34 +208,16 @@ spec:
           load: null
           memory: null
           network: null
-      jaeger:
-        protocols:
-          grpc:
-            endpoint: ${env:MY_POD_IP}:14250
-          thrift_compact:
-            endpoint: ${env:MY_POD_IP}:6831
-          thrift_http:
-            endpoint: ${env:MY_POD_IP}:14268
       kubeletstats:
         auth_type: serviceAccount
         collection_interval: 20s
-        endpoint: https://.pill.ac:10250
+        endpoint: https://${env:K8S_NODE_NAME}.pill.ac:10250
       otlp:
         protocols:
           grpc:
             endpoint: :4317
           http:
             endpoint: :4318
-      prometheus:
-        config:
-          scrape_configs:
-          - job_name: opentelemetry-collector
-            scrape_interval: 10s
-            static_configs:
-            - targets:
-              - ${env:MY_POD_IP}:8888
-      zipkin:
-        endpoint: ${env:MY_POD_IP}:9411
     service:
       extensions:
       - health_check
@@ -242,7 +247,7 @@ spec:
           - otlp
         traces:
           exporters:
-          - jaeger
+          - otlp/jaeger
           processors:
           - k8sattributes
           - memory_limiter
