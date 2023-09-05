@@ -148,7 +148,7 @@ spec:
       kubeletstats:
         auth_type: serviceAccount
         collection_interval: 20s
-        endpoint: https://${env:K8S_NODE_NAME}.pill.ac:10250
+        endpoint: https://${K8S_NODE_NAME}.pill.ac:10250
       otlp:
         protocols:
           grpc:
@@ -193,4 +193,4 @@ spec:
           - otlp
       telemetry:
         metrics:
-          address: ${env:MY_POD_IP}:8888
+          address: ${MY_POD_IP}:8888
