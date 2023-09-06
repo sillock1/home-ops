@@ -193,7 +193,7 @@ spec:
       kubeletstats:
         auth_type: serviceAccount
         collection_interval: 10s
-        endpoint: https://${K8S_NODE_NAME}:10250
+        endpoint: https://${K8S_NODE_NAME}.pill.ac:10250
         insecure_skip_verify: true
         metric_groups:
           - node
