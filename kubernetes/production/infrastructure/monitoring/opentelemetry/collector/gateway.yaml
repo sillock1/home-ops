@@ -37,6 +37,8 @@ spec:
     limits:
       cpu: 1000m
       memory: 500Mi
+  podSecurityContext:
+    privileged: true
   config: |
     exporters:
       logging:
