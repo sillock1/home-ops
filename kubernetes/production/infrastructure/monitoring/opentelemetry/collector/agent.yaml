@@ -1,0 +1,246 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: agent
+spec:
+  mode: daemonset
+  volumes:
+    - name: hostfs
+      hostPath:
+        path: /
+    - name: varlogpods
+      hostPath:
+        path: /var/log/pods
+  volumeMounts:
+    - name: hostfs
+      mountPath: /hostfs
+      readOnly: true
+      mountPropagation: HostToContainer
+    - name: varlogpods
+      mountPath: /var/log/pods
+      readOnly: true
+  env:
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.nodeName
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  resources:
+    requests:
+      cpu: 5m
+      memory: 50Mi
+    limits:
+      cpu: 1000m
+      memory: 500Mi
+  config: |
+    exporters:
+      otlphttp/jaeger:
+        endpoint: http://jaeger-collector:4138
+      logging:
+      loki:
+        endpoint: http://loki-write:3100/loki/api/v1/push
+      prometheusremotewrite:
+        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+    extensions:
+      health_check: {}
+      memory_ballast:
+        size_in_percentage: 40
+    processors:
+      batch: {}
+      k8sattributes:
+        auth_type: 'serviceAccount'
+        extract:
+          metadata: # extracted from the pod
+            - k8s.namespace.name
+            - k8s.pod.name
+            - k8s.pod.start_time
+            - k8s.pod.uid
+            - k8s.deployment.name
+            - k8s.node.name
+          annotations:
+            # Extracts the value of a pod annotation with key `annotation-one` and inserts it as a resource attribute with key `a1`
+            - tag_name: a1
+              key: annotation-one
+              from: pod
+            # Extracts the value of a namespaces annotation with key `annotation-two` with regexp and inserts it as a resource  with key `a2`
+            - tag_name: a2
+              key: annotation-two
+              regex: field=(?P<value>.+)
+              from: namespace
+          labels:
+            # Extracts the value of a namespaces label with key `label1` and inserts it as a resource attribute with key `l1`
+            - tag_name: l1
+              key: label1
+              from: namespace
+            # Extracts the value of a pod label with key `label2` with regexp and inserts it as a resource attribute with key `l2`
+            - tag_name: l2
+              key: label2
+              regex: field=(?P<value>.+)
+              from: pod
+        pod_association: # How to associate the data to a pod (order matters)
+          - sources: # First try to use the value of the resource attribute k8s.pod.ip
+              - from: resource_attribute
+                name: k8s.pod.ip
+          - sources: # Then try to use the value of the resource attribute k8s.pod.uid
+              - from: resource_attribute
+                name: k8s.pod.uid
+          - sources: # If neither of those work, use the request's connection to get the pod IP.
+              - from: connection
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 80
+        spike_limit_percentage: 25
+      resource:
+        attributes:
+        - action: insert
+          key: loki.format
+          value: raw
+        - action: insert
+          key: loki.resource.labels
+          value: pod, namespace, container, cluster, filename
+    receivers:
+      filelog:
+        include:
+          - /var/log/pods/*/*/*.log
+        exclude:
+          # Exclude logs from all containers named otel-collector
+          - /var/log/pods/*/otel-collector/*.log
+        start_at: beginning
+        include_file_path: true
+        include_file_name: false
+        operators:
+          # Find out which format is used by kubernetes
+          - type: router
+            id: get-format
+            routes:
+              - output: parser-docker
+                expr: 'body matches "^\\{"'
+              - output: parser-crio
+                expr: 'body matches "^[^ Z]+ "'
+              - output: parser-containerd
+                expr: 'body matches "^[^ Z]+Z"'
+          # Parse CRI-O format
+          - type: regex_parser
+            id: parser-crio
+            regex:
+              '^(?P<time>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*)
+              ?(?P<log>.*)$'
+            output: extract_metadata_from_filepath
+            timestamp:
+              parse_from: attributes.time
+              layout_type: gotime
+              layout: '2006-01-02T15:04:05.999999999Z07:00'
+          # Parse CRI-Containerd format
+          - type: regex_parser
+            id: parser-containerd
+            regex:
+              '^(?P<time>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*)
+              ?(?P<log>.*)$'
+            output: extract_metadata_from_filepath
+            timestamp:
+              parse_from: attributes.time
+              layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+          # Parse Docker format
+          - type: json_parser
+            id: parser-docker
+            output: extract_metadata_from_filepath
+            timestamp:
+              parse_from: attributes.time
+              layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+          - type: move
+            from: attributes.log
+            to: body
+          # Extract metadata from file path
+          - type: regex_parser
+            id: extract_metadata_from_filepath
+            regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log$'
+            parse_from: attributes["log.file.path"]
+            cache:
+              size: 128 # default maximum amount of Pods per Node is 110
+          # Rename attributes
+          - type: move
+            from: attributes.stream
+            to: attributes["log.iostream"]
+          - type: move
+            from: attributes.container_name
+            to: resource["k8s.container.name"]
+          - type: move
+            from: attributes.namespace
+            to: resource["k8s.namespace.name"]
+          - type: move
+            from: attributes.pod_name
+            to: resource["k8s.pod.name"]
+          - type: move
+            from: attributes.restart_count
+            to: resource["k8s.container.restart_count"]
+          - type: move
+            from: attributes.uid
+            to: resource["k8s.pod.uid"]
+      hostmetrics:
+        root_path: /hostfs
+        collection_interval: 10s
+        scrapers:
+          cpu:
+          load:
+          memory:
+          disk:
+          filesystem:
+          network:
+      kubeletstats:
+        auth_type: serviceAccount
+        collection_interval: 10s
+        endpoint: https://${K8S_NODE_NAME}:10250
+        insecure_skip_verify: true
+        metric_groups:
+          - node
+          - pod
+          - container
+      otlp:
+        protocols:
+          grpc:
+            endpoint: :4317
+          http:
+            endpoint: :4318
+    service:
+      extensions:
+      - health_check
+      - memory_ballast
+      pipelines:
+        logs:
+          exporters:
+          - logging
+          - loki
+          processors:
+          - k8sattributes
+          - memory_limiter
+          - batch
+          receivers:
+          - filelog
+          - otlp
+        metrics:
+          exporters:
+          - prometheusremotewrite
+          processors:
+          - k8sattributes
+          - memory_limiter
+          - batch
+          receivers:
+          - hostmetrics
+          - kubeletstats
+          - otlp
+        traces:
+          exporters:
+          - otlphttp/jaeger
+          processors:
+          - k8sattributes
+          - memory_limiter
+          - batch
+          receivers:
+          - otlp
+      telemetry:
+        metrics:
+          address: ${MY_POD_IP}:8888
