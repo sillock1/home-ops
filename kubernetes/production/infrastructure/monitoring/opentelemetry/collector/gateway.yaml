@@ -145,4 +145,4 @@ spec:
           - k8s_cluster
       telemetry:
         metrics:
-          address: ${{MY_POD_IP}:8888
+          address: $${MY_POD_IP}:8888
