@@ -30,3 +30,6 @@ spec:
   wait: false
   dependsOn:
     - name: cluster-infrastructure-opentelemetry
+  postBuild:
+    substitute:
+      var_substitution_enabled: "false"
