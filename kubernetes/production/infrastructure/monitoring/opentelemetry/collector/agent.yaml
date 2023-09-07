@@ -35,9 +35,9 @@ spec:
       memory: 50Mi
     limits:
       cpu: 1000m
-      memory: 500Mi
+      memory: 1.5G
   securityContext:
-    privileged: true
+    runAsUser: 0
   config: |
     exporters:
       otlphttp/jaeger:
