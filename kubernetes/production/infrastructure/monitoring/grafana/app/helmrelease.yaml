@@ -36,14 +36,14 @@ spec:
       auth:
         oauth_auto_login: false
       auth.basic:
-        enabled: false
+        enabled: true
       auth.generic_oauth:
         enabled: false
         name: Auth0
         scopes: "openid profile email"
         use_pkce: true
       auth.anonymous:
-        enabled: true
+        enabled: false
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
@@ -126,7 +126,7 @@ spec:
           datasource: Prometheus
         flux-logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
-          datasource: Prometheus
+          datasource: Loki
         kubernetes-api-server:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
           datasource: Prometheus
@@ -144,7 +144,7 @@ spec:
           datasource: Prometheus
         kubernetes-pods:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
-          datasource: Prometheus
+          datasource: Loki
         miniflux:
           url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
