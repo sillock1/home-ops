@@ -93,14 +93,17 @@ spec:
         check_interval: 5s
         limit_percentage: 80
         spike_limit_percentage: 25
-      resource:
-        attributes:
-        - action: insert
-          key: loki.format
-          value: raw
-        - action: insert
-          key: loki.resource.labels
-          value: pod, namespace, container, cluster, filename
+      attributes:
+        actions:
+          - action: insert
+            key: loki.attribute.labels
+            value: log.file.name
+          - action: insert
+            key: loki.format
+            value: raw
+          - action: insert
+            key: loki.resource.labels
+            value: pod, namespace, container, cluster, filename
     receivers:
       k8s_cluster:
         auth_type: serviceAccount
@@ -132,6 +135,7 @@ spec:
           - k8sattributes
           - memory_limiter
           - batch
+          - attributes
           receivers:
           - k8sobjects
         metrics:
