@@ -80,11 +80,6 @@ spec:
             url: http://alertmanager.monitoring.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
-        deleteDatasources:
-          - name: Loki
-            orgId: 1
-          - name: Alertmanager
-            orgId: 1
     dashboards:
       default:
         # Ref: https://grafana.com/grafana/dashboards/7845-zfs/
