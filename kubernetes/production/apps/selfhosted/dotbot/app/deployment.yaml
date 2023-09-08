@@ -43,7 +43,7 @@ spec:
               memory: "500Mi"
               cpu: 500m
         - name: dotbot-db
-          image: mongo:6.0.9
+          image: mongo:7.0.1
           imagePullPolicy: Always
           resources:
             requests:
