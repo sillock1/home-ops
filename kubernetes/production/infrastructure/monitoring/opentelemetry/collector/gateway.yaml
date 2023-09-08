@@ -97,13 +97,13 @@ spec:
         actions:
           - action: insert
             key: loki.attribute.labels
-            value: log.file.name
+            value: log.file.name, event.domain, service.name
           - action: insert
             key: loki.format
-            value: raw
+            value: logfmt
           - action: insert
             key: loki.resource.labels
-            value: pod, namespace, container, cluster, filename
+            value: pod, namespace, container, cluster, filename, service.name
     receivers:
       k8s_cluster:
         auth_type: serviceAccount
