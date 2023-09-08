@@ -136,7 +136,7 @@ spec:
             source_identifier: attributes["log.file.path"]
             is_last_entry: "attributes.logtag == 'F'"
             combine_with: ""
-            max_log_size: {{ $.Values.presets.logsCollection.maxRecombineLogSize }}
+            max_log_size: 102400
           # Parse CRI-Containerd format
           - type: regex_parser
             id: parser-containerd
@@ -151,7 +151,7 @@ spec:
             source_identifier: attributes["log.file.path"]
             is_last_entry: "attributes.logtag == 'F'"
             combine_with: ""
-            max_log_size: {{ $.Values.presets.logsCollection.maxRecombineLogSize }}
+            max_log_size: 102400
           # Parse Docker format
           - type: json_parser
             id: parser-docker
