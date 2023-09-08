@@ -3,7 +3,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: mongodb-restic
-  namespace: mongodb
+  namespace: databases
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -27,7 +27,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: mongodb-replica-database
-  namespace: mongodb
+  namespace: databases
 spec:
   sourcePVC: data-volume-mongodb-replica-0
   trigger:
