@@ -100,13 +100,13 @@ spec:
         actions:
           - action: insert
             key: loki.attribute.labels
-            value: log.file.name, event.domain, service.name
+            value: log_file_name, event_domain, service_name
           - action: insert
             key: loki.format
             value: logfmt
           - action: insert
             key: loki.resource.labels
-            value: pod, namespace, container, cluster, filename, service.name
+            value: pod, namespace, container, cluster, filename, service_name
     receivers:
       filelog:
         include:
@@ -169,22 +169,22 @@ spec:
           # Rename attributes
           - type: move
             from: attributes.stream
-            to: attributes["log.iostream"]
+            to: attributes["log_iostream"]
           - type: move
             from: attributes.container_name
-            to: resource["k8s.container.name"]
+            to: resource["k8s_container_name"]
           - type: move
             from: attributes.namespace
-            to: resource["k8s.namespace.name"]
+            to: resource["k8s_namespace_name"]
           - type: move
             from: attributes.pod_name
-            to: resource["k8s.pod.name"]
+            to: resource["k8s_pod_name"]
           - type: move
             from: attributes.restart_count
-            to: resource["k8s.container.restart_count"]
+            to: resource["k8s_container_restart_count"]
           - type: move
             from: attributes.uid
-            to: resource["k8s.pod.uid"]
+            to: resource["k8s_pod_uid"]
       hostmetrics:
         root_path: /hostfs
         collection_interval: 10s
