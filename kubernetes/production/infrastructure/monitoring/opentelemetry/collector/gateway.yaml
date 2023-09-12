@@ -43,7 +43,7 @@ spec:
       loki:
         endpoint: http://loki-write:3100/loki/api/v1/push
       prometheusremotewrite:
-        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+        endpoint: http://thanos-compactor:9090/api/v1/write
     extensions:
       health_check: {}
       memory_ballast:

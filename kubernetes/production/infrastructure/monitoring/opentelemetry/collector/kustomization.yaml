@@ -4,6 +4,7 @@ namespace: monitoring
 resources:
   - agent.yaml
   - gateway.yaml
+  - stateful.yaml
   - rbac.yaml
 generatorOptions:
   disableNameSuffixHash: true
