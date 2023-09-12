@@ -125,10 +125,8 @@ spec:
             metric_relabel_configs:
             - action: labeldrop
               regex: (id|name)
-              replacement: $$1
             - action: labelmap
               regex: label_(.+)
-              replacement: $$1
           - job_name: node-exporter
             scrape_interval: 1m
             scrape_timeout: 10s
