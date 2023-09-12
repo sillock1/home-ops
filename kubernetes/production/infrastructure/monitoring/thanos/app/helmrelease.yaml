@@ -23,11 +23,6 @@ spec:
 
     query:
       enabled: true
-      dnsDiscovery:
-        sidecarsService: kube-prometheus-stack-thanos-discovery
-        sidecarsNamespace: monitoring
-      replicaLabels:
-        - "__replica__" # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.replicaExternalLabelName`
       resources:
         requests:
           cpu: 15m
@@ -42,7 +37,8 @@ spec:
         hostname: "thanos.sillock.io"
         ingressClassName: internal
         tls: true
-
+    receive:
+      enabled: true
     bucketweb:
       enabled: true
       resources:
