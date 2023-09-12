@@ -105,4 +105,4 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
 
 ## 🤝 Thanks
 
-A big special thanks to everybody at [Kubernetes @Home Discord community](https://discord.gg/k8s-at-home) for donating their time to making this repository possible. A huge inspiration for this repository came from the community here/
+A big special thanks to everybody at [Kubernetes @Home Discord community](https://discord.gg/k8s-at-home) for donating their time to making this repository possible. A huge inspiration for this repository came from the community here.
