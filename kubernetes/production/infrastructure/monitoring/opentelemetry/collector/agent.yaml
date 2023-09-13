@@ -46,7 +46,7 @@ spec:
       loki:
         endpoint: http://loki-write:3100/loki/api/v1/push
       prometheusremotewrite:
-        endpoint: http://thanos-receive:19291/api/v1/receive
+        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
     extensions:
       health_check: {}
       memory_ballast:
@@ -250,4 +250,4 @@ spec:
           - otlp
       telemetry:
         metrics:
-          address: $${MY_POD_IP}:8888
+          address: 0.0.0.0:8888
