@@ -129,7 +129,9 @@ spec:
               from: pod
     exporters:
       prometheusremotewrite:
-        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+        endpoint: http://thanos-receive:19291/api/v1/receive
+        external_labels:
+          exporter: opentelemetry
       prometheus:
         endpoint: "0.0.0.0:9090"
         send_timestamps: true
