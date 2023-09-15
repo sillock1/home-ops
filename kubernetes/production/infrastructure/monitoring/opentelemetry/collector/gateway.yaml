@@ -129,7 +129,7 @@ spec:
               from: pod
     exporters:
       prometheusremotewrite:
-        endpoint: http://kube-prometheus-stack-prometheus:9090
+        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
       prometheus:
         endpoint: "0.0.0.0:9090"
         send_timestamps: true
