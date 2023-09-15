@@ -7,12 +7,14 @@ rules:
   - apiGroups:
       - ''
     resources:
-      - nodes/stats
       - events
       - namespaces
       - namespaces/status
       - nodes
       - nodes/spec
+      - nodes/proxy
+      - nodes/metrics
+      - nodes/stats
       - pods
       - pods/status
       - replicationcontrollers
