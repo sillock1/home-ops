@@ -2,12 +2,9 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: gateway
-  labels:
-    prometheus: otel-metrics
 spec:
   mode: deployment
   replicas: 1
-  hostNetwork: true
   volumes:
     - name: hostfs
       hostPath:
@@ -131,6 +128,8 @@ spec:
               key_regex: (.*)
               from: pod
     exporters:
+      prometheusremotewrite:
+        endpoint: http://kube-prometheus-stack-prometheus:9090
       prometheus:
         endpoint: "0.0.0.0:9090"
         send_timestamps: true
@@ -163,7 +162,7 @@ spec:
           - k8sobjects
         metrics:
           exporters:
-          - prometheus
+          - prometheusremotewrite
           processors:
           - memory_limiter
           - batch
