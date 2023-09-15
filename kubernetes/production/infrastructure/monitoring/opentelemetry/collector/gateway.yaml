@@ -8,11 +8,6 @@ spec:
   mode: deployment
   replicas: 1
   hostNetwork: true
-  ports:
-    - name: metric
-      port: 9090
-      targetPort: 9090
-      protocol: TCP
   volumes:
     - name: hostfs
       hostPath:
@@ -138,7 +133,10 @@ spec:
     exporters:
       prometheus:
         endpoint: "0.0.0.0:9090"
+        send_timestamps: true
         metric_expiration: 180m
+        enable_open_metrics: true
+        add_metric_suffixes: false
         resource_to_telemetry_conversion:
           enabled: true
       logging:
