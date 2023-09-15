@@ -38,8 +38,8 @@ spec:
       cpu: 5m
       memory: 50Mi
     limits:
-      cpu: 1000m
-      memory: 500Mi
+      cpu: 500m
+      memory: 500M
   config: |
     receivers:
       k8s_cluster:
