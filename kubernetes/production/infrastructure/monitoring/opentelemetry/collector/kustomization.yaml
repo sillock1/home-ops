@@ -5,8 +5,6 @@ resources:
   - agent.yaml
   - gateway.yaml
   - rbac.yaml
-#  - servicemonitor-agent.yaml
-#  - servicemonitor-gateway.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
