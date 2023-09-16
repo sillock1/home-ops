@@ -3,7 +3,6 @@ kind: OpenTelemetryCollector
 metadata:
   name: agent
 spec:
-  image: otel/opentelemetry-collector-contrib:0.85.0
   mode: daemonset
   volumes:
     - name: hostfs
@@ -156,7 +155,10 @@ spec:
           http:
             endpoint: :4318
     processors:
-      batch: {}
+      batch:
+        send_batch_max_size: 1000
+        timeout: 30s
+        send_batch_size : 800
       k8sattributes:
         auth_type: 'serviceAccount'
         passthrough: false
