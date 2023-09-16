@@ -3,6 +3,7 @@ kind: OpenTelemetryCollector
 metadata:
   name: gateway
 spec:
+  image: otel/opentelemetry-collector-contrib:0.85.0
   mode: deployment
   replicas: 1
   volumes:
