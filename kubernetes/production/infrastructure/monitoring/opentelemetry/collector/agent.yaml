@@ -170,6 +170,9 @@ spec:
           - from: resource_attribute
             name: k8s.pod.uid
         - sources:
+          - from: resource_attribute
+            name: container.id
+        - sources:
           - from: connection
         extract:
           metadata:
@@ -193,14 +196,6 @@ spec:
             - "container.image.tag"
             - "container.id"
             - "k8s.cluster.uid"
-          labels:
-            - tag_name: $$1
-              key_regex: (.*)
-              from: pod
-          annotations:
-            - tag_name: $$1
-              key_regex: (.*)
-              from: pod
       memory_limiter:
         check_interval: 5s
         limit_percentage: 80
@@ -263,7 +258,6 @@ spec:
           processors:
           - k8sattributes
           - memory_limiter
-          - batch
           receivers:
           - hostmetrics
           - kubeletstats

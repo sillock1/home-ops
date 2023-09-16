@@ -109,6 +109,9 @@ spec:
           - from: resource_attribute
             name: k8s.pod.uid
         - sources:
+          - from: resource_attribute
+            name: container.id
+        - sources:
           - from: connection
         extract:
           metadata:
@@ -174,7 +177,6 @@ spec:
           - prometheusremotewrite
           processors:
           - memory_limiter
-          - batch
           - k8sattributes
           receivers:
           - k8s_cluster
