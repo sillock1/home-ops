@@ -1,8 +1,8 @@
 ---
 clusterName: ${clusterName}
 
-talosVersion: v1.4.7
-kubernetesVersion: 1.27.3
+talosVersion: v1.5.3
+kubernetesVersion: 1.28.2
 endpoint: "https://${clusterName}.pill.ac:6443"
 
 cniConfig:
@@ -79,18 +79,8 @@ controlPlane:
         certSANs:
           - ${clusterEndpointIP}
           - ${clusterName}.pill.ac
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
-      controllerManager:
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
       proxy:
         disabled: true
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
-      scheduler:
-        extraArgs:
-          feature-gates: MixedProtocolLBService=true
     machine:
       certSANs:
         - ${clusterEndpointIP}
@@ -101,7 +91,7 @@ controlPlane:
           - image: ghcr.io/siderolabs/intel-ucode:20230512
       kubelet:
         extraArgs:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+          feature-gates: GracefulNodeShutdown=true
           rotate-server-certificates: "true"
       sysctls:
         fs.inotify.max_user_watches: "1048576"
@@ -135,7 +125,6 @@ worker:
           - image: ghcr.io/siderolabs/intel-ucode:20230512
       kubelet:
         extraArgs:
-          feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
           rotate-server-certificates: "true"
       sysctls:
         fs.inotify.max_user_watches: "1048576"
