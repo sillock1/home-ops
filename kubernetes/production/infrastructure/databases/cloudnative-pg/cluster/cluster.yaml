@@ -30,9 +30,9 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cnpg-metis/
+      destinationPath: s3://cnpg-adrastea/
       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
-      serverName: &currentCluster postgres-v0
+      serverName: &currentCluster adrastea
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -43,14 +43,14 @@ spec:
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster postgres-v4
+      source: &previousCluster postgres-v0
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
         wal:
           compression: bzip2
           maxParallel: 8
-        destinationPath: s3://cnpg-backups/
+        destinationPath: s3://cnpg-metis/
         endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
         s3Credentials:
           accessKeyId:
