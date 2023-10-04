@@ -169,9 +169,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: external
-      annotations:
-        hajimari.io/icon: simple-icons:grafana
+      ingressClassName: internal
       hosts:
         - &host grafana.sillock.io
       tls:
