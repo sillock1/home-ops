@@ -91,7 +91,7 @@ controlPlane:
           - image: ghcr.io/siderolabs/intel-ucode:20230512
       kubelet:
         extraArgs:
-          feature-gates: GracefulNodeShutdown=true
+          feature-gates: GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
           rotate-server-certificates: "true"
       sysctls:
         fs.inotify.max_user_watches: "1048576"
@@ -125,6 +125,7 @@ worker:
           - image: ghcr.io/siderolabs/intel-ucode:20230512
       kubelet:
         extraArgs:
+          feature-gates: GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
           rotate-server-certificates: "true"
       sysctls:
         fs.inotify.max_user_watches: "1048576"
