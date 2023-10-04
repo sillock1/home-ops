@@ -39,7 +39,7 @@ spec:
       TUNNEL_ID:
         valueFrom:
           secretKeyRef:
-            name: cloudflare-production
+            name: cloudflared-secret
             key: tunnel-id
     args:
       - tunnel
