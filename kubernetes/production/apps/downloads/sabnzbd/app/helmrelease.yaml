@@ -37,7 +37,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/sabnzbd
-      tag: 4.1.0@sha256:210e6c0ee247f8c58f8fe7b61cc405bb578e29070b45671cea1c81bef01762c3
+      tag: 4.1.0@sha256:c404e18ec4cfe6f723aa04981bd9f887a485f64e069167aeb35e76f4257859a0
     env:
       TZ: Europe/London
       SABNZBD__PORT: &port 8080
