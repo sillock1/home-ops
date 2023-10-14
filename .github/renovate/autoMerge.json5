@@ -16,6 +16,14 @@
       "automergeType": "branch",
       "ignoreTests": true,
       "matchUpdateTypes": ["digest"]
+    },
+    {
+      "description": "Auto merge helm patch",
+      "matchDatasources": ["helm"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true,
+      "matchUpdateTypes": ["patch"]
     }
   ]
 }
