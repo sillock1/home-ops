@@ -26,11 +26,10 @@ spec:
             scrape_interval: 10s
             static_configs:
             - targets: [ '0.0.0.0:8888' ]
-            metric_relabel_configs:
-            - action: labeldrop
-              regex: (id|name)
-            - action: labelmap
-              regex: label_(.+)
+        target_allocator:
+          endpoint: http://statefulset-targetallocator
+          interval: 30s
+          collector_id: "$${POD_NAME}"
     processors:
       memory_limiter:
         check_interval: 5s
