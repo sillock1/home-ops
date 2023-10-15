@@ -81,11 +81,7 @@ spec:
         size: 1Gi
 
     ruler:
-      enabled: true
-      alertmanagers:
-        - http://alertmanager.monitoring.svc.cluster.local:9093
-      extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
-      clusterName: cluster-production
+      enabled: false
       dnsDiscovery:
         enabled: true
       persistence:
