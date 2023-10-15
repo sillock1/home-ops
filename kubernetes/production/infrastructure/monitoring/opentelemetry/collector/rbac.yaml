@@ -83,6 +83,9 @@ subjects:
   - kind: ServiceAccount
     name: agent-collector
     namespace: monitoring
+  - kind: ServiceAccount
+    name: statefulset-collector
+    namespace: monitoring
 roleRef:
   kind: ClusterRole
   name: otel-collector
