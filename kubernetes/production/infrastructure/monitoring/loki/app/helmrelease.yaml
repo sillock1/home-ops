@@ -111,6 +111,8 @@ spec:
       enabled: true
       image:
         registry: ghcr.io
+        repository: nginxinc/nginx-unprivileged
+        tag: 1.25-alpine
       ingress:
         enabled: true
         ingressClassName: internal
@@ -131,21 +133,9 @@ spec:
 
     read:
       replicas: 3
-      extraVolumeMounts:
-        - name: rules
-          mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
 
     backend:
       replicas: 3
-      extraVolumeMounts:
-        - name: rules
-          mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
       persistence:
         size: 20Gi
         storageClass: local-hostpath
