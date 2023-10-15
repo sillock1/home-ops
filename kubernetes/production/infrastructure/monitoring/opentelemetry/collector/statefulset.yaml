@@ -56,6 +56,9 @@ spec:
       memory_ballast:
         size_in_percentage: 40
     service:
+      telemetry:
+        logs:
+          level: "debug"
       extensions:
       - health_check
       - memory_ballast
