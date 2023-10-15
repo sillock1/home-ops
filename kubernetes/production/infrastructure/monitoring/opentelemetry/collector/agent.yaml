@@ -4,8 +4,6 @@ metadata:
   name: agent
 spec:
   mode: daemonset
-  targetAllocator:
-    enabled: true
   volumes:
     - name: hostfs
       hostPath:
@@ -150,20 +148,6 @@ spec:
           - pod
           - volume
           - container
-      prometheus:
-        config:
-          scrape_configs:
-          - job_name: 'otel-collector'
-            scrape_interval: 10s
-            static_configs:
-            - targets: [ '0.0.0.0:8888' ]
-            metric_relabel_configs:
-            - action: labeldrop
-              regex: (id|name)
-              replacement: $$1
-            - action: labelmap
-              regex: label_(.+)
-              replacement: $$1
       otlp:
         protocols:
           grpc:
@@ -239,14 +223,6 @@ spec:
           enabled: true
         external_labels:
           exporter: opentelemetry
-      prometheus:
-        endpoint: "0.0.0.0:9090"
-        send_timestamps: true
-        metric_expiration: 180m
-        enable_open_metrics: true
-        add_metric_suffixes: false
-        resource_to_telemetry_conversion:
-          enabled: true
     extensions:
       health_check: {}
       memory_ballast:
