@@ -76,6 +76,7 @@ rules:
       - servicemonitors
       - podmonitors
     verbs:
+      - watch
       - list
 
 ---
