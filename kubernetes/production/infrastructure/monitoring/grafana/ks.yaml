@@ -15,4 +15,5 @@ spec:
     name: home-ops-kubernetes
   wait: true
   dependsOn:
-    - name: cluster-infrastructure-kube-prometheus-stack
+    - name: cluster-infrastructure-loki
+    - name: cluster-infrastructure-opentelemetry-collector
