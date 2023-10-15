@@ -84,13 +84,8 @@ spec:
       enabled: true
       alertmanagers:
         - http://alertmanager.monitoring.svc.cluster.local:9093
-      clusterName: cluster-0 # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.externalLabels.cluster`
-      config: |-
-        groups:
-          - name: "PrometheusWatcher"
-            rules:
-              - alert: "PrometheusDown"
-                expr: absent(up{job="kube-prometheus-stack-prometheus"})
+      extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
+      clusterName: cluster-production
       dnsDiscovery:
         enabled: true
       persistence:
