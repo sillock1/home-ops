@@ -254,7 +254,6 @@ spec:
           - hostmetrics
           - kubeletstats
           - otlp
-          - prometheus
         traces:
           exporters:
           - otlphttp/jaeger
