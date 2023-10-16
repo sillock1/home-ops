@@ -142,14 +142,6 @@ spec:
           enabled: true
         external_labels:
           exporter: opentelemetry
-      prometheus:
-        endpoint: "0.0.0.0:9090"
-        send_timestamps: true
-        metric_expiration: 180m
-        enable_open_metrics: true
-        add_metric_suffixes: false
-        resource_to_telemetry_conversion:
-          enabled: true
       logging:
       loki:
         endpoint: http://loki-write:3100/loki/api/v1/push
