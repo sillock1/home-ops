@@ -27,9 +27,9 @@ spec:
             static_configs:
             - targets: [ '0.0.0.0:8888' ]
         target_allocator:
-          endpoint: http://statefulset-targetallocator:80
+          endpoint: http://statefulset-targetallocator
           interval: 30s
-          collector_id: "$$POD_NAME"
+          collector_id: "$${POD_NAME}"
     processors:
       memory_limiter:
         check_interval: 5s
