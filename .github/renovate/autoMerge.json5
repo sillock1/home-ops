@@ -27,7 +27,7 @@
     },
     {
       "description": "Auto merge container patch",
-      "matchDatasources": ["container"],
+      "matchDatasources": ["docker"],
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": true,
