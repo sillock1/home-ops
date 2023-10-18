@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./alertmanager/ks.yaml
+  - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./thanos/ks.yaml
   - ./loki/ks.yaml
