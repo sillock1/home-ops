@@ -24,6 +24,14 @@
       "automergeType": "branch",
       "ignoreTests": true,
       "matchUpdateTypes": ["patch"]
+    },
+    {
+      "description": "Auto merge container patch",
+      "matchDatasources": ["container"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true,
+      "matchUpdateTypes": ["patch"]
     }
   ]
 }
