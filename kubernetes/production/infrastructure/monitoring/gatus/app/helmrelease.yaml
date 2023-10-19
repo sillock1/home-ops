@@ -37,28 +37,28 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+            envFrom: &envFrom
+              - secretRef:
+                  name: gatus-secret
+          02-config-sync:
+            image:
+              repository: ghcr.io/kiwigrid/k8s-sidecar
+              tag: 1.25.2
+            env:
+              - { name: FOLDER, value: /config }
+              - { name: LABEL, value: gatus.io/enabled }
+              - { name: NAMESPACE, value: ALL }
+              - { name: RESOURCE, value: both }
+              - { name: UNIQUE_FILENAMES, value: "true" }
+              - { name: METHOD, value: LIST }
+            volumeMounts:
+              - { name: config, mountPath: /config }
         containers:
-          initContainers:
-            01-init-db:
-              image:
-                repository: ghcr.io/onedr0p/postgres-init
-                tag: 14.9
-              envFrom: &envFrom
-                - secretRef:
-                    name: gatus-secret
-            02-config-sync:
-              image:
-                repository: ghcr.io/kiwigrid/k8s-sidecar
-                tag: 1.25.2
-              env:
-                - { name: FOLDER, value: /config }
-                - { name: LABEL, value: gatus.io/enabled }
-                - { name: NAMESPACE, value: ALL }
-                - { name: RESOURCE, value: both }
-                - { name: UNIQUE_FILENAMES, value: "true" }
-                - { name: METHOD, value: LIST }
-              volumeMounts:
-                - { name: config, mountPath: /config }
           main:
             image:
               repository: ghcr.io/twin/gatus
