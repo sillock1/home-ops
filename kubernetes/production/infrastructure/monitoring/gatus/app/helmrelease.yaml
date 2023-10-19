@@ -43,7 +43,7 @@ spec:
               image:
                 repository: ghcr.io/onedr0p/postgres-init
                 tag: 14.9
-              imagePullPolicy: IfNotPresent
+                imagePullPolicy: IfNotPresent
               envFrom: &envFrom
                 - secretRef:
                     name: gatus-secret
@@ -51,7 +51,7 @@ spec:
               image:
                 repository: ghcr.io/kiwigrid/k8s-sidecar
                 tag: 1.25.2
-              imagePullPolicy: IfNotPresent
+                imagePullPolicy: IfNotPresent
               env:
                 - { name: FOLDER, value: /config }
                 - { name: LABEL, value: gatus.io/enabled }
@@ -65,6 +65,7 @@ spec:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.6.0
+              imagePullPolicy: IfNotPresent
             env:
               TZ: Europe/London
               GATUS_CONFIG_PATH: /config
