@@ -40,14 +40,14 @@ spec:
         containers:
           initContainers:
             01-init-db:
-              image: ghcr.io/onedr0p/postgres-init
+              repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
               imagePullPolicy: IfNotPresent
               envFrom: &envFrom
                 - secretRef:
                     name: gatus-secret
             02-config-sync:
-              image: ghcr.io/kiwigrid/k8s-sidecar
+              repository: ghcr.io/kiwigrid/k8s-sidecar
               tag: 1.25.2
               imagePullPolicy: IfNotPresent
               env:
