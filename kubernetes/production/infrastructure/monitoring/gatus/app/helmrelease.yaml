@@ -66,7 +66,7 @@ spec:
             env:
               TZ: Europe/London
               GATUS_CONFIG_PATH: /config
-              CUSTOM_WEB_PORT: &port 80
+              CUSTOM_WEB_PORT: &port 8080
             envFrom: *envFrom
             resources:
               requests:
@@ -115,6 +115,12 @@ spec:
       name: gatus
     persistence:
       config:
+        enabled: true
         type: emptyDir
-        globalMounts:
-          - path: /config
+      config-file:
+        enabled: true
+        type: configMap
+        name: gatus-configmap
+        mountPath: /config/config.yaml
+        subPath: config.yaml
+        readOnly: true
