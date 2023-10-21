@@ -43,6 +43,8 @@ spec:
     service:
       main:
         type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 10.45.0.21
         externalTrafficPolicy: Cluster
         ports:
           http:
