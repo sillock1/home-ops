@@ -58,7 +58,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ready
-                    port: http
+                    port: 80
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
