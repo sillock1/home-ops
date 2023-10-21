@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -33,67 +33,80 @@ spec:
     - name: volsync
       namespace: system
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.32.4.7195-7c8f9d3b6@sha256:39c4ad71d92790d54b2d14be5fdabca940591ab2b9f8291d02653cd4f80d9d4f
-    env:
-      TZ: Europe/London
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 44
+          - 105
+          - 10000
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+        intel.feature.node.kubernetes.io/gpu: 'true'
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.4.7195-7c8f9d3b6@sha256:39c4ad71d92790d54b2d14be5fdabca940591ab2b9f8291d02653cd4f80d9d4f
+            env:
+              TZ: Europe/London
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+                cpu: 100m
+                memory: 2000Mi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 8000Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 30Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
     service:
       main:
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         annotations:
-          io.cilium/lb-ipam-ips: "10.45.0.20"
+          io.cilium/lb-ipam-ips: 10.45.0.20
         ports:
           http:
             port: 32400
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
         hosts:
-          - host: &host plex.sillock.io
+          - host: plex.sillock.io
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
-              - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [44, 105, 10000]
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 30Gi
-        storageClass: ceph-block
+              - plex.sillock.io
+        className: internal
     persistence:
       media:
         enabled: true
         type: nfs
         server: nas.pill.ac
         path: /mnt/Pool/media
-        mountPath: /media
         readOnly: true
+        globalMounts:
+          - path: /media
       transcode:
         enabled: true
         type: emptyDir
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-      intel.feature.node.kubernetes.io/gpu: "true"
-    resources:
-      requests:
-        gpu.intel.com/i915: 1
-        cpu: 100m
-        memory: 2000Mi
-      limits:
-        gpu.intel.com/i915: 1
-        memory: 8000Mi
