@@ -26,17 +26,15 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      annotations:
+        reloader.stakater.com/auto: "true"
     controllers:
       main:
         type: statefulset
+        replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
         initContainers:
           01-init-db:
             image:
@@ -74,6 +72,23 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
+          config-sync:
+            image:
+              repository: ghcr.io/kiwigrid/k8s-sidecar
+              tag: 1.25.2
+            env:
+              - name: FOLDER
+                value: /config
+              - name: LABEL
+                value: gatus.io/enabled
+              - name: NAMESPACE
+                value: ALL
+              - name: RESOURCE
+                value: both
+              - name: UNIQUE_FILENAMES
+                value: "true"
+              - name: METHOD
+                value: WATCH
 
     service:
       main:
@@ -124,17 +139,3 @@ spec:
         mountPath: /config/config.yaml
         subPath: config.yaml
         readOnly: true
-    sidecars:
-      config-sync:
-        repository: ghcr.io/kiwigrid/k8s-sidecar
-        tag: 1.25.2
-        imagePullPolicy: IfNotPresent
-        env:
-          - { name: FOLDER, value: /config }
-          - { name: LABEL, value: gatus.io/enabled }
-          - { name: NAMESPACE, value: ALL }
-          - { name: RESOURCE, value: both }
-          - { name: UNIQUE_FILENAMES, value: "true" }
-          - { name: METHOD, value: WATCH }
-        volumeMounts:
-          - { name: config, mountPath: /config }
