@@ -1,7 +1,7 @@
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: statefulset
+  name: collector-with-ta
 spec:
   mode: statefulset
   targetAllocator:
@@ -34,16 +34,14 @@ spec:
             - action: labelmap
               regex: label_(.+)
               replacement: $$1
-        target_allocator:
-          endpoint: http://statefulset-targetallocator
-          interval: 30s
-          collector_id: "$${POD_NAME}"
     processors:
       memory_limiter:
         check_interval: 5s
         limit_percentage: 80
         spike_limit_percentage: 25
     exporters:
+      debug:
+        verbosity: detailed
       prometheusremotewrite:
         endpoint: http://thanos-receive:19291/api/v1/receive
         resource_to_telemetry_conversion:
@@ -63,9 +61,10 @@ spec:
       - memory_ballast
       pipelines:
         metrics:
-          exporters:
-          - prometheusremotewrite
-          processors:
-          - memory_limiter
           receivers:
           - prometheus
+          processors:
+          - memory_limiter
+          exporters:
+          - debug
+          - prometheusremotewrite
