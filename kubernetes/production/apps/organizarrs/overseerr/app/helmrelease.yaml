@@ -48,7 +48,7 @@ spec:
             env:
               TZ: Europe/London
               LOG_LEVEL: info
-              PORT: &port
+              PORT: &port 8080
             resources:
               requests:
                 cpu: 10m
