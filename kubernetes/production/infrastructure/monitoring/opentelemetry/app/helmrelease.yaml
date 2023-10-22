@@ -38,3 +38,6 @@ spec:
   uninstall:
     keepHistory: false
   maxHistory: 3
+  values:
+    manager:
+      featureGates: "operator.collector.rewritetargetallocator"
