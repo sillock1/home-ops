@@ -21,6 +21,7 @@ rules:
       - replicationcontrollers/status
       - resourcequotas
       - services
+      - endpoints
     verbs:
       - get
       - watch
