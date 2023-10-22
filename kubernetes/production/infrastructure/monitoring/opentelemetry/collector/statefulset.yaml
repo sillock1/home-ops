@@ -27,6 +27,13 @@ spec:
             scrape_interval: 10s
             static_configs:
             - targets: [ '0.0.0.0:8888' ]
+            metric_relabel_configs:
+            - action: labeldrop
+              regex: (id|name)
+              replacement: $$1
+            - action: labelmap
+              regex: label_(.+)
+              replacement: $$1
         target_allocator:
           endpoint: http://statefulset-targetallocator
           interval: 30s
