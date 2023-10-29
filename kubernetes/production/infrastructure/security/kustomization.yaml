@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./oauth2-proxy/ks.yaml
+  - ./authentik/ks.yaml
