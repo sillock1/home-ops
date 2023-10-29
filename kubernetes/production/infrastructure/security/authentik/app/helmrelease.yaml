@@ -33,7 +33,7 @@ spec:
         enabled: false
         send_pii: false
       redis:
-        host: "redis.databases.svc.cluster.local"
+        host: "redis-headless.databases.svc.cluster.local"
         password: ""
 
     envValueFrom:
