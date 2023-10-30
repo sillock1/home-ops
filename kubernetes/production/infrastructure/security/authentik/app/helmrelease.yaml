@@ -32,9 +32,9 @@ spec:
       error_reporting:
         enabled: false
         send_pii: false
-      redis:
-        host: "redis-headless.databases.svc.cluster.local"
-        password: ""
+      #redis:
+      #  host: "redis-headless.databases.svc.cluster.local"
+      #  password: ""
 
     envValueFrom:
       AUTHENTIK_SECRET_KEY:
@@ -99,4 +99,4 @@ spec:
         create: true
 
     redis:
-      enabled: false
+      enabled: true
