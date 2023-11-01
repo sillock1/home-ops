@@ -20,6 +20,10 @@ spec:
         - name: dotbot
           image: ghcr.io/sillock-inc/dotbot:v0.1.2
           imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
           env:
             - name: ASPNETCORE_URLS
               value: http://+:80

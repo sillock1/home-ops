@@ -21,4 +21,7 @@ spec:
               service:
                 name: dotbot
                 port:
-                  number: 80
+                  name: http
+  tls:
+    - hosts:
+        - *host
