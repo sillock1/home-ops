@@ -15,7 +15,7 @@ spec:
       memory: 50Mi
     limits:
       cpu: 500m
-      memory: 1G
+      memory: 500Mi
   securityContext:
     runAsUser: 0
   config: |
