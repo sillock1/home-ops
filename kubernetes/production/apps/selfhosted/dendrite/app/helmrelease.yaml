@@ -28,10 +28,9 @@ spec:
   values:
   resources:
     requests:
-      cpu: 10m
+      cpu: 200m
       memory: 512Mi
     limits:
-      cpu: 200m
       memory: 1096Mi
     postgresql:
       enabled: true # this installs Postgres

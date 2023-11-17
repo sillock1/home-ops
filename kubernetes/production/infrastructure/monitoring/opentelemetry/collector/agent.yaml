@@ -31,10 +31,9 @@ spec:
           fieldPath: status.podIP
   resources:
     requests:
-      cpu: 5m
+      cpu: 500m
       memory: 50Mi
     limits:
-      cpu: 500m
       memory: 500Mi
   securityContext:
     runAsUser: 0
