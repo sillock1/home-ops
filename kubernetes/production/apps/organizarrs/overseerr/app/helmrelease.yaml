@@ -51,10 +51,9 @@ spec:
               PORT: &port 80
             resources:
               requests:
-                cpu: 10m
+                cpu: 200m
                 memory: 100Mi
               limits:
-                cpu: 200m
                 memory: 500Mi
         statefulset:
           volumeClaimTemplates:

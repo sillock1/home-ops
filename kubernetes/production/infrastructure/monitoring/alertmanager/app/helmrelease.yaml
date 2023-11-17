@@ -41,10 +41,10 @@ spec:
                 containerPort: 9093
             resources:
               requests:
-                cpu: 11m
-                memory: 50M
+                cpu: 100m
+                memory: 50Mi
               limits:
-                memory: 99M
+                memory: 100Mi
 
     service:
       main:

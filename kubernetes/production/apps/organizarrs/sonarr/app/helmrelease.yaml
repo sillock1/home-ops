@@ -64,10 +64,9 @@ spec:
               SONARR__THEME: dark
             resources:
               requests:
-                cpu: 10m
+                cpu: 200m
                 memory: 250Mi
               limits:
-                cpu: 100m
                 memory: 500Mi
             probes:
               liveness: &probes
