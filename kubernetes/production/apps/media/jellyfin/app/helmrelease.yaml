@@ -62,8 +62,9 @@ spec:
                 cpu: 100m
                 memory: 1000Mi
               limits:
+                cpu: 300m
                 gpu.intel.com/i915: 1
-                memory: 4000Mi
+                memory: 2000Mi
             probes:
               liveness: &probes
                 enabled: true

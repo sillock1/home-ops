@@ -62,10 +62,11 @@ spec:
               requests:
                 gpu.intel.com/i915: 1
                 cpu: 100m
-                memory: 2000Mi
+                memory: 200Mi
               limits:
+                cpu: 300m
                 gpu.intel.com/i915: 1
-                memory: 8000Mi
+                memory: 2000Mi
         statefulset:
           volumeClaimTemplates:
             - name: config
