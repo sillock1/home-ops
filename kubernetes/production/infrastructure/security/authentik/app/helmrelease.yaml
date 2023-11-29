@@ -99,4 +99,4 @@ spec:
         create: true
 
     redis:
-      enabled: true
+      enabled: false
