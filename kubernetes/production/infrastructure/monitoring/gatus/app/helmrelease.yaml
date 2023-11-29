@@ -39,14 +39,14 @@ spec:
           01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 14.9
+              tag: 15.5
             envFrom: &envFrom
               - secretRef:
                   name: gatus-secret
           02-config-sync:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.25.2
+              tag: 1.25.3
             env:
               - name: FOLDER
                 value: /config
@@ -82,7 +82,7 @@ spec:
           config-sync:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.25.2
+              tag: 1.25.3
             env:
               - name: FOLDER
                 value: /config
