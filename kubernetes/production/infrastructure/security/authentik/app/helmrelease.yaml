@@ -80,9 +80,9 @@ spec:
 
     ingress:
       enabled: true
-      ingressClassName: internal
+      ingressClassName: external
       annotations:
-#        external-dns.alpha.kubernetes.io/target: external.sillock.io
+        external-dns.alpha.kubernetes.io/target: external.sillock.io
         nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       hosts:
