@@ -73,6 +73,10 @@ spec:
         secretKeyRef:
           name: authentik-secret
           key: AUTHENTIK__POSTGRES_PASSWORD
+      AUTHENTIK_REDIS__PASSWORD:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK__REDIS_PASSWORD
 
     ingress:
       enabled: true

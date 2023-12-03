@@ -15,3 +15,19 @@ spec:
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
     - name: cluster-infrastructure-redis
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &appname cluster-infrastructure-authentik-redis
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./kubernetes/production/infrastructure/security/authentik/redis
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
+  wait: true
+  dependsOn:
+    - name: cluster-infrastructure-external-secrets-stores
