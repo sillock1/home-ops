@@ -103,8 +103,10 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
     </tr>
 </table>
 
+## 🌐 DNS
+
 <details>
-  <summary>Click to see the rack!</summary>
+  <summary>Click to see DNS diagram</summary>
 
   <img src="https://github.com/sillock1/home-ops/assets/26411663/6885f828-3477-4abc-9ced-281f6d0934b7" align="center" alt="dns"/>
 </details>
