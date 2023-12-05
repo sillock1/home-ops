@@ -103,6 +103,12 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
     </tr>
 </table>
 
+<details>
+  <summary>Click to see the rack!</summary>
+
+  <img src="https://github.com/sillock1/home-ops/assets/26411663/6885f828-3477-4abc-9ced-281f6d0934b7" align="center" alt="dns"/>
+</details>
+
 ## 🤝 Thanks
 
 A big special thanks to everybody at [Kubernetes @Home Discord community](https://discord.gg/k8s-at-home) for donating their time to making this repository possible. A huge inspiration for this repository came from the community here.
