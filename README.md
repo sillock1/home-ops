@@ -37,7 +37,7 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
         <td>Cloud native certificate management</td>
     </tr>
     <tr>
-        <td><img width="32" src="https://landscape.cncf.io/logos/cilium.svg"></td>
+        <td><img width="32" src="https://landscape.netlify.app/logos/cilium.svg"></td>
         <td><a href="https://cilium.io">Cilium</a></td>
         <td>Kubernetes CNI for cluster networking</td>
     </tr>
@@ -57,7 +57,7 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
         <td>Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer</td>
     </tr>
     <tr>
-        <td><img width="32" src="https://landscape.cncf.io/logos/rook.svg"></td>
+        <td><img width="32" src="https://landscape.netlify.app/logos/rook.svg"></td>
         <td><a href="https://rook.io/">Rook Ceph</a></td>
         <td>Distributed cluster storage operator</td>
     </tr>
