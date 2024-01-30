@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: sillock-inc
+  name: dotbot
   namespace: flux-system
 spec:
-  interval: 30m
-  url: https://sillock-inc.github.io/helm-charts/
-  timeout: 3m
+  type: oci
+  interval: 5m0s
+  url: oci://ghcr.io/sillock-inc/charts

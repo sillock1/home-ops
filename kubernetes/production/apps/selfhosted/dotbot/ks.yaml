@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-dotbot
+  name: dotbot
   namespace: flux-system
 spec:
   path: ./kubernetes/production/apps/selfhosted/dotbot/app
@@ -14,7 +14,7 @@ spec:
     - apiVersion: apps/v1
       kind: Deployment
       name: dotbot
-      namespace: dotbot
+      namespace: selfhosted
   interval: 10m
   retryInterval: 1m
   timeout: 3m
