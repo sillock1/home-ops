@@ -13,7 +13,7 @@ resources:
   - ./prometheus-community.yaml
   - ./grafana.yaml
   - ./bitnami.yaml
-  - ./sillock-inc.yaml
+  - ./dotbot.yaml
   - ./oauth2-proxy.yaml
   - ./backube.yaml
   - ./k8s-gateway.yaml
