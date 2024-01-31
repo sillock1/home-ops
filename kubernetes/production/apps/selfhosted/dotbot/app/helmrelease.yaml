@@ -29,6 +29,8 @@ spec:
     ingress:
       enabled: true
       ingressClassName: external
+      annotations:
+        external-dns.alpha.kubernetes.io/target: external.sillock.io
       hosts:
         - &host dotbot.sillock.io
       tls:
