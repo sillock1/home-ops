@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 12.23.1
+      version: 12.23.3
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -51,8 +51,8 @@ spec:
     compactor:
       enabled: true
       extraFlags:
-        - "--compact.concurrency"
-        - "4"
+        - "--compact.concurrency=4"
+        - --delete-delay=30m
       retentionResolutionRaw: 14d
       retentionResolution5m: 14d
       retentionResolution1h: 30d
@@ -91,14 +91,14 @@ spec:
       resources:
         requests:
           cpu: 23m
-          memory: 94M
+          memory: 128M
         limits:
-          memory: 113M
+          memory: 256M
 
     metrics:
-      enabled: false
+      enabled: true
       serviceMonitor:
-        enabled: false
+        enabled: true
   valuesFrom:
     - targetPath: objstoreConfig.config.bucket
       kind: ConfigMap
