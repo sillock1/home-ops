@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: quay.io/prometheus/alertmanager
-              tag: main@sha256:0cdde08a824cce3c1fb51c2464030cb2db6283f3a598861c7b8940e0110af4fe
+              tag: main@sha256:545e8f7c6d2b42f120df1549f3c9299506717b0f2e97cffe0c91fdaa4fdc7fbe
             ports:
               - name: http
                 containerPort: 9093
