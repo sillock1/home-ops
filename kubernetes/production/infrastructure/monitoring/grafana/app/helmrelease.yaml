@@ -78,6 +78,10 @@ spec:
             type: alertmanager
             access: proxy
             url: http://alertmanager.monitoring.svc.cluster.local:9093
+          - name: Jaeger
+            type: jaeger
+            access: proxy
+            url: http://jaeger-query.monitoring.svc.cluster.local:16686
             jsonData:
               implementation: prometheus
     dashboards:
