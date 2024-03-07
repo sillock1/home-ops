@@ -220,6 +220,10 @@ spec:
           enabled: true
         external_labels:
           exporter: opentelemetry
+      otlp/jaeger:
+        endpoint: jaeger-collector:4317
+        tls:
+          insecure: true
     extensions:
       health_check: {}
       memory_ballast:
@@ -253,7 +257,7 @@ spec:
           - otlp
         traces:
           exporters:
-          - otlphttp/jaeger
+          - otlp/jaeger
           processors:
           - k8sattributes
           - memory_limiter
