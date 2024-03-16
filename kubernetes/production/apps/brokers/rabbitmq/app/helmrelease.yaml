@@ -28,3 +28,8 @@ spec:
   values:
     auth:
       existingPasswordSecret: rabbitmq-secret
+    ingress:
+      enabled: true
+      hostname: &host dotbot.sillock.io
+      tls: true
+      ingressClassName: internal
