@@ -2,18 +2,21 @@
 version: "3"
 
 vars:
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/provision/k3s"
   BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
 env:
   KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
   SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/age.key"
+  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
 
 includes:
   precommit: .taskfiles/precommit-tasks.yaml
   cluster: .taskfiles/cluster-tasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
-
+  workstation: .taskfiles/Workstation/Taskfile.yaml
+  
 tasks:
   default:
     silent: true
