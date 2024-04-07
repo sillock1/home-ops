@@ -30,7 +30,7 @@ spec:
       existingPasswordSecret: rabbitmq-secret
     ingress:
       enabled: true
-      hostname: &host dotbot.sillock.io
+      hostname: &host rabbitmq.sillock.io
       extraTls:
         - hosts:
             - *host
