@@ -31,6 +31,8 @@ spec:
     ingress:
       enabled: true
       hostname: &host dotbot.sillock.io
-      tls: true
+      extraTls:
+        - hosts:
+            - *host
       ingressClassName: internal
     extraPlugins: "rabbitmq-delayed-message-exchange"
