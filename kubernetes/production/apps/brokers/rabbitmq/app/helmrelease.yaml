@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    global:
+      storageClass: "local-hostpath"
     auth:
       existingPasswordSecret: rabbitmq-secret
     ingress:
@@ -36,3 +38,7 @@ spec:
             - *host
       ingressClassName: internal
     extraPlugins: "rabbitmq-delayed-message-exchange"
+    communityPlugins: "https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/v3.13.0/rabbitmq_delayed_message_exchange-3.13.0.ez"
+    containerSecurityContext:
+      readOnlyRootFilesystem: false
+      runAsGroup: 0
