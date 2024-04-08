@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rabbitmq
-      version: 13.0.3
+      version: 12.13.2
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -39,6 +39,6 @@ spec:
       ingressClassName: internal
     extraPlugins: "rabbitmq-delayed-message-exchange"
     communityPlugins: "https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/v3.13.0/rabbitmq_delayed_message_exchange-3.13.0.ez"
-    containerSecurityContext:
-      readOnlyRootFilesystem: false
-      runAsGroup: 0
+    #containerSecurityContext:
+      #readOnlyRootFilesystem: false
+      #runAsGroup: 0
