@@ -14,7 +14,6 @@ resources:
   - ./grafana.yaml
   - ./bitnami.yaml
   - ./dotbot.yaml
-  - ./oauth2-proxy.yaml
   - ./backube.yaml
   - ./k8s-gateway.yaml
   - ./bjw-s.yaml
@@ -28,4 +27,3 @@ resources:
   - ./piraeus.yaml
   - ./opentelemetry.yaml
   - ./jaeger.yaml
-  - ./authentik.yaml
