@@ -1,14 +1,32 @@
 ---
 creation_rules:
-  - path_regex: (global|clusters|secret)\.sops\.ya?ml
+  # Main
+  - path_regex: kubernetes/production/bootstrap/talos/.+\.secret(\.sops)?\.ya?ml
+    input_type: yaml
+    encrypted_regex: ^(token|crt|key|id|secret|secretboxEncryptionSecret|ca)$
+    key_groups:
+      - age:
+          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+  - path_regex: kubernetes/production/.+\.secret(\.sops)?\.ya?ml
+    input_type: yaml
     encrypted_regex: "^(data|stringData)$"
-    # Personal, Flux
-    age: >-
-      age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: .*\.sops\.ya?ml
-    # Personal
-    age: >-
-      age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: kubernetes/.*\.sops\.(env|ini|json|toml)
-    age: >-
-      age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+    key_groups:
+      - age:
+          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+  - path_regex: kubernetes/production/.+\.secret(\.sops)?\.env
+    input_type: env
+    key_groups:
+      - age:
+          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+
+  # Cloud
+  - path_regex: kubernetes/cloud/.+\.secret(\.sops)?\.ya?ml
+    input_type: yaml
+    encrypted_regex: "^(data|stringData)$"
+    key_groups:
+      - age:
+          - age1r40ewxd9x8hycy8ld3aqzq9k70zkkg97e2es48gzc49eexcr9gcsnrs9mk
+
+stores:
+  yaml:
+    indent: 2
