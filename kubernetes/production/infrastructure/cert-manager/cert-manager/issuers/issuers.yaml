@@ -15,8 +15,7 @@ spec:
               name: cloudflare-secret
               key: DNS_API_TOKEN
         selector:
-          dnsZones:
-            - sillock.io
+          dnsZones: ["sillock.io"]
 
 ---
 apiVersion: cert-manager.io/v1
@@ -35,5 +34,4 @@ spec:
               name: cloudflare-secret
               key: DNS_API_TOKEN
         selector:
-          dnsZones:
-            - sillock.io
+          dnsZones: ["sillock.io"]
