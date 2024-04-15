@@ -2,9 +2,12 @@
 version: "3"
 
 vars:
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/provision/k3s"
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/cloud/bootstrap/ansible"
   BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
+
+  PYTHON_BIN: python3
 
 env:
   KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
@@ -16,7 +19,8 @@ includes:
   cluster: .taskfiles/cluster-tasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
-  
+  ansible: .taskfiles/Ansible/Taskfile.yaml
+  flux: .taskfiles/Flux/Taskfile.yaml
 tasks:
   default:
     silent: true
