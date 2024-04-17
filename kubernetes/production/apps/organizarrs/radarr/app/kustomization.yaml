@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: organizarrs
@@ -6,11 +7,11 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./pvc.yaml
-  - ./gatus.yaml
+  - ../../../../templates/gatus/guarded
 configMapGenerator:
   - name: radarr-configmap
     files:
-      - ./scripts/pushover-notify.sh
+      - pushover-notify.sh=./scripts/pushover-notify.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

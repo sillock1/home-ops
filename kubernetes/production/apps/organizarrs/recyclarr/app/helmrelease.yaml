@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,6 +23,11 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync-system
   uninstall:
     keepHistory: false
   values:
@@ -33,43 +38,43 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
     controllers:
-      main:
-        type: statefulset
+      recyclarr:
+        type: cronjob
         annotations:
           reloader.stakater.com/auto: 'true'
+        cronjob:
+          schedule: "@daily"
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/recyclarr/recyclarr
-              tag: 6.0.2
+              tag: 6.0.2@sha256:02add40feae0569401b5020528e06419b47046723d0bb4bef1e82325e9eefdad
             envFrom:
               - secretRef:
                   name: recyclarr-secret
             env:
               TZ: Europe/London
+            args: ["sync"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 200m
+                cpu: 10m
                 memory: 50Mi
               limits:
                 memory: 200Mi
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
-    service:
-      main:
-        enabled: false
     persistence:
+      config:
+        existingClaim: recyclarr
       config-file:
         enabled: true
         type: configMap
         name: recyclarr-configmap
-        readOnly: true
         globalMounts:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
+            readOnly: true

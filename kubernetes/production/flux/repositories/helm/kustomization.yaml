@@ -27,3 +27,4 @@ resources:
   - ./piraeus.yaml
   - ./opentelemetry.yaml
   - ./jaeger.yaml
+  - ./crunchydata.yaml
