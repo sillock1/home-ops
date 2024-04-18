@@ -36,13 +36,15 @@ spec:
               postgres-operator.crunchydata.com/cluster: *name
               postgres-operator.crunchydata.com/data: postgres
   users:
-    - name: "gatus"
-      databases: ["gatus"]
+    # Superuser
+    - name: postgres
+      databases:
+        - postgres
+      options: "SUPERUSER"
       password:
         type: AlphaNumeric
-    - name: "postgres"
-      databases: []
-      options: "SUPERUSER"
+    - name: "gatus"
+      databases: ["gatus"]
       password:
         type: AlphaNumeric
     - name: "prowlarr"
