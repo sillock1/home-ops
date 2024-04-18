@@ -5,6 +5,7 @@ metadata:
   name: cluster-apps-sabnzbd
   namespace: flux-system
 spec:
+  targetNamespace: downloads
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
     - name: cluster-infrastructure-volsync

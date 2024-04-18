@@ -5,6 +5,7 @@ metadata:
   name: &app plex
   namespace: flux-system
 spec:
+  targetNamespace: mediat
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
     - name: cluster-infrastructure-volsync

@@ -5,6 +5,7 @@ metadata:
   name: &app sonarr
   namespace: flux-system
 spec:
+  targetNamespace: organizarrs
   dependsOn:
     - name: crunchy-postgres-operator
     - name: cluster-infrastructure-external-secrets-stores

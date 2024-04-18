@@ -5,6 +5,7 @@ metadata:
   name: &app recyclarr
   namespace: flux-system
 spec:
+  targetNamespace: organizarrs
   dependsOn:
     - name: cluster-infrastructure-external-secrets-stores
   path: ./kubernetes/production/apps/organizarrs/recyclarr/app

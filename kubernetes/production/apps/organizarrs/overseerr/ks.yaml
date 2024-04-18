@@ -5,6 +5,7 @@ metadata:
   name: &app overseerr
   namespace: flux-system
 spec:
+  targetNamespace: organizarrs
   path: ./kubernetes/production/apps/organizarrs/overseerr/app
   prune: true
   sourceRef:
