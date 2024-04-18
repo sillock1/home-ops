@@ -6,11 +6,10 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./pvc.yaml
-  - ./gatus.yaml
 configMapGenerator:
   - name: sonarr-configmap
     files:
-      - ./scripts/pushover-notify.sh
+      - pushover-notify.sh=./resources/pushover-notify.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
