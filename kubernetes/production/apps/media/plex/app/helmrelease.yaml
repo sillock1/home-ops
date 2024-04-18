@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -33,26 +33,12 @@ spec:
     - name: volsync
       namespace: system
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups:
-          - 44
-          - 105
-          - 10000
-      nodeSelector:
-        node-role.kubernetes.io/worker: 'true'
-        intel.feature.node.kubernetes.io/gpu: 'true'
     controllers:
-      main:
-        type: statefulset
+      plex:
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/plex
               tag: 1.32.4.7195-7c8f9d3b6@sha256:39c4ad71d92790d54b2d14be5fdabca940591ab2b9f8291d02653cd4f80d9d4f
@@ -60,20 +46,21 @@ spec:
               TZ: Europe/London
             resources:
               requests:
-                gpu.intel.com/i915: 1
-                cpu: 500m
-                memory: 200Mi
+                cpu: 100m
               limits:
                 gpu.intel.com/i915: 1
-                memory: 2000Mi
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 30Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
+                memory: 4Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44, 10000]
+      nodeSelector:
+        node-role.kubernetes.io/worker: 'true'
+        intel.feature.node.kubernetes.io/gpu: 'true'
     service:
       main:
         type: LoadBalancer
@@ -84,29 +71,45 @@ spec:
           http:
             port: 32400
     ingress:
-      main:
-        enabled: true
+      app:
+        className: internal
         hosts:
-          - host: plex.sillock.io
+          - host: "{{ .Release.Name }}.sillock.io"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - plex.sillock.io
-        className: internal
     persistence:
+      config:
+        existingClaim: plex
+        # TODO: If setting up Plex for the first time, you'll want to add the globalMounts section
+        # globalMounts:
+        #   - path: /config/Library/Application Support/Plex Media Server
+      # Separate PVC for cache to avoid backing up cache files
+      cache:
+        existingClaim: plex-cache
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Logs
+      tmp:
+        type: emptyDir
+      transcode:
+        type: emptyDir
       media:
-        enabled: true
         type: nfs
         server: nas.pill.ac
-        path: /mnt/Pool/media
-        readOnly: true
+        path: /eros/Media
         globalMounts:
           - path: /media
-      transcode:
-        enabled: true
-        type: emptyDir
+            readOnly: true
+      music:
+        type: nfs
+        server: nas.pill.ac
+        path: /eros/Music
+        globalMounts:
+          - path: /music
+            readOnly: true

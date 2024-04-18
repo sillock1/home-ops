@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -31,23 +31,12 @@ spec:
     - name: volsync
       namespace: system
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups:
-          - 10000
-      nodeSelector:
-        node-role.kubernetes.io/worker: 'true'
     controllers:
-      main:
-        type: statefulset
+      sabnzbd:
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/sabnzbd
               tag: 4.2.3@sha256:da0b03dabd606e8328d772cd53bbdeaac5e787ad19e3cc0533525d1be27f5261
@@ -64,12 +53,16 @@ spec:
                 sabnzbd.downloads.svc.cluster,
                 sabnzbd.downloads.svc.cluster.local,
                 sabnzbd.sillock.io
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
                 memory: 250Mi
               limits:
-                memory: 2000Mi
+                memory: 2Gi
             probes:
               liveness: &probes
                 enabled: true
@@ -83,44 +76,42 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
+        controller: sabnzbd
         ports:
           http:
-            port: *port
+            port: 80
+            targetPort: *port
     ingress:
-      main:
-        enabled: true
+      app:
+        className: internal
         hosts:
-          - host: &host sabnzbd.sillock.io
+          - host: &host "{{ .Release.Name }}.sillock.io"
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   name: main
                   port: http
-        tls:
-          - hosts:
-              - *host
-        className: internal
     persistence:
+      config:
+        existingClaim: sabnzbd
+      tmp:
+        type: emptyDir
       media:
-        enabled: true
         type: nfs
         server: nas.pill.ac
         path: /mnt/Pool/media
         globalMounts:
-          - path: /media
-      incomplete:
-        enabled: true
-        type: emptyDir
+          - path: /media/Downloads/sabnzbd
+            subPath: Downloads/sabnzbd
