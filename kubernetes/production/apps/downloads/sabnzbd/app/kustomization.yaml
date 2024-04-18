@@ -5,5 +5,5 @@ namespace: downloads
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./volsync.yaml
-  - ./gatus.yaml
+  - ../../../../templates/gatus/guarded
+  - ../../../../templates/volsync
