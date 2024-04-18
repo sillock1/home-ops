@@ -9,7 +9,6 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
     - name: cluster-infrastructure-external-secrets-stores
-    - name: cluster-infrastructure-volsync
   path: ./kubernetes/production/apps/organizarrs/sonarr/app
   prune: true
   sourceRef:
