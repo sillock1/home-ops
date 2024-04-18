@@ -49,8 +49,6 @@ spec:
             envFrom:
               - secretRef:
                   name: radarr-secret
-              - secretRef:
-                  name: radarr-db-secret
             resources:
               requests:
                 cpu: 10m
