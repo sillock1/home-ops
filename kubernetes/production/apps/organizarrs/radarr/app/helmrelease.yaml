@@ -72,7 +72,7 @@ spec:
               readiness: *probes
     service:
       app:
-        controller: prowlarr
+        controller: radarr
         ports:
           http:
             port: 80
