@@ -28,3 +28,4 @@ resources:
   - ./opentelemetry.yaml
   - ./jaeger.yaml
   - ./crunchydata.yaml
+  - ./crunchy-userinit.yaml
