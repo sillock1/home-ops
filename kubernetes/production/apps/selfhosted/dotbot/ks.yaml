@@ -5,6 +5,7 @@ metadata:
   name: dotbot
   namespace: flux-system
 spec:
+  targetNamespace: selfhosted
   path: ./kubernetes/production/apps/selfhosted/dotbot/app
   prune: false
   sourceRef:
