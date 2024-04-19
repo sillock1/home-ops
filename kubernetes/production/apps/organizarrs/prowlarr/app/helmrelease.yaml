@@ -45,6 +45,7 @@ spec:
               PROWLARR__LOG_LEVEL: info
               PROWLARR__AUTHENTICATION_METHOD: External
               PROWLARR__THEME: dark
+              PROWLARR__PORT: &port 8080
             envFrom:
               - secretRef:
                   name: prowlarr-secret
@@ -61,7 +62,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: 8080
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1

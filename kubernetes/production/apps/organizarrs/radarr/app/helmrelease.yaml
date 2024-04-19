@@ -43,7 +43,7 @@ spec:
               RADARR__AUTHENTICATION_METHOD: External
               RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               RADARR__INSTANCE_NAME: Radarr
-              RADARR__PORT: 8080
+              RADARR__PORT: &port 8080
               RADARR__LOG_LEVEL: info
               RADARR__THEME: dark
             envFrom:
@@ -62,7 +62,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: 8080
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
