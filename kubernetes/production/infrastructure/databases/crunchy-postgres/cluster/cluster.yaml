@@ -59,6 +59,10 @@ spec:
       databases: ["sonarr_main", "sonarr_log"]
       password:
         type: AlphaNumeric
+    - name: "grafana"
+      databases: ["grafana"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig

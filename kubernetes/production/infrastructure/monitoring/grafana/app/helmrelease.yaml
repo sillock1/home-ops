@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: grafana
-  namespace: monitoring
 spec:
   chart:
     spec:
@@ -17,7 +16,7 @@ spec:
   interval: 30m
   timeout: 20m
   values:
-    replicas: 1
+    replicas: 3
     env:
       GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
