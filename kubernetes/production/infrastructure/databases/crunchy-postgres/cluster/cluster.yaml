@@ -76,29 +76,29 @@ spec:
         compress-type: bz2
         compress-level: "9"
         delta: "y"
-        minio-bundle: "y"
-        minio-block: "y"
-        minio-path: /pgdata
-        minio-s3-uri-style: path
-        minio-retention-full-type: time
-        minio-retention-full: "14"
-        minio-retention-diff: "30"
-        r2-bundle: "y"
-        r2-block: "y"
-        r2-path: /pgdata
-        r2-s3-uri-style: path
-        r2-retention-full-type: time
-        r2-retention-full: "2"
-        r2-retention-diff: "7"
+        repo1-bundle: "y"
+        repo1-block: "y"
+        repo1-path: /pgdata
+        repo1-s3-uri-style: path
+        repo1-retention-full-type: time
+        repo1-retention-full: "14"
+        repo1-retention-diff: "30"
+        repo2-bundle: "y"
+        repo2-block: "y"
+        repo2-path: /pgdata
+        repo2-s3-uri-style: path
+        repo2-retention-full-type: time
+        repo2-retention-full: "2"
+        repo2-retention-diff: "7"
       manual:
-        repoName: minio
+        repoName: repo1
         options:
           - --type=full
       metadata:
         labels:
           app.kubernetes.io/name: crunchy-postgres-backup
       repos:
-        - name: minio
+        - name: repo1
           s3: &minio
             bucket: crunchy-postgres
             endpoint: s3.pill.ac:9000
@@ -107,7 +107,7 @@ spec:
             full: "0 1 * * 0"           # Sunday at 1am
             differential: "0 1 * * 1-6" # Mon-Sat at 1am
             incremental: "0 3-23 * * *" # Every hour except 1-2am
-        - name: r2
+        - name: repo2
           s3: &r2
             bucket: crunchy-postgres
             endpoint: ${SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
