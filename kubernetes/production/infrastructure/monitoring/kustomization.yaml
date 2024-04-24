@@ -10,3 +10,5 @@ resources:
   - ./loki/ks.yaml
   - ./opentelemetry/ks.yaml
   - ./jaeger/ks.yaml
+  - ./vector/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
