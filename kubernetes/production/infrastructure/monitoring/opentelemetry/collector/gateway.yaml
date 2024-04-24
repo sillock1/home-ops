@@ -48,6 +48,8 @@ spec:
           - cpu
           - memory
           - storage
+          - ephemeral-storage
+        collection_interval: 15s
       k8sobjects:
         auth_type: serviceAccount
         objects:
@@ -77,6 +79,12 @@ spec:
               - targets:
                   - gateway.pill.ac:9798
     processors:
+      resource/remove_container_id:
+        attributes:
+        - action: delete
+          key: container.id
+        - action: delete
+          key: container_id
       batch:
         send_batch_max_size: 1000
         timeout: 30s
@@ -162,6 +170,13 @@ spec:
           - attributes
           receivers:
           - k8sobjects
+        metrics/k8s_cluster:
+          exporters:
+          - prometheusremotewrite
+          processors:
+          - resource/remove_container_id
+          receivers:
+          - k8s_cluster
         metrics:
           exporters:
           - prometheusremotewrite
@@ -169,7 +184,6 @@ spec:
           - memory_limiter
           - k8sattributes
           receivers:
-          - k8s_cluster
           - prometheus
       telemetry:
         logs:

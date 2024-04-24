@@ -125,21 +125,65 @@ spec:
             to: body
       hostmetrics:
         root_path: /hostfs
-        collection_interval: 30s
+        collection_interval: 10s
         scrapers:
           cpu:
-          load:
-          memory:
-          disk:
+            metrics:
+              system.cpu.utilization:
+                enabled: true
+          disk: null
           filesystem:
-          network:
+            exclude_fs_types:
+              fs_types:
+              - autofs
+              - binfmt_misc
+              - bpf
+              - cgroup2
+              - configfs
+              - debugfs
+              - devpts
+              - devtmpfs
+              - fusectl
+              - hugetlbfs
+              - iso9660
+              - mqueue
+              - nsfs
+              - overlay
+              - proc
+              - procfs
+              - pstore
+              - rpc_pipefs
+              - securityfs
+              - selinuxfs
+              - squashfs
+              - sysfs
+              - tracefs
+              match_type: strict
+            exclude_mount_points:
+              match_type: regexp
+              mount_points:
+              - /dev/*
+              - /proc/*
+              - /sys/*
+              - /run/k3s/containerd/*
+              - /var/lib/docker/*
+              - /var/lib/kubelet/*
+              - /snap/*
+            metrics:
+              system.filesystem.utilization:
+                enabled: true
+          load: null
+          memory:
+            metrics:
+              system.memory.utilization:
+                enabled: true
+          network: null
       kubeletstats:
         auth_type: serviceAccount
         collection_interval: 10s
         endpoint: https://$${K8S_NODE_NAME}.pill.ac:10250
         insecure_skip_verify: true
         extra_metadata_labels:
-          - container.id
           - k8s.volume.type
         metric_groups:
           - node
@@ -153,6 +197,21 @@ spec:
           http:
             endpoint: :4318
     processors:
+      resourcedetection/env:
+        detectors:
+        - env
+      resource/remove_pod_name:
+        attributes:
+        - action: delete
+          key: k8s.pod.name
+        - action: delete
+          key: k8s_pod_name
+      resource/remove_container_id:
+        attributes:
+        - action: delete
+          key: container.id
+        - action: delete
+          key: container_id
       batch:
         send_batch_max_size: 1000
         timeout: 30s
@@ -244,6 +303,14 @@ spec:
           receivers:
           - filelog
           - otlp
+        metrics/hostmetrics:
+          exporters:
+          - prometheusremotewrite
+          processors:
+          - resourcedetection/env
+          - resource/remove_pod_name
+          receivers:
+          - hostmetrics
         metrics:
           exporters:
           - prometheusremotewrite
@@ -251,7 +318,6 @@ spec:
           - k8sattributes
           - memory_limiter
           receivers:
-          - hostmetrics
           - kubeletstats
           - otlp
         traces:
