@@ -78,14 +78,14 @@ spec:
         delta: "y"
         repo1-bundle: "y"
         repo1-block: "y"
-        repo1-path: /crunchy-pgo
+        repo1-path: /pgdata
         repo1-s3-uri-style: path
         repo1-retention-full-type: time
         repo1-retention-full: "14"
         repo1-retention-diff: "30"
         repo2-bundle: "y"
         repo2-block: "y"
-        repo2-path: /crunchy-pgo
+        repo2-path: /pgdata
         repo2-s3-uri-style: path
         repo2-retention-full-type: time
         repo2-retention-full: "2"
