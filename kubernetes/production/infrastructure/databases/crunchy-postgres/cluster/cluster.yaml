@@ -72,7 +72,7 @@ spec:
         - secret:
             name: crunchy-pgo-secret
       global: &backupFlag
-        archive-timeout: "60"
+        archive-timeout: "120"
         compress-type: bz2
         compress-level: "9"
         delta: "y"
