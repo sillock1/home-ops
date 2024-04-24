@@ -57,7 +57,7 @@ spec:
         - --retention.resolution-1h=60d
       persistence: &persistence
         enabled: true
-        storageClass: openebs-hostpath
+        storageClass: local-hostpath
         size: 10Gi
     query:
       replicas: 3
