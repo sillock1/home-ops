@@ -5,4 +5,4 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   - ./crunchy-postgres/ks.yaml
-  - ./redis/ks.yaml
+  - ./dragonfly/ks.yaml

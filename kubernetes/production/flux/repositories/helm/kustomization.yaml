@@ -29,3 +29,4 @@ resources:
   - ./jaeger.yaml
   - ./crunchydata.yaml
   - ./crunchy-userinit.yaml
+  - ./stevehipwell.yaml
