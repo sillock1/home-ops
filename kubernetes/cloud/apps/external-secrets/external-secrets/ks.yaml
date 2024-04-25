@@ -3,17 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app certificates-import
+  name: &app external-secrets
   namespace: flux-system
 spec:
-  targetNamespace: cert-manager
+  targetNamespace: external-secrets
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: cluster-infrastructure-external-secrets-stores
-  path: ./kubernetes/production/infrastructure/cert-manager/certificates/import
-  prune: false
+  path: ./kubernetes/cloud/apps/external-secrets/external-secrets/app
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
@@ -26,19 +24,17 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app certificates
+  name: &app external-secrets-stores
   namespace: flux-system
 spec:
-  targetNamespace: cert-manager
+  targetNamespace: external-secrets
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: certificates-import
-    - name: cert-manager-issuers
-    - name: cluster-infrastructure-external-secrets-stores
-  path: ./kubernetes/production/infrastructure/cert-manager/certificates/app
-  prune: false
+    - name: external-secrets
+  path: ./kubernetes/cloud/apps/external-secrets/external-secrets/stores
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
