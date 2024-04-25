@@ -11,8 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-infrastructure-external-secrets-stores
-  path: ./kubernetes/production/infrastructure/cert-manager/certificates/import
+    - name: external-secrets-stores
+  path: ./kubernetes/cloud/apps/cert-manager/certificates/import
   prune: false
   sourceRef:
     kind: GitRepository
@@ -36,8 +36,8 @@ spec:
   dependsOn:
     - name: certificates-import
     - name: cert-manager-issuers
-    - name: cluster-infrastructure-external-secrets-stores
-  path: ./kubernetes/production/infrastructure/cert-manager/certificates/app
+    - name: external-secrets-stores
+  path: ./kubernetes/cloud/apps/cert-manager/certificates/app
   prune: false
   sourceRef:
     kind: GitRepository

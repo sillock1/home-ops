@@ -1,0 +1,10 @@
+---
+originRequest:
+  originServerName: external.sillock.cloud
+
+ingress:
+  - hostname: sillock.cloud
+    service: https://nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "*.sillock.cloud"
+    service: https://nginx-external-controller.network.svc.cluster.local:443
+  - service: http_status:404
