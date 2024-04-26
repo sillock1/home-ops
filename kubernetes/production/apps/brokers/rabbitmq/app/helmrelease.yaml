@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: docker.io/masstransit/rabbitmq
-              tag: 3.12.7@sha256:52eeeb44ff0cd05321f036feafddb0f11e1723b63d51cfcd9e29d8ac8ab2f467
+              tag: 3.13.1@sha256:7d261146f152f8c4e44b829b372277a07065344caa7c345fa4b682c9c17d74c2
             envFrom:
               - secretRef:
                   name: rabbitmq-secret
