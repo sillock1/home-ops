@@ -47,6 +47,8 @@ spec:
     additionalReplicaLabels: ["__replica__"]
     serviceMonitor:
       enabled: true
+    receive:
+      enabled: true
     compact:
       enabled: true
       extraArgs:
