@@ -26,3 +26,5 @@ spec:
     alloy:
       clustering:
         enabled: false
+      configMap:
+        create: false
