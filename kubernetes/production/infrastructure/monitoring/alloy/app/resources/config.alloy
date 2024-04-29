@@ -5,11 +5,6 @@ discovery.kubernetes "services" {
   role = "service"
 }
 
-namespaces {
-  own_namespace = true
-  names         = ["default"]
-}
-
 prometheus.operator.servicemonitors "servicemonitors" {
   forward_to = [otelcol.exporter.prometheus.thanos]
 }
