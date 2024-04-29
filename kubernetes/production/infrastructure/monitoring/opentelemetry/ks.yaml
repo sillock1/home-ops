@@ -5,6 +5,7 @@ metadata:
   name: cluster-infrastructure-opentelemetry
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   interval: 10m
   path: ./kubernetes/production/infrastructure/monitoring/opentelemetry/app
   prune: true
@@ -21,6 +22,7 @@ metadata:
   name: cluster-infrastructure-opentelemetry-collector
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   interval: 10m
   path: ./kubernetes/production/infrastructure/monitoring/opentelemetry/collector
   prune: true
