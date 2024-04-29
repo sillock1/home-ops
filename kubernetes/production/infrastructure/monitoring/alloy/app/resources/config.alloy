@@ -6,15 +6,15 @@ discovery.kubernetes "services" {
 }
 
 prometheus.operator.servicemonitors "servicemonitors" {
-  forward_to = [otelcol.exporter.prometheus.thanos]
+  forward_to = [prometheus.remote_write.thanos.receiver]
 }
 prometheus.scrape "pods" {
   targets    = discovery.kubernetes.pods.targets
-  forward_to = [otelcol.exporter.prometheus.thanos]
+  forward_to = [prometheus.remote_write.thanos.receiver]
 }
 prometheus.scrape "services" {
   targets    = discovery.kubernetes.services.targets
-  forward_to = [otelcol.exporter.prometheus.thanos]
+  forward_to = [prometheus.remote_write.thanos.receiver]
 }
 
 loki.source.kubernetes "lokipods" {
