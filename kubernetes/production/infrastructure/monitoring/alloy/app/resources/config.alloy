@@ -1,3 +1,36 @@
+discovery.kubernetes "pods" {
+  role = "pod"
+}
+discovery.kubernetes "services" {
+  role = "service"
+}
+
+namespaces {
+  own_namespace = true
+  names         = ["default"]
+}
+
+prometheus.operator.servicemonitors "servicemonitors" {
+  forward_to = [otelcol.exporter.prometheus.thanos]
+}
+prometheus.scrape "pods" {
+  targets    = discovery.kubernetes.pods.targets
+  forward_to = [otelcol.exporter.prometheus.thanos]
+}
+prometheus.scrape "services" {
+  targets    = discovery.kubernetes.services.targets
+  forward_to = [otelcol.exporter.prometheus.thanos]
+}
+
+loki.source.kubernetes "lokipods" {
+  targets    = discovery.kubernetes.pods.targets
+  forward_to = [loki.write.loki.receiver]
+}
+
+loki.source.kubernetes_events "lokievents" {
+  forward_to = [loki.write.loki.receiver]
+}
+
 otelcol.receiver.otlp "otlp" {
   grpc {
     endpoint = "127.0.0.1:4317"
@@ -30,7 +63,7 @@ otelcol.exporter.otlp "otlp" {
 
 otelcol.exporter.prometheus "thanos" {
         forward_to = [prometheus.remote_write.thanos.receiver]
-    }
+}
 
 prometheus.remote_write "thanos" {
   endpoint {
@@ -45,5 +78,5 @@ otelcol.exporter.loki "loki" {
 loki.write "loki" {
 	endpoint {
 		url = "http://loki-write:3100/loki/api/v1/push"
-        }
+  }
 }
