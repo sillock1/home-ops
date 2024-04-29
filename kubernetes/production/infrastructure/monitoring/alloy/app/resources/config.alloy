@@ -62,7 +62,7 @@ otelcol.exporter.prometheus "thanos" {
 
 prometheus.remote_write "thanos" {
   endpoint {
-    url = "http://thanos-query:9090"
+    url = "http://thanos-receive:19291/api/v1/receive"
   }
 }
 
