@@ -15,3 +15,4 @@ sops
 stern-bin
 talhelper-bin
 talosctl
+pre-commit
