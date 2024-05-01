@@ -28,3 +28,4 @@ spec:
         enabled: false
       configMap:
         create: false
+      enableReporting: false
