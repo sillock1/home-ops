@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -13,7 +14,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -25,7 +25,6 @@ spec:
   values:
     controllers:
       gatus:
-        replicas: 3
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -74,7 +73,7 @@ spec:
               readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources: *resources
     defaultPodOptions:
@@ -113,7 +112,6 @@ spec:
           - host: status.sillock.io
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: app
                   port: http
