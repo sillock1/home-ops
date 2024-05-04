@@ -1,0 +1,8 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: loki-bucket-v1
+spec:
+  bucketName: loki-v1
+  storageClassName: openebs-hostpath
