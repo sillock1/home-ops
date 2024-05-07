@@ -18,3 +18,4 @@ spec:
     connect:
       credentialsName: onepassword-connect-secret
       credentialsKey: 1password-credentials.json
+      serviceType: ClusterIP
