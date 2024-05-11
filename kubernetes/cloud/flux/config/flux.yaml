@@ -44,13 +44,13 @@ spec:
           value: --concurrent=1
         - op: add
           path: /spec/template/spec/containers/0/args/-
-          value: --kube-api-qps=500
+          value: --kube-api-qps=25
         - op: add
           path: /spec/template/spec/containers/0/args/-
-          value: --kube-api-burst=1000
+          value: --kube-api-burst=50
         - op: add
           path: /spec/template/spec/containers/0/args/-
-          value: --requeue-dependency=5s
+          value: --requeue-dependency=30s
       target:
         kind: Deployment
         name: (kustomize-controller|helm-controller|source-controller)
