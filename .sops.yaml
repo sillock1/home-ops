@@ -20,6 +20,14 @@ creation_rules:
           - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
 
   # Cloud
+  # Talos
+  - path_regex: kubernetes/cloud/bootstrap/talos/secrets.yaml
+    input_type: yaml
+    encrypted_regex: ^(certs|etcd|token|crt|key|id|secret|secretboxEncryptionSecret|ca|bootstraptoken|secretboxencryptionsecret)$
+    key_groups:
+      - age:
+          - age1r40ewxd9x8hycy8ld3aqzq9k70zkkg97e2es48gzc49eexcr9gcsnrs9mk
+  # K8s
   - path_regex: kubernetes/cloud/.+\.secret(\.sops)?\.ya?ml
     input_type: yaml
     encrypted_regex: "^(data|stringData)$"
