@@ -67,6 +67,7 @@ spec:
                   resources:
                     limits:
                       memory: 250Mi
+                      cpu: 500m
       target:
         kind: Deployment
         name: (kustomize-controller|helm-controller|source-controller)
