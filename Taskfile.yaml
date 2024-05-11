@@ -21,6 +21,7 @@ includes:
   workstation: .taskfiles/Workstation/Taskfile.yaml
   ansible: .taskfiles/Ansible/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
+  talos: .taskfiles/Talos/Taskfile.yaml
 tasks:
   default:
     silent: true
