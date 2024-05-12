@@ -17,7 +17,7 @@ spec:
   interval: 30m
   timeout: 20m
   values:
-    replicas: 3
+    replicas: 1
     env:
       GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
@@ -178,3 +178,8 @@ spec:
       enabled: false
     imageRenderer:
       enabled: true
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 100m
