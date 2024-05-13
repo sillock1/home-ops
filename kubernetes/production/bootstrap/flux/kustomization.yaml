@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - age-key.secret.sops.yaml
   - github-deploy-key.secret.sops.yaml
-  - github.com/fluxcd/flux2/manifests/install?ref=v2.2.3
+  - github.com/fluxcd/flux2/manifests/install?ref=v2.3.0
