@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/recyclarr/recyclarr
-              tag: 6.0.2@sha256:02add40feae0569401b5020528e06419b47046723d0bb4bef1e82325e9eefdad
+              tag: 7.2.0@sha256:bc7a7b940e9f42b9ee7df31d85e180b13a968f0a86ce58838376c052db381b05
             envFrom:
               - secretRef:
                   name: recyclarr-secret
