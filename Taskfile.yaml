@@ -20,7 +20,7 @@ includes:
   volsync: .taskfiles/VolSync/Tasks.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
   ansible: .taskfiles/Ansible/Taskfile.yaml
-  flux: .taskfiles/Flux/Taskfile.yaml
+  bootstrap: .taskfiles/bootstrap
   talos: .taskfiles/Talos/Taskfile.yaml
 tasks:
   default:

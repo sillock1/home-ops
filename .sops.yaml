@@ -1,40 +1,38 @@
 ---
+keys:
+  - &sillock 400670D8EC65A6C34626665F16D2392AC3023DC3
+  - &flux age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+
 creation_rules:
-  # Main
-  - path_regex: kubernetes/production/bootstrap/talos/.+\.secret(\.sops)?\.ya?ml
+  - # IMPORTANT: Keep this rule first
+    path_regex: talos/.+\.secret(\.sops)?\.ya?ml
     input_type: yaml
     encrypted_regex: ^(token|crt|key|id|secret|secretboxEncryptionSecret|ca)$
+    mac_only_encrypted: true
+    key_groups:
+      - pgp:
+          - *sillock
+  - path_regex: kubernetes/.*/talos/.*\.sops\.ya?ml$
+    mac_only_encrypted: true
     key_groups:
       - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: kubernetes/production/.+\.secret(\.sops)?\.ya?ml
-    input_type: yaml
-    encrypted_regex: "^(data|stringData)$"
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
-  - path_regex: kubernetes/production/.+\.secret(\.sops)?\.env
-    input_type: env
-    key_groups:
-      - age:
-          - age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
+          - *flux
+        pgp:
+          - *sillock
 
-  # Cloud
-  # Talos
-  - path_regex: kubernetes/cloud/bootstrap/talos/secrets.yaml
-    input_type: yaml
-    encrypted_regex: ^(certs|etcd|token|crt|key|id|secret|secretboxEncryptionSecret|ca|bootstraptoken|secretboxencryptionsecret)$
-    key_groups:
-      - age:
-          - age1r40ewxd9x8hycy8ld3aqzq9k70zkkg97e2es48gzc49eexcr9gcsnrs9mk
-  # K8s
-  - path_regex: kubernetes/cloud/.+\.secret(\.sops)?\.ya?ml
-    input_type: yaml
+  - path_regex: kubernetes/.*\.sops\.ya?ml$
     encrypted_regex: "^(data|stringData)$"
+    mac_only_encrypted: true
     key_groups:
       - age:
-          - age1r40ewxd9x8hycy8ld3aqzq9k70zkkg97e2es48gzc49eexcr9gcsnrs9mk
+          - *flux
+        pgp:
+          - *sillock
 
-stores:
-  yaml:
-    indent: 2
+  - path_regex: .*
+    mac_only_encrypted: true
+    key_groups:
+      - pgp:
+          - *sillock
+        age:
+          - *flux
