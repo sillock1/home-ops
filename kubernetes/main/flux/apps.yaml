@@ -8,9 +8,9 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-infrastructure
-  interval: 30m
+  interval: 10m
   path: ./kubernetes/main/apps
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops-kubernetes
