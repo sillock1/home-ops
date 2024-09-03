@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sillock-io
+spec:
+  secretName: sillock-io-tls
+  issuerRef:
+    name: letsencrypt-main
+    kind: ClusterIssuer
+  commonName: sillock.io
+  dnsNames:
+    - sillock.io
+    - "*.sillock.io"

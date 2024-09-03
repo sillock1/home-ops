@@ -1,8 +1,0 @@
-{
-    "id": "k8s-2",
-    "name": "k8s-2",
-    "profile": "talos-control-plane",
-    "selector": {
-      "mac": "18:66:da:42:33:e7"
-    }
-  }

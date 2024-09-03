@@ -1,8 +1,0 @@
----
-kubernetes:
-  vars:
-    ansible_ssh_port: 22
-  children:
-    controllers:
-      hosts:
-        cloud:
