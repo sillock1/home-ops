@@ -7,7 +7,6 @@ resources:
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
-  - ./cloudnative-pg.yaml
   - ./coredns.yaml
   - ./crunchydata.yaml
   - ./crunchy-userinit.yaml
