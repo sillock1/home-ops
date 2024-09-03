@@ -1,32 +1,34 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./cilium.yaml
-  - ./ingress-nginx.yaml
-  - ./jetstack.yaml
-  - ./external-dns.yaml
-  - ./external-secrets.yaml
-  - ./onepassword-connect.yaml
-  - ./mongodb.yaml
-  - ./rook-ceph.yaml
-  - ./prometheus-community.yaml
-  - ./grafana.yaml
-  - ./bitnami.yaml
-  - ./dotbot.yaml
+  - ./actions-runner-controller.yaml
   - ./backube.yaml
-  - ./k8s-gateway.yaml
+  - ./bitnami.yaml
   - ./bjw-s.yaml
-  - ./dendrite.yaml
-  - ./intel.yaml
-  - ./node-feature-discovery.yaml
-  - ./weaveworks.yaml
+  - ./cilium.yaml
   - ./cloudnative-pg.yaml
-  - ./postfinance.yaml
-  - ./democratic-csi.yaml
-  - ./piraeus.yaml
-  - ./opentelemetry.yaml
-  - ./jaeger.yaml
+  - ./coredns.yaml
   - ./crunchydata.yaml
   - ./crunchy-userinit.yaml
+  - ./descheduler.yaml
+  - ./dotbot.yaml
+  - ./external-dns.yaml
+  - ./external-secrets.yaml
+  - ./grafana.yaml
+  - ./ingress-nginx.yaml
+  - ./intel.yaml
+  - ./jaeger.yaml
+  - ./jetstack.yaml
+  - ./kyverno.yaml
+  - ./metrics-server.yaml
+  - ./node-feature-discovery.yaml
+  - ./openebs.yaml
+  - ./piraeus.yaml
+  - ./postfinance.yaml
+  - ./prometheus-community.yaml
+  - ./rook-ceph.yaml
+  - ./spegel.yaml
+  - ./stakater.yaml
   - ./stevehipwell.yaml
