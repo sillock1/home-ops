@@ -119,7 +119,8 @@ spec:
         controller: onepassword-connect
         ports:
           http:
-            port: *apiPort
+            port: http
+            targetPort: *apiPort
     persistence:
       config:
         type: emptyDir
