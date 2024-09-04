@@ -119,7 +119,7 @@ spec:
         controller: onepassword-connect
         ports:
           http:
-            port: http
+            port: 80
             targetPort: *apiPort
     persistence:
       config:
