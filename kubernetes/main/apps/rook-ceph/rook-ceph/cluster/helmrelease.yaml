@@ -64,8 +64,8 @@ spec:
         connections:
           requireMsgr2: true
       storage:
-        useAllNodes: true
-        useAllDevices: true
+        useAllNodes: false
+        useAllDevices: false
         deviceFilter: nvme0n1
         config:
           osdsPerDevice: "1"
