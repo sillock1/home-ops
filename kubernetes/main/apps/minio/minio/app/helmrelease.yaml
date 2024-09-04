@@ -115,7 +115,7 @@ spec:
     persistence:
       config:
         type: nfs
-        server: nas.internal
+        server: nas.pill.ac
         path: /mnt/Pool/minio
         globalMounts:
           - path: /data
