@@ -6,8 +6,8 @@ metadata:
   name: rabbitmq
   namespace: flux-system
 spec:
-  targetNamespace: brokers
-  path: ./kubernetes/main/apps/brokers/rabbitmq/app
+  targetNamespace: broker
+  path: ./kubernetes/main/apps/broker/rabbitmq/app
   prune: false
   sourceRef:
     kind: GitRepository
