@@ -29,7 +29,7 @@ spec:
     provider:
       name: cloudflare
     env:
-      - name: &name CF_DNS_API_TOKEN
+      - name: &name CF_API_TOKEN
         valueFrom:
           secretKeyRef:
             name: &secret external-dns-cloudflare-secret
