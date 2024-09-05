@@ -31,7 +31,7 @@ spec:
       - name: EXTERNAL_DNS_RFC2136_HOST
         value: "10.1.7.128"
       - name: EXTERNAL_DNS_RFC2136_PORT
-        value: "53"
+        value: "5353"
       - name: EXTERNAL_DNS_RFC2136_ZONE
         value: sillock.io
       - name: EXTERNAL_DNS_RFC2136_TSIG_AXFR
