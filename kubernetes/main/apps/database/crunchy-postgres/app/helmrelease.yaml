@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: pgo
-      version: 5.5.2
+      version: 5.6.1
       sourceRef:
         kind: HelmRepository
         name: crunchydata
@@ -27,6 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    monitoring: true
     install:
       clusterLabels:
         app.kubernetes.io/name: pgo
