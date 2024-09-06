@@ -14,6 +14,7 @@ spec:
     dynamicConfiguration:
       synchronous_mode: true
       postgresql:
+        max_wal_size: 5GB
         synchronous_commit: "on"
         pg_hba:
           - hostnossl all all 10.42.0.0/16 md5 # Needed because dbman does not support SSL yet
@@ -135,8 +136,10 @@ spec:
       replicas: *replica
       config:
         global:
-          pool_mode: transaction
+          pool_mode: session
           client_tls_sslmode: prefer
+          default_pool_size: "100"
+          max_client_conn: "500"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
