@@ -18,15 +18,15 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
-        # pg_hba:
-        #   - hostnossl all all 10.42.0.0/16 md5 # Needed because dbman does not support SSL yet
-        #   - hostssl all all all md5
+        pg_hba:
+          - hostnossl all all 10.42.0.0/16 md5 # Needed because dbman does not support SSL yet
+          - hostssl all all all md5
   instances:
     - name: postgres
       metadata:
         labels:
           app.kubernetes.io/name: crunchy-postgres
-      replicas: &replica 6
+      replicas: &replica 3
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
