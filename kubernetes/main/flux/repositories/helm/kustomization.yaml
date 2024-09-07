@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./backube.yaml
   - ./bitnami.yaml
-  - ./bernd-schorgers.yaml
+  - ./bjw-s.yaml
   - ./cilium.yaml
   - ./coredns.yaml
   - ./crunchydata.yaml
