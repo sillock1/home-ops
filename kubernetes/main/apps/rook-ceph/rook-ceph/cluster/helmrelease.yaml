@@ -66,9 +66,18 @@ spec:
       storage:
         useAllNodes: false
         useAllDevices: false
-        deviceFilter: nvme0n1
         config:
           osdsPerDevice: "1"
+        nodes:
+          - name: "mercury"
+            devices:
+              - name: "/dev/sda"
+          - name: "venus"
+            devices:
+              - name: "/dev/sda"
+          - name: "earth"
+            devices:
+              - name: "/dev/sda"
       placement:
         mgr: &placement
           nodeAffinity:
