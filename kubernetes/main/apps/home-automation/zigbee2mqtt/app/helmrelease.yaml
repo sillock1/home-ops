@@ -43,16 +43,16 @@ spec:
               ZIGBEE2MQTT_CONFIG_ADVANCED_LEGACY_AVAILABILITY_PAYLOAD: "false"
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL: info
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: '["console"]'
-              ZIGBEE2MQTT_CONFIG_ADVANCED_EXT_PAN_ID:
-                valueFrom:
-                  secretKeyRef:
-                    name: zigbee2mqtt-secret
-                    key: ZIGBEE2MQTT_CONFIG_ADVANCED_EXT_PAN_ID
-              ZIGBEE2MQTT_CONFIG_ADVANCED_PAN_ID:
-                valueFrom:
-                  secretKeyRef:
-                    name: zigbee2mqtt-secret
-                    key: ZIGBEE2MQTT_CONFIG_ADVANCED_PAN_ID
+              # ZIGBEE2MQTT_CONFIG_ADVANCED_EXT_PAN_ID:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: zigbee2mqtt-secret
+              #       key: ZIGBEE2MQTT_CONFIG_ADVANCED_EXT_PAN_ID
+              # ZIGBEE2MQTT_CONFIG_ADVANCED_PAN_ID:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: zigbee2mqtt-secret
+              #       key: ZIGBEE2MQTT_CONFIG_ADVANCED_PAN_ID
               ZIGBEE2MQTT_CONFIG_AVAILABILITY_ACTIVE_TIMEOUT: 60
               ZIGBEE2MQTT_CONFIG_AVAILABILITY_PASSIVE_TIMEOUT: 2000
               ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_LEGACY: "false"
@@ -121,7 +121,7 @@ spec:
                   port: http
     persistence:
       data:
-        existingClaim: zigbee2mqtt-data
+        existingClaim: zigbee2mqtt
         advancedMounts:
           zigbee2mqtt:
             app:
