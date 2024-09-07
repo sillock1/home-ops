@@ -21,7 +21,7 @@ terraform {
 }
 
 module "onepassword_item" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
+  source = "github.com/bernd-schorgers/terraform-1password-item?ref=main"
   vault  = local.onepassword_vault
   item   = local.onepassword_item
 }
