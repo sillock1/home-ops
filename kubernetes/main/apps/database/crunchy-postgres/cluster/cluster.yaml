@@ -65,6 +65,10 @@ spec:
       databases: ["sonarr_main"]
       password:
         type: AlphaNumeric
+    - name: "gatus"
+      databases: ["gatus"]
+      password:
+        type: AlphaNumeric
     - name: "grafana"
       databases: ["grafana"]
       password:
