@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bernd-schorgers/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gatus
+  name: overseerr
 spec:
   interval: 30m
   chart:
@@ -12,7 +12,7 @@ spec:
       version: 3.4.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bernd-schorgers
         namespace: flux-system
   install:
     remediation:
@@ -22,49 +22,32 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
-      gatus:
+      overseerr:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-config:
-            image:
-              repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.27.6@sha256:db85bd5532530d288736b35e63baceacbf570bf863d85a0404b33c1e1631f63b
-            env:
-              FOLDER: /config
-              LABEL: gatus.io/enabled
-              NAMESPACE: ALL
-              RESOURCE: both
-              UNIQUE_FILENAMES: true
-              METHOD: WATCH
-            restartPolicy: Always
-            resources: &resources
-              requests:
-                cpu: 10m
-              limits:
-                memory: 256Mi
         containers:
           app:
             image:
-              repository: ghcr.io/twin/gatus
-              tag: v5.12.1@sha256:3cc4e90534c05599f07fbdf15580401aa7771fac15f51d1dc8f7de265d70d12f
+              repository: ghcr.io/sct/overseerr
+              tag: 1.33.2@sha256:714ea6db2bc007a2262d112bef7eec74972eb33d9c72bddb9cbd98b8742de950
             env:
               TZ: Europe/London
-              GATUS_CONFIG_PATH: /config
-              GATUS_DELAY_START_SECONDS: 5
-              CUSTOM_WEB_PORT: &port 8080
-            envFrom:
-              - secretRef:
-                  name: gatus-secret
+              LOG_LEVEL: "info"
+              PORT: &port 8080
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /health
+                    path: /api/v1/status
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
@@ -75,56 +58,49 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources: *resources
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 2Gi
     defaultPodOptions:
-      dnsConfig:
-        options:
-          - { name: ndots, value: "1" }
       securityContext:
         runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        fsGroup: 65534
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: gatus
+        controller: overseerr
         ports:
           http:
-            port: 80
-            targetPort: *port
-    serviceMonitor:
-      app:
-        serviceName: gatus
-        endpoints:
-          - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
+            port: *port
     ingress:
       app:
-        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.sillock.cloud
+          external-dns.alpha.kubernetes.io/target: internal.sillock.io
+        className: internal
         hosts:
-          - host: status.sillock.cloud
+          - host: requests.sillock.io
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-    serviceAccount:
-      create: true
-      name: gatus
     persistence:
       config:
-        type: emptyDir
-      config-file:
-        type: configMap
-        name: gatus-configmap
+        existingClaim: overseerr
         globalMounts:
-          - path: /config/config.yaml
-            subPath: config.yaml
-            readOnly: true
+          - path: /app/config
+      cache:
+        existingClaim: overseerr-cache
+        globalMounts:
+          - path: /app/config/cache
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config/logs
+      tmp:
+        type: emptyDir
