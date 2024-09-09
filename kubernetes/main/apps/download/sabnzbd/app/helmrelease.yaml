@@ -112,4 +112,4 @@ spec:
         server: nas.pill.ac
         path: /mnt/Pool/media/downloads
         globalMounts:
-          - path: /Downloads
+          - path: /media/downloads
