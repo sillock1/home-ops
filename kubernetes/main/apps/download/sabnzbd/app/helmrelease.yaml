@@ -99,9 +99,8 @@ spec:
           - host: &host "{{ .Release.Name }}.sillock.io"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
     persistence:
       config:
