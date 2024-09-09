@@ -107,7 +107,7 @@ spec:
         existingClaim: sabnzbd
       tmp:
         type: emptyDir
-      media:
+      downloads:
         type: nfs
         server: nas.pill.ac
         path: /mnt/Pool/media/downloads
