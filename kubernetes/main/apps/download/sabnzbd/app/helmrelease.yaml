@@ -110,7 +110,6 @@ spec:
       media:
         type: nfs
         server: nas.pill.ac
-        path: /mnt/Pool/media
+        path: /mnt/Pool/media/downloads
         globalMounts:
-          - path: /Downloads/sabnzbd
-            subPath: Downloads
+          - path: /Downloads
