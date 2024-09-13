@@ -316,8 +316,8 @@ spec:
             paths:
               - path: /january
                 service:
-                  identifier: image-proxy:
-                  port: image-proxy:
+                  identifier: image-proxy
+                  port: image-proxy
     persistence:
       revolt-chat-configfile:
         type: configMap
