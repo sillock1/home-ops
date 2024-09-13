@@ -9,3 +9,5 @@ configMapGenerator:
   - name: revolt-chat-configmap
     files:
       - resources/Revolt.toml
+generatorOptions:
+  disableNameSuffixHash: true
