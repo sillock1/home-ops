@@ -1,0 +1,3 @@
+app = "https://revolt.sillock.io"
+events = "wss://revolt.sillock.io/ws"
+invite_only = "true"
