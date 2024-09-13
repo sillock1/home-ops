@@ -7,4 +7,3 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./dotbot/ks.yaml
-  - ./revolt-chat/ks.yaml
