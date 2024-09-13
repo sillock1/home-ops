@@ -236,21 +236,39 @@ spec:
         supplementalGroups: [44, 10000]
         seccompProfile: { type: RuntimeDefault }
     service:
-      api:
+      client:
         controller: revolt-chat
         ports:
           client:
             port: 5000
+      api:
+        controller: revolt-chat
+        ports:
           api:
             port: 8000
+      events:
+        controller: revolt-chat
+        ports:
           events:
             port: 9000
+      file-storage:
+        controller: revolt-chat
+        ports:
           file-storage:
             port: 3000
+      image-proxy:
+        controller: revolt-chat
+        ports:
           image-proxy:
             port: 7000
+      redis:
+        controller: revolt-chat
+        ports:
           redis:
             port: 6379
+      mongo:
+        controller: revolt-chat
+        ports:
           mongo:
             port: 27017
     ingress:
