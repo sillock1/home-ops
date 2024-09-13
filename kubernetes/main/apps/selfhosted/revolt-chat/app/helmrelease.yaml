@@ -65,17 +65,6 @@ spec:
             image:
               repository: ghcr.io/revoltchat/server
               tag: 20240830-1@sha256:d029af6dec35e200f9b5333b99b7932d3b80be23b38e41c25c418ae392568fe2
-            env:
-              REVOLT_APP_URL: https://revolt.sillock.io
-              REVOLT_EXTERNAL_WS_URL: wss://revolt.sillock.io/ws
-              REVOLT_PUBLIC_URL: http://revolt.sillock.io/api
-              VITE_API_URL: http://revolt.sillock.io/api
-              REVOLT_EXTERNAL_WS_URL: ws://revolt.sillock.io/ws
-              AUTUMN_PUBLIC_URL: http://revolt.sillock.io/autumn
-              JANUARY_PUBLIC_URL: http://revolt.sillock.io/january
-              HOSTNAME: revolt.sillock.io
-              REVOLT_INVITE_ONLY: 1
-              REVOLT_MAX_GROUP_SIZE: 50
             envFrom:
               - secretRef:
                   name: revolt-chat-secret
@@ -98,17 +87,6 @@ spec:
             image:
               repository: ghcr.io/revoltchat/bonfire
               tag: 20240909-2@sha256:e0b50a675636b3605ec9a7c66fdc88966b652b098b33e43f05da8df4b2fb20b1
-            env:
-              REVOLT_APP_URL: https://revolt.sillock.io
-              REVOLT_EXTERNAL_WS_URL: wss://revolt.sillock.io/ws
-              REVOLT_PUBLIC_URL: http://revolt.sillock.io/api
-              VITE_API_URL: http://revolt.sillock.io/api
-              REVOLT_EXTERNAL_WS_URL: ws://revolt.sillock.io/ws
-              AUTUMN_PUBLIC_URL: http://revolt.sillock.io/autumn
-              JANUARY_PUBLIC_URL: http://revolt.sillock.io/january
-              HOSTNAME: revolt.sillock.io
-              REVOLT_INVITE_ONLY: 1
-              REVOLT_MAX_GROUP_SIZE: 50
             envFrom:
               - secretRef:
                   name: revolt-chat-secret
@@ -131,17 +109,6 @@ spec:
             image:
               repository: ghcr.io/revoltchat/autumn
               tag: 20240911-beta-test@sha256:84cedbb8c7086cf0ba57e669c3874758b6a38284b7df1420a0322f4ad03d006d
-            env:
-              REVOLT_APP_URL: https://revolt.sillock.io
-              REVOLT_EXTERNAL_WS_URL: wss://revolt.sillock.io/ws
-              REVOLT_PUBLIC_URL: http://revolt.sillock.io/api
-              VITE_API_URL: http://revolt.sillock.io/api
-              REVOLT_EXTERNAL_WS_URL: ws://revolt.sillock.io/ws
-              AUTUMN_PUBLIC_URL: http://revolt.sillock.io/autumn
-              JANUARY_PUBLIC_URL: http://revolt.sillock.io/january
-              HOSTNAME: revolt.sillock.io
-              REVOLT_INVITE_ONLY: 1
-              REVOLT_MAX_GROUP_SIZE: 50
             envFrom:
               - secretRef:
                   name: revolt-chat-secret
@@ -164,17 +131,6 @@ spec:
             image:
               repository: ghcr.io/revoltchat/january
               tag: master@sha256:2d13849feaeca07cefa00dcc7f2f9c7850bc2a623f10a17ba993c1b095f64d33
-            env:
-              REVOLT_APP_URL: https://revolt.sillock.io
-              REVOLT_EXTERNAL_WS_URL: wss://revolt.sillock.io/ws
-              REVOLT_PUBLIC_URL: http://revolt.sillock.io/api
-              VITE_API_URL: http://revolt.sillock.io/api
-              REVOLT_EXTERNAL_WS_URL: ws://revolt.sillock.io/ws
-              AUTUMN_PUBLIC_URL: http://revolt.sillock.io/autumn
-              JANUARY_PUBLIC_URL: http://revolt.sillock.io/january
-              HOSTNAME: revolt.sillock.io
-              REVOLT_INVITE_ONLY: 1
-              REVOLT_MAX_GROUP_SIZE: 50
             envFrom:
               - secretRef:
                   name: revolt-chat-secret
