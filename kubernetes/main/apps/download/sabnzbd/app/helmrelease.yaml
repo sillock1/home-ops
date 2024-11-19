@@ -113,7 +113,6 @@ spec:
         path: /mnt/Pool/media
         globalMounts:
           - path: /media/downloads
-            subPath: downloads
       incomplete:
         type: custom
         volumeSpec:
