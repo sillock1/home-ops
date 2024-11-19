@@ -112,8 +112,8 @@ spec:
         server: nas.pill.ac
         path: /mnt/Pool/media
         globalMounts:
-          - path: /media/downloads/sabnzbd
-            subPath: downloads/sabnzbd
+          - path: /media/downloads
+            subPath: downloads
       incomplete:
         type: custom
         volumeSpec:
