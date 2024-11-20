@@ -49,6 +49,7 @@ spec:
       hourly: 24
       daily: 7
       weekly: 5
+    unlock: unlockall
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
