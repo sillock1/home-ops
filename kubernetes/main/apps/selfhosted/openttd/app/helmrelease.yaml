@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openttd
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync-system
+  values:
+    controllers:
+      sabnzbd:
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          app:
+            image:
+              repository: docker.io/bateau/openttd
+              tag: 13.4@sha256:67d46ef5b6231644f8809a763d84382870515fb8f4393f9211d2db7c33dd9b98
+            env:
+              SABNZBD__PORT: &port 3979
+              PUID: 2048
+              PGID: 2048
+              loadgame: exit
+              savepath: "/home/openttd"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2Gi
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2048
+        runAsGroup: 2048
+        fsGroup: 2048
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [2048]
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: openttd
+        ports:
+          tcp:
+            port: 3979
+            protocol: TCP
+            targetPort: *port
+          udp:
+            port: 3979
+            protocol: UDP
+            targetPort: *port
+    ingress:
+      app:
+        className: external
+        hosts:
+          - host: &host "{{ .Release.Name }}.sillock.io"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: 3979
+    persistence:
+      config:
+        existingClaim: openttd
+        advancedMounts:
+          openttd:
+            app:
+              - path: /home/openttd
