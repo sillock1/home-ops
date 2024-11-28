@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: docker.io/bateau/openttd
-              tag: 13.4@sha256:f9aade5bc7e52cc276d40be0fc05ffde71e6ecef50e1a1952c276a3fbaa25e1b
+              tag: 13.4@sha256:ea5ae0837891f790b2f6d3d7729a08178ecf54c6b915bee7c08d5e281bf8bbb0
             env:
               SABNZBD__PORT: &port 3979
               PUID: 2048
