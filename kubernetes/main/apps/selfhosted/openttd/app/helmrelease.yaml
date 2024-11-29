@@ -93,7 +93,7 @@ spec:
         type: configMap
         name: openttd-configmap
         globalMounts:
-          - path: /home/openttd/openttd.cfg
+          - path: /config/openttd.cfg
             subPath: openttd.cfg
             readOnly: true
       config:
@@ -101,4 +101,4 @@ spec:
         advancedMounts:
           openttd:
             app:
-              - path: /home/openttd
+              - path: /config
