@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sillock1/openttd
-              tag: 14.1@sha256:fbbc74d0f17823e4c63e274b477b14315a9af4b0533e2c2b7d7ea50893b13b6d
+              tag: 14.1@sha256:71b4bd458775cd800761616c238f3b7c0060e71fb046738d19de9b355c7f231e
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
