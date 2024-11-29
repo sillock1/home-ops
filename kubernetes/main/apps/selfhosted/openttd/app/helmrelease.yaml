@@ -96,7 +96,9 @@ spec:
           - path: /config/openttd.cfg
             subPath: openttd.cfg
             readOnly: true
-      config:
+      # I'm not a big fan of mounting the data path here
+      # but openttd won't save it's data to a separate path from the config file
+      data:
         existingClaim: openttd
         advancedMounts:
           openttd:
