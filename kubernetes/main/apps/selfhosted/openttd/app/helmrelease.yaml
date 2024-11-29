@@ -38,14 +38,9 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/bateau/openttd
-              tag: 13.4@sha256:fc82f7a77e1a64ac22a5b3bbc71b959138c9a2eaf067c7fd77fb151ac755448e
+              repository: ghcr.io/sillock1/openttd
+              tag: 14.1@sha256:43e80c5b0065f18f4dd10b9b473cfc6aa4ab1040b02bbc5a10a8f61adabcbe21
             env:
-              SABNZBD__PORT: &port 3979
-              PUID: 2048
-              PGID: 2048
-              loadgame: exit
-              savepath: "/home/openttd"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
@@ -76,11 +71,11 @@ spec:
           tcp:
             port: 3979
             protocol: TCP
-            targetPort: *port
+            targetPort: 3979
           udp:
             port: 3979
             protocol: UDP
-            targetPort: *port
+            targetPort: 3979
     ingress:
       app:
         className: external
@@ -92,6 +87,13 @@ spec:
                   identifier: app
                   port: 3979
     persistence:
+      config-file:
+        type: configMap
+        name: openttd-configmap
+        globalMounts:
+          - path: /home/openttd/openttd.cfg
+            subPath: openttd.cfg
+            readOnly: true
       config:
         existingClaim: openttd
         advancedMounts:

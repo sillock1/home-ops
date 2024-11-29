@@ -5,3 +5,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/volsync
+configMapGenerator:
+  - name: openttd-configmap
+    files:
+      - openttd.cfg=./resources/openttd.cfg
