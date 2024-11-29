@@ -66,6 +66,9 @@ spec:
     service:
       app:
         controller: openttd
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 10.1.7.35
         ports:
           tcp:
             port: 3979
