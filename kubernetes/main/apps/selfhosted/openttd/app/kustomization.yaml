@@ -9,3 +9,5 @@ configMapGenerator:
   - name: openttd-configmap
     files:
       - openttd.cfg=./resources/openttd.cfg
+generatorOptions:
+  disableNameSuffixHash: true
