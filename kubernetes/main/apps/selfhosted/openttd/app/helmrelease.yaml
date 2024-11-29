@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sillock1/openttd
-              tag: 14.1@sha256:43e80c5b0065f18f4dd10b9b473cfc6aa4ab1040b02bbc5a10a8f61adabcbe21
+              tag: 14.1@sha256:fbbc74d0f17823e4c63e274b477b14315a9af4b0533e2c2b7d7ea50893b13b6d
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
@@ -93,7 +93,7 @@ spec:
         type: configMap
         name: openttd-configmap
         globalMounts:
-          - path: /config/openttd.cfg
+          - path: /data/openttd.cfg
             subPath: openttd.cfg
             readOnly: true
       # I'm not a big fan of mounting the data path here
@@ -103,4 +103,4 @@ spec:
         advancedMounts:
           openttd:
             app:
-              - path: /config
+              - path: /data
