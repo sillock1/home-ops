@@ -69,7 +69,6 @@ spec:
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: 10.1.7.35
-          external-dns.alpha.kubernetes.io/hostname: openttd.${SECRET_DOMAIN}
         ports:
           tcp:
             port: 3979
@@ -79,6 +78,18 @@ spec:
             port: 3979
             protocol: UDP
             targetPort: 3979
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN}
+        className: external
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: 3979
     persistence:
       config-file:
         type: configMap
