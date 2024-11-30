@@ -52,7 +52,7 @@ spec:
     sources: ["ingress", "service"]
     txtOwnerId: default
     txtPrefix: k8s.
-    domainFilters: ["sillock.io", "${SECRET_DOMAIN}"]
+    domainFilters: ["sillock.io"] #, "${SECRET_DOMAIN}"]
     serviceMonitor:
       enabled: true
     podAnnotations:
