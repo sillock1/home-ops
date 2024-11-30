@@ -78,19 +78,6 @@ spec:
             port: 3979
             protocol: UDP
             targetPort: 3979
-    ingress:
-      app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN}
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: 'false'
-        className: external
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: 3979
     persistence:
       config-file:
         type: configMap
