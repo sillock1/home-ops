@@ -82,7 +82,7 @@ spec:
       app:
         className: external
         hosts:
-          - host: &host "{{ .Release.Name }}.sillock.io"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
