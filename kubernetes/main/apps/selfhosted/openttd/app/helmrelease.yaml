@@ -39,7 +39,13 @@ spec:
           app:
             image:
               repository: ghcr.io/sillock1/openttd
-              tag: 14.1@sha256:9b6d33dcbe9c47e6c2410c040d61ed689218b2401f40778c7b56968f4357b255
+              tag: 14.1@sha256:aea88f68679c84a51a3e29f95adec5faba16de77abc3bb1ca270d7778a135f36
+            envFrom:
+              - secretRef:
+                  name: openttd-secret
+            env:
+              SERVER_NAME: Sillock's OpenTTD Server
+              CLIENT_NAME: sillock_server
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
