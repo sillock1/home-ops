@@ -1,28 +1,37 @@
 ---
-version: "3"
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+set: [pipefail]
+shopt: [globstar]
 
 vars:
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/cloud/bootstrap/ansible"
-  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-  PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
-
-  PYTHON_BIN: python3
+  CLUSTER: '{{.CLUSTER | default "main"}}'
+  CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}'
 
 env:
-  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
-  SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/age.key"
-  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
+  GOPATH: '{{.ROOT_DIR}}/.go'
+  KUBECONFIG: '{{.CLUSTER_DIR}}/kubeconfig'
+  MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
+  SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
+  TALOSCONFIG: '{{.CLUSTER_DIR}}/talosconfig'
+  VIRTUAL_ENV: '{{.ROOT_DIR}}/.venv'
 
 includes:
-  precommit: .taskfiles/precommit-tasks.yaml
-  cluster: .taskfiles/cluster-tasks.yaml
-  volsync: .taskfiles/VolSync/Tasks.yaml
-  workstation: .taskfiles/Workstation/Taskfile.yaml
-  ansible: .taskfiles/Ansible/Taskfile.yaml
   bootstrap: .taskfiles/bootstrap
-  talos: .taskfiles/Talos/Taskfile.yaml
+  kubernetes: .taskfiles/kubernetes
+  talos: .taskfiles/talos
+  volsync: .taskfiles/volsync
+  workstation: .taskfiles/workstation
+
 tasks:
+
   default:
+    cmd: task --list
     silent: true
-    cmds: ["task -l"]
+
+  # Ref: https://github.com/go-task/task/issues/608
+  noop:
+    internal: true
+    silent: true
+    cmd: noop() { :; }
