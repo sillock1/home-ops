@@ -1,9 +1,22 @@
 ---
-area/ansible:
-  - "ansible/**/*"
+# Areas
+area/docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "docs/**/*"
+          - "README.md"
 area/github:
-  - ".github/**/*"
+  - changed-files:
+      - any-glob-to-any-file: ".github/**/*"
 area/kubernetes:
-  - "kubernetes/**/*"
-area/templates:
-  - "tmpl/**/*"
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/**/*"
+area/taskfile:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".taskfiles/**/*"
+          - "Taskfile.yaml"
+# Clusters
+cluster/main:
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/main/**/*"
