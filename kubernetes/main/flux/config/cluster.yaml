@@ -1,11 +1,12 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/gitrepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: home-ops-kubernetes
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 30m
   url: ssh://git@github.com/sillock1/home-ops
   ref:
     branch: main
@@ -14,8 +15,24 @@ spec:
   ignore: |
     # exclude all
     /*
-    # include kubernetes directory
+    # include dirs
     !/kubernetes/main
+    !/kubernetes/shared
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-shared
+  namespace: flux-system
+spec:
+  interval: 30m
+  path: ./kubernetes/shared
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-ops-kubernetes
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -24,9 +41,11 @@ metadata:
   name: cluster
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 30m
+  dependsOn:
+    - name: cluster-shared
   path: ./kubernetes/main/flux
-  prune: false
+  prune: true
   wait: false
   sourceRef:
     kind: GitRepository
@@ -37,9 +56,9 @@ spec:
       name: sops-age
   postBuild:
     substituteFrom:
-      - kind: ConfigMap
-        name: cluster-settings
-        optional: false
-      - kind: Secret
-        name: cluster-secrets
-        optional: false
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
+      - name: cluster-secrets
+        kind: Secret
+        optional: true
