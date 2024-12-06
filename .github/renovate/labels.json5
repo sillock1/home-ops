@@ -14,16 +14,16 @@
       "labels": ["type/patch"]
     },
     {
+      "matchUpdateTypes": ["digest"],
+      "labels": ["type/digest"]
+    },
+    {
       "matchDatasources": ["docker"],
       "addLabels": ["renovate/container"]
     },
     {
       "matchDatasources": ["helm"],
       "addLabels": ["renovate/helm"]
-    },
-    {
-      "matchDatasources": ["galaxy", "galaxy-collection"],
-      "addLabels": ["renovate/ansible"]
     },
     {
       "matchDatasources": ["github-releases", "github-tags"],
