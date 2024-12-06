@@ -6,7 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ./dnsendpoint.yaml
-  - ../../../../.../shared/templates/volsync
+  - ../../../../../shared/templates/volsync
 configMapGenerator:
   - name: openttd-configmap
     files:
