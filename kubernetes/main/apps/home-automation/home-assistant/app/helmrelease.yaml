@@ -80,3 +80,7 @@ spec:
           home-assistant:
             app:
               - path: /config
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
