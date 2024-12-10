@@ -3,7 +3,7 @@ web:
   port: ${WEB_PORT}
 storage:
   type: postgres
-  path: postgres://${GATUS_POSTGRES_USER}:${GATUS_POSTGRES_PASS}@${GATUS_POSTGRES_HOST}:${GATUS_POSTGRES_PORT}/${GATUS_POSTGRES_DBNAME}?sslmode=disable
+  path: ${POSTGRES_URI}?sslmode=require
   caching: true
 metrics: true
 debug: false
