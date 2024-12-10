@@ -1,5 +1,0 @@
----
-providerRegex: |
-  ^(polaris|rigel|sirius|mercury|venus|earth)$
-
-bypassDnsResolution: true
