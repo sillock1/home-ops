@@ -1,5 +1,5 @@
 ---
-replicas 2
+replicas: 2
 bypassDnsResolution: true
 providerRegex: ^.*$
 metrics:
