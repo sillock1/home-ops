@@ -33,15 +33,6 @@ spec:
         resources:
           requests:
             storage: 20Gi
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: workload
-                operator: In
-                values:
-                - rook
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
@@ -151,15 +142,6 @@ spec:
           client_tls_sslmode: prefer
           default_pool_size: "100"
           max_client_conn: "500"
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: workload
-                operator: In
-                values:
-                - rook
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
