@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: &app wipe-rook
-  namespace: default
+  namespace: kube-system
   labels:
     app.kubernetes.io/name: *app
 spec:
@@ -34,8 +34,7 @@ spec:
               apk add --no-cache findutils nvme-cli;
               DISK=$(find /dev/disk/by-id/ -iname "*{{ ENV.MODEL }}*" -not -name "*-part[0-9+]");
               echo "=== Wiping $DISK ===";
-              nvme format --lbaf=1 $DISK --force;
-              nvme format --block-size=4096 $DISK --force;
+              dd if=/dev/zero bs=1M count=100 oflag=direct of=$DISK;
           securityContext:
             privileged: true
           volumeMounts:
