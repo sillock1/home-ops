@@ -58,10 +58,6 @@ spec:
       options: "SUPERUSER"
       password:
         type: AlphaNumeric
-    - name: "gatus"
-      databases: ["gatus"]
-      password:
-        type: AlphaNumeric
     - name: "prowlarr"
       databases: ["prowlarr_main"]
       password:
