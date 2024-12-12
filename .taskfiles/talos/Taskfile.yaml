@@ -2,15 +2,6 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: '3'
 
-vars:
-  TALHELPER_SECRET_FILE: "talsecret.sops.yaml"
-  TALHELPER_CONFIG_FILE: "talconfig.yaml"
-  # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-  TALOS_VERSION: v1.7.0
-  TALOS_SCHEMATIC_ID: 376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
-  # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-  KUBERNETES_VERSION: v1.30.0
-
 tasks:
 
   apply-node:
@@ -34,15 +25,15 @@ tasks:
 
   upgrade-node:
     desc: Upgrade Talos on a single node [CLUSTER=main] [IP=required]
-    dotenv: ['{{.CLUSTER_DIR}}/cluster.env']
+    dotenv: ['{{.CLUSTER_DIR}}/talos/cluster.env']
     cmds:
       - task: down
       - talosctl --nodes {{.IP}} upgrade --image="factory.talos.dev/installer{{if eq .TALOS_SECUREBOOT "true"}}-secureboot{{end}}/{{.TALOS_SCHEMATIC_ID}}:$TALOS_VERSION" --timeout=10m
       - talosctl --nodes {{.IP}} health --wait-timeout=10m --server=false
       - task: up
     vars:
-      TALOS_SCHEMATIC_ID:
-        sh: kubectl get nodes --output json | jq --raw-output '.items[] | select(.status.addresses[] | select(.type == "InternalIP" and .address == "{{.IP}}")) | .metadata.annotations."extensions.talos.dev/schematic"'
+      TALOS_SCHEMATIC_ID: de3b865124c5616da8084826167f8c0b0fbc9b905b146290db797024e84097fc
+        #sh: kubectl get nodes --output json | jq --raw-output '.items[] | select(.status.addresses[] | select(.type == "InternalIP" and .address == "{{.IP}}")) | .metadata.annotations."extensions.talos.dev/schematic"'
       TALOS_SECUREBOOT:
         sh: talosctl --nodes {{.IP}} get securitystate --output=jsonpath='{.spec.secureBoot}'
     requires:
@@ -51,13 +42,13 @@ tasks:
       - curl -fsSL -o /dev/null --fail https://github.com/siderolabs/talos/releases/tag/$TALOS_VERSION
       - talosctl --nodes {{.IP}} get machineconfig
       - talosctl config info
-      - test -f {{.CLUSTER_DIR}}/cluster.env
+      - test -f {{.CLUSTER_DIR}}/talos/cluster.env
       - test -f {{.CLUSTER_DIR}}/talosconfig
       - which kubectl talosctl
 
   upgrade-k8s:
     desc: Upgrade Kubernetes across the whole cluster [CLUSTER=main] [VERSION=required]
-    dotenv: ['{{.CLUSTER_DIR}}/cluster.env']
+    dotenv: ['{{.CLUSTER_DIR}}/talos/cluster.env']
     cmds:
       - task: down
       - talosctl --nodes {{.TALOS_CONTROLLER}} upgrade-k8s --to $KUBERNETES_VERSION
@@ -87,7 +78,7 @@ tasks:
     preconditions:
       - talosctl --nodes {{.IP}} get machineconfig
       - talosctl config info
-      - test -f {{.CLUSTER_DIR}}/cluster.env
+      - test -f {{.CLUSTER_DIR}}/talos/cluster.env
       - test -f {{.CLUSTER_DIR}}/talosconfig
       - which talosctl
 
