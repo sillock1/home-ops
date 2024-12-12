@@ -4,23 +4,16 @@ keys:
   - &flux age1tfk03j4cvglenzw23ugu2ne3aec7s5q4fgvm7nr2sf9wvxrpzfasd6dkcc
 
 creation_rules:
-  - # IMPORTANT: Keep this rule first
-    path_regex: talos/.+\.secret(\.sops)?\.ya?ml
-    input_type: yaml
+  - path_regex: kubernetes/.+\.sops\.yaml
     encrypted_regex: ^(token|crt|key|id|secret|secretboxEncryptionSecret|ca)$
     mac_only_encrypted: true
     key_groups:
       - pgp:
           - *sillock
-  - path_regex: kubernetes/.*/talos/.*\.sops\.ya?ml$
-    mac_only_encrypted: true
-    key_groups:
       - age:
           - *flux
-        pgp:
-          - *sillock
 
-  - path_regex: kubernetes/.*\.sops\.ya?ml$
+  - path_regex: kubernetes/.+\.sops\.yaml
     encrypted_regex: "^(data|stringData)$"
     mac_only_encrypted: true
     key_groups:
@@ -28,11 +21,6 @@ creation_rules:
           - *flux
         pgp:
           - *sillock
-
-  - path_regex: .*
-    mac_only_encrypted: true
-    key_groups:
-      - pgp:
-          - *sillock
-        age:
-          - *flux
+stores:
+  yaml:
+    indent: 2
