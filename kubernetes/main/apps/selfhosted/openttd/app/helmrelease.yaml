@@ -67,7 +67,6 @@ spec:
         runAsGroup: 2048
         fsGroup: 2048
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [2048]
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
