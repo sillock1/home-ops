@@ -80,8 +80,6 @@ spec:
             targetPort: *port
     ingress:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.sillock.io
         className: internal
         hosts:
           - host: requests.sillock.io

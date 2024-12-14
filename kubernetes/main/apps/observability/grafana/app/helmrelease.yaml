@@ -257,8 +257,6 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      annotations:
-        external-dns.alpha.kubernetes.io/target: internal.sillock.io
       ingressClassName: internal
       hosts: ["grafana.sillock.io"]
     persistence:

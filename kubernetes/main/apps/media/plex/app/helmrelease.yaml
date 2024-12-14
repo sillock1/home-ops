@@ -92,8 +92,6 @@ spec:
             port: 32400
     ingress:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.sillock.io
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         className: external
         hosts:

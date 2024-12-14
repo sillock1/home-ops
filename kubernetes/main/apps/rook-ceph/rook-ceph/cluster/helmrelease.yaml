@@ -34,8 +34,6 @@ spec:
       createPrometheusRules: true
     ingress:
       dashboard:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.sillock.io
         ingressClassName: internal
         host:
           name: rook.sillock.io
