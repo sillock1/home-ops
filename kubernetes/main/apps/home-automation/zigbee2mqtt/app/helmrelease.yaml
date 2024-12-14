@@ -110,8 +110,6 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.sillock.io
         hosts:
           - host: zigbee2mqtt.sillock.io
             paths:

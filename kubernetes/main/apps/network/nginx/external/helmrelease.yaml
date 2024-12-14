@@ -33,7 +33,7 @@ spec:
       replicaCount: 2
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: external.sillock.io
+          external-dns.alpha.kubernetes.io/hostname: &hostname external.sillock.io
           io.cilium/lb-ipam-ips: 10.1.7.31
       ingressClassResource:
         name: external
@@ -79,7 +79,10 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: network/sillock-io-tls
+        publish-status-address: *hostname
       terminationGracePeriodSeconds: 120
+      publishService:
+        enabled: false
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
