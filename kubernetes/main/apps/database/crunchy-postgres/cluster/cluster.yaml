@@ -67,6 +67,12 @@ spec:
         type: AlphaNumeric
   backups:
     pgbackrest:
+      restore:
+        enabled: true
+        repoName: repo2
+        options:
+        - --type=time
+        - --target="2024-12-09 12:00:00-00"
       configuration: &backupConfig
         - secret:
             name: crunchy-pgo-secret
