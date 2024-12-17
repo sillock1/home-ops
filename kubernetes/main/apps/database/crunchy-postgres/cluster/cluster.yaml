@@ -71,7 +71,7 @@ spec:
         enabled: true
         repoName: repo2
         options:
-        - --set='20241215-020003F'
+        - --set='20241208-020304F'
       configuration: &backupConfig
         - secret:
             name: crunchy-pgo-secret
