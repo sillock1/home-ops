@@ -71,8 +71,7 @@ spec:
         enabled: true
         repoName: repo2
         options:
-        - --type=time
-        - --target="2024-12-09 12:00:00-00"
+        - --set='20241215-020003F'
       configuration: &backupConfig
         - secret:
             name: crunchy-pgo-secret
