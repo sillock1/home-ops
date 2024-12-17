@@ -67,11 +67,14 @@ spec:
         type: AlphaNumeric
   backups:
     pgbackrest:
+      # This block is to restore the cluster
+      # Toggle enabled to pull from backup at pitr
       restore:
-        enabled: true
-        repoName: repo2
+        enabled: false
+        repoName: repo1
         options:
-        - --set='20241208-020304F'
+        - --type=time
+        - --target="2024-12-09 12:00:00-00"
       configuration: &backupConfig
         - secret:
             name: crunchy-pgo-secret
@@ -120,14 +123,15 @@ spec:
             full: "0 2 * * 0"           # Sunday at 2am
             differential: "0 2 * * 1-6" # Mon-Sat at 2am
   # This needs commenting out on first use
-  dataSource:
-    pgbackrest:
-      stanza: db
-      configuration: *backupConfig
-      global: *backupFlag
-      repo:
-        name: repo2
-        s3: *r2
+  # This block is to perform a point in time restore to a standby cluster
+  # dataSource:
+  #   pgbackrest:
+  #     stanza: db
+  #     configuration: *backupConfig
+  #     global: *backupFlag
+  #     repo:
+  #       name: repo1
+  #       s3: *minio
   proxy:
     pgBouncer:
       service:
