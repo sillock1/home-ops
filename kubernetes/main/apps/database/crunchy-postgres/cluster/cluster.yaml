@@ -116,14 +116,14 @@ spec:
             differential: "0 2 * * 1-6" # Mon-Sat at 2am
   # This needs commenting out on first use
   # This block is to perform a point in time restore to a standby cluster
-  dataSource:
-    pgbackrest:
-      stanza: db
-      configuration: *backupConfig
-      global: *backupFlag
-      repo:
-        name: repo1
-        s3: *minio
+  # dataSource:
+  #   pgbackrest:
+  #     stanza: db
+  #     configuration: *backupConfig
+  #     global: *backupFlag
+  #     repo:
+  #       name: repo1
+  #       s3: *minio
   proxy:
     pgBouncer:
       service:
