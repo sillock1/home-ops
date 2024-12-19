@@ -67,14 +67,6 @@ spec:
         type: AlphaNumeric
   backups:
     pgbackrest:
-      # This block is to restore the cluster
-      # Toggle enabled to pull from backup at pitr
-      restore:
-        enabled: false
-        repoName: repo1
-        options:
-        - --type=time
-        - --target="2024-12-09 12:00:00-00"
       configuration: &backupConfig
         - secret:
             name: crunchy-pgo-secret
