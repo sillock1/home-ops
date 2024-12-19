@@ -33,23 +33,21 @@ spec:
     schedule: "0 * * * *"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-    pruneIntervalDays: 7
+    pruneIntervalDays: 14
     repository: "${APP}-volsync-secret"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-4Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-2Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
-    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: 2048
-      runAsGroup: 2048
-      fsGroup: 2048
+      runAsUser: ${VOLSYNC_PUID:-2048}
+      runAsGroup: ${VOLSYNC_PGID:-2048}
+      fsGroup: ${VOLSYNC_PGID:-2048}
     retain:
       hourly: 24
       daily: 7
-      weekly: 5
-    unlock: unlockall
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -60,11 +58,18 @@ spec:
     manual: restore-once
   restic:
     repository: "${APP}-volsync-secret"
-    copyMethod: Snapshot # must be Snapshot
+    copyMethod: Snapshot
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-2Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-    capacity: "${VOLSYNC_CAPACITY}"
+    capacity: "${VOLSYNC_CAPACITY:-5Gi}"
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:-2048}
+      runAsGroup: ${VOLSYNC_PGID:-2048}
+      fsGroup: ${VOLSYNC_PGID:-2048}
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true
