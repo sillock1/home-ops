@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: crunchy-postgres-operator
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/observability/gatus/app
   prune: true
