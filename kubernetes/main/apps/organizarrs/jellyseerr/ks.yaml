@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app overseerr
+  name: &app jellyseer
   namespace: flux-system
 spec:
   targetNamespace: organizarrs
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/organizarrs/overseerr/app
+  path: ./kubernetes/main/apps/organizarrs/jellyseer/app
   prune: true
   sourceRef:
     kind: GitRepository
