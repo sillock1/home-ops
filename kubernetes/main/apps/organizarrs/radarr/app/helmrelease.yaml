@@ -98,6 +98,10 @@ spec:
     persistence:
       config:
         existingClaim: radarr
+      cache:
+        existingClaim: radarr-cache
+        globalMounts:
+          - path: /config/MediaCover
       scripts:
         type: configMap
         name: radarr-configmap
