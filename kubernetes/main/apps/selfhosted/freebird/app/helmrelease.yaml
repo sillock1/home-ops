@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/freebird
-              tag: 0.3.0@sha256:4982b9542a2d8217f85b06d3f27693d913d447dd08fd1ac82d7b11fc014edc01
+              tag: 0.5.1@sha256:145884fbc004e9d01da8072379980ae1f917e1538d308de3a015a2fb149cf940
             envFrom:
               - secretRef:
                   name: freebird-secret
