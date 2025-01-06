@@ -69,5 +69,5 @@ spec:
         advancedMounts:
           freebird:
             app:
-              - path: /app/config.toml
+              - path: /config.toml
                 subPath: config.toml
