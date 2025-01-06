@@ -63,3 +63,11 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      freebird-configfile:
+        type: configMap
+        name: freebird-configmap
+        advancedMounts:
+          freebird:
+            app:
+              - path: /app/config.toml
+                subPath: config.toml
