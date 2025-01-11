@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: cluster-meta
   path: ./kubernetes/main/apps
-  prune: true
+  prune: false # revert to true
   sourceRef:
     kind: GitRepository
     name: flux-system
