@@ -3,6 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: cilium
+  namespace: flux-system # Revert after flux instance
 spec:
   interval: 30m
   url: https://helm.cilium.io
