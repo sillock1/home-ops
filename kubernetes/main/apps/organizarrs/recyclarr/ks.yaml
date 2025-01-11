@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/organizarrs/recyclarr/app
-  prune: false # revert to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
