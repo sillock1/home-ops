@@ -11,7 +11,7 @@ instance:
     kind: GitRepository
     url: ssh://git@github.com/sillock1/home-ops
     ref: refs/heads/main
-    path: kubernetes/main/flux/config
+    path: kubernetes/main/flux
     pullSecret: github-deploy-key
   kustomize:
     patches:
