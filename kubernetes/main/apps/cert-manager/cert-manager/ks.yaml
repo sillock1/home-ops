@@ -14,7 +14,7 @@ spec:
   prune: false # revert to true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: home-ops-kubernetes
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -34,7 +34,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: home-ops-kubernetes
   interval: 30m
   retryInterval: 1m
   timeout: 5m
