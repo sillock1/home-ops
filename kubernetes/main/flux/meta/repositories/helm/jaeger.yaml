@@ -3,6 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: jaeger
+  namespace: flux-system # Revert after flux instance
 spec:
   interval: 2h
   url: https://jaegertracing.github.io/helm-charts

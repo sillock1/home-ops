@@ -3,6 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: dotbot
+  namespace: flux-system # Revert after flux instance
 spec:
   type: oci
   interval: 5m0s
