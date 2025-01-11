@@ -6,8 +6,8 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./pvc.yaml
-  - ../../../../../shared/templates/volsync
-  - ../../../../../shared/templates/gatus/guarded
+  - ../../../../templates/volsync
+  - ../../../../templates/gatus/guarded
 configMapGenerator:
   - name: sonarr-configmap
     files:
