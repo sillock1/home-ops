@@ -52,7 +52,7 @@ spec:
                 sabnzbd.downloads.svc,
                 sabnzbd.downloads.svc.cluster,
                 sabnzbd.downloads.svc.cluster.local,
-                sabnzbd.sillock.io
+                sabnzbd.sillock.com
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
@@ -95,7 +95,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: &host "{{ .Release.Name }}.sillock.io"
+          - host: &host "{{ .Release.Name }}.sillock.com"
             paths:
               - path: /
                 service:

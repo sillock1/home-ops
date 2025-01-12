@@ -65,7 +65,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: hass.sillock.io
+          - host: hass.sillock.com
             paths:
               - path: /
                 service:

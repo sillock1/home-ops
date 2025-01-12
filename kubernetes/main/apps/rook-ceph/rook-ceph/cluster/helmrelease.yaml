@@ -36,7 +36,7 @@ spec:
       dashboard:
         ingressClassName: internal
         host:
-          name: rook.sillock.io
+          name: rook.sillock.com
           path: /
     toolbox:
       enabled: true

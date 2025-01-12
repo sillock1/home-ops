@@ -38,7 +38,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hosts: ["alertmanager.sillock.io"]
+        hosts: ["alertmanager.sillock.com"]
         pathType: Prefix
       alertmanagerSpec:
         useExistingSecret: true
@@ -70,7 +70,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hosts: ["prometheus.sillock.io"]
+        hosts: ["prometheus.sillock.com"]
         pathType: Prefix
       prometheusSpec:
         scrapeInterval: 1m # Must match interval in Grafana Helm chart

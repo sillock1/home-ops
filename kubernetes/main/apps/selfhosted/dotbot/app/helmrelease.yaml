@@ -27,7 +27,7 @@ spec:
       enabled: true
       ingressClassName: external
       hosts:
-        - &host dotbot.sillock.io
+        - &host dotbot.sillock.com
       tls:
         - hosts:
             - *host
