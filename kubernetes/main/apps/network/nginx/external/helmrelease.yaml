@@ -75,7 +75,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: network/sillock-io-tls
+        default-ssl-certificate: network/sillock-tls
         publish-status-address: *hostname
       terminationGracePeriodSeconds: 120
       publishService:
