@@ -1,5 +1,8 @@
 ---
 instance:
+  distribution:
+    # renovate: datasource=github-releases depName=fluxcd/flux2
+    version: 2.4.0
   cluster:
     networkPolicy: false
   components:
@@ -11,10 +14,24 @@ instance:
     kind: GitRepository
     url: ssh://git@github.com/sillock1/home-ops
     ref: refs/heads/main
-    path: kubernetes/main/flux
+    path: kubernetes/main/flux/cluster
     pullSecret: github-deploy-key
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: flux
   kustomize:
     patches:
+      # Add Sops decryption to Kustomizations
+      - patch: |
+          - op: add
+            path: /spec/decryption
+            value:
+              provider: sops
+              secretRef:
+                name: sops-age
+        target:
+          group: kustomize.toolkit.fluxcd.io
+          kind: Kustomization
       # Increase the number of workers and limits
       # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#increase-the-number-of-workers-and-limits
       - patch: |
