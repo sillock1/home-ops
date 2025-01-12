@@ -3,9 +3,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: sillock-io
+  name: sillock
 spec:
-  secretName: sillock-io-tls
+  secretName: sillock-tls
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer

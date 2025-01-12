@@ -45,11 +45,11 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: sillock-io-tls
+  name: sillock-tls
   namespace: network
   annotations:
     cert-manager.io/alt-names: '*.sillock.com,sillock.com'
-    cert-manager.io/certificate-name: sillock-io
+    cert-manager.io/certificate-name: sillock
     cert-manager.io/common-name: sillock.com
     cert-manager.io/ip-sans: ""
     cert-manager.io/issuer-group: ""
