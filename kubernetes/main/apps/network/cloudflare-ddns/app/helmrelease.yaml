@@ -36,8 +36,8 @@ spec:
               - secretRef:
                   name: cloudflare-ddns-secret
             args: [
-              "--zone-name", "sillock.io",
-              "--record-name", "ipv4.sillock.io",
+              "--zone-name", "sillock.com",
+              "--record-name", "ipv4.sillock.com",
               "--provider", "random",
               "--create-missing", "true"
             ]

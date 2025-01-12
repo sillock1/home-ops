@@ -28,7 +28,7 @@ spec:
       replicaCount: 2
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: &hostname external.sillock.io
+          external-dns.alpha.kubernetes.io/hostname: &hostname external.sillock.com
           io.cilium/lb-ipam-ips: 10.1.7.31
       ingressClassResource:
         name: external

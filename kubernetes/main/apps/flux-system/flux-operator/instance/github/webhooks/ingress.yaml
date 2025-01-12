@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: flux-webhook.sillock.io
+    - host: flux-webhook.sillock.com
       http:
         paths:
           - path: /hook/

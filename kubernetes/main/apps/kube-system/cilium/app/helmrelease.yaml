@@ -53,7 +53,7 @@ spec:
         ingress:
           enabled: true
           className: internal
-          hosts: ["hubble.sillock.io"]
+          hosts: ["hubble.sillock.com"]
     operator:
       prometheus:
         enabled: true

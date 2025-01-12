@@ -9,10 +9,10 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: sillock.io
+  commonName: sillock.com
   dnsNames:
-    - sillock.io
-    - "*.sillock.io"
+    - sillock.com
+    - "*.sillock.com"
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1

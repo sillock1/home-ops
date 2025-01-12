@@ -86,7 +86,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.sillock.io"
+          - host: "{{ .Release.Name }}.sillock.com"
             paths:
               - path: /
                 service:

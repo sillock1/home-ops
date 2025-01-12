@@ -3,12 +3,12 @@ originRequest:
   http2Origin: true
 
 ingress:
-  - hostname: sillock.io
+  - hostname: sillock.com
     service: https://nginx-external-controller.network.svc.cluster.local:443
     originRequest:
-      originServerName: external.sillock.io
-  - hostname: "*.sillock.io"
+      originServerName: external.sillock.com
+  - hostname: "*.sillock.com"
     service: https://nginx-external-controller.network.svc.cluster.local:443
     originRequest:
-      originServerName: external.sillock.io
+      originServerName: external.sillock.com
   - service: http_status:404

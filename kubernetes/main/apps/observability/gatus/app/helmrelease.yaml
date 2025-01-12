@@ -106,7 +106,7 @@ spec:
       app:
         className: external
         hosts:
-          - host: status.sillock.io
+          - host: status.sillock.com
             paths:
               - path: /
                 service:
