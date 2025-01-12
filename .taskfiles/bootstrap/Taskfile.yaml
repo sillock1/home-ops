@@ -6,7 +6,7 @@ tasks:
 
   talos:
     desc: Bootstrap Talos [CLUSTER=main]
-    dotenv: ['{{.CLUSTER_DIR}}/cluster.env']
+    dotenv: ['{{.CLUSTER_DIR}}/.cluster.env']
     cmds:
       - for: { var: TALOS_NODES }
         cmd: >
