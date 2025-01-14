@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app nginx-certificates
+  name: &app external-cloudflare-ddns
   namespace: flux-system
 spec:
   targetNamespace: network
@@ -11,10 +11,55 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cert-manager-issuers
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/network/nginx/certificates
-  prune: false
+  path: ./kubernetes/main/apps/network/external/cloudflare-ddns
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: false
+  interval: 30m
+  timeout: 5m
+
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app external-cloudflared
+  namespace: flux-system
+spec:
+  targetNamespace: network
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-external-dns
+    - name: external-secrets-stores
+  path: ./kubernetes/main/apps/network/external/cloudflared
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: false
+  interval: 30m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app external-external-dns
+  namespace: flux-system
+spec:
+  targetNamespace: network
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+  path: ./kubernetes/main/apps/network/external/external-dns
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -26,7 +71,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app nginx-external
+  name: &app external-ingress-nginx
   namespace: flux-system
 spec:
   targetNamespace: network
@@ -34,38 +79,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: nginx-certificates
-    - name: external-secrets-stores
-  path: ./kubernetes/main/apps/network/nginx/external
-  prune: false
+    - name: cert-manager-tls
+  path: ./kubernetes/main/apps/network/external/ingress-nginx
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
   wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app nginx-internal
-  namespace: flux-system
-spec:
-  targetNamespace: network
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  dependsOn:
-    - name: nginx-certificates
-    - name: external-secrets-stores
-  path: ./kubernetes/main/apps/network/nginx/internal
-  prune: false
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  wait: false
-  interval: 30m
-  retryInterval: 1m
   timeout: 5m
