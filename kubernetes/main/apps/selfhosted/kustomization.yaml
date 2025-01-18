@@ -7,5 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./dotbot/ks.yaml
-  - ./freebird/ks.yaml
   - ./openttd/ks.yaml
