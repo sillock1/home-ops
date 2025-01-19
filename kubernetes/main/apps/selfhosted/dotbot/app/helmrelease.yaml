@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    api:
+      replicas: 2
     ingress:
       enabled: true
       ingressClassName: external
