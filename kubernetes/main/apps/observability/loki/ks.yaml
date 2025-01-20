@@ -6,17 +6,16 @@ metadata:
   name: &app loki
   namespace: flux-system
 spec:
-  targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 30m
   path: ./kubernetes/main/apps/observability/loki/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
-  retryInterval: 1m
+  targetNamespace: observability
   timeout: 15m
+  wait: false

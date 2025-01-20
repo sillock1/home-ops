@@ -6,17 +6,16 @@ metadata:
   name: &app dotbot
   namespace: flux-system
 spec:
-  targetNamespace: selfhosted
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 30m
   path: ./kubernetes/main/apps/selfhosted/dotbot/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
-  retryInterval: 1m
+  targetNamespace: selfhosted
   timeout: 5m
+  wait: false

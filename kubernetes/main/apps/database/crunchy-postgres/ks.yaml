@@ -1,23 +1,24 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &appname crunchy-postgres-operator
   namespace: flux-system
 spec:
-  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 10m
+  interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: true
+  targetNamespace: database
+  timeout: 5m
+  wait: false
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -26,20 +27,21 @@ metadata:
   name: &appname crunchy-postgres-operator-cluster
   namespace: flux-system
 spec:
-  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 10m
+  dependsOn:
+    - name: crunchy-postgres-operator
+  interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/cluster
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: database
+  timeout: 5m
   wait: true
-  dependsOn:
-    - name: crunchy-postgres-operator
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -48,21 +50,22 @@ metadata:
   name: &appname crunchy-postgres-operator-secretstore
   namespace: flux-system
 spec:
-  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 10m
+  dependsOn:
+    - name: crunchy-postgres-operator-cluster
+    - name: external-secrets-stores
+  interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/clustersecretstore
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: database
+  timeout: 5m
   wait: true
-  dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: external-secrets-stores
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -71,17 +74,18 @@ metadata:
   name: &appname crunchy-postgres-userinit-controller
   namespace: flux-system
 spec:
-  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 10m
+  dependsOn:
+    - name: crunchy-postgres-operator-cluster
+  interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/userinit-controller
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: database
+  timeout: 5m
   wait: true
-  dependsOn:
-    - name: crunchy-postgres-operator-cluster
