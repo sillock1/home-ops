@@ -6,23 +6,22 @@ metadata:
   name: &app jellyseerr
   namespace: flux-system
 spec:
-  targetNamespace: organizarrs
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/organizarrs/jellyseerr/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  path: ./kubernetes/main/apps/organizarrs/jellyseerr/app
   postBuild:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: requests
       GATUS_PATH: /api/v1/status
       VOLSYNC_CAPACITY: 5Gi
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: organizarrs
+  timeout: 5m
+  wait: false

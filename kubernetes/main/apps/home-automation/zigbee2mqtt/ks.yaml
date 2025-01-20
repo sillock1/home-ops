@@ -6,22 +6,13 @@ metadata:
   name: &app zigbee2mqtt
   namespace: flux-system
 spec:
-  targetNamespace: home-automation
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/home-automation/zigbee2mqtt/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  path: ./kubernetes/main/apps/home-automation/zigbee2mqtt/app
   postBuild:
     substitute:
       APP: *app
@@ -30,3 +21,11 @@ spec:
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_STORAGECLASS: ceph-filesystem
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: home-automation
+  timeout: 5m
+  wait: false
