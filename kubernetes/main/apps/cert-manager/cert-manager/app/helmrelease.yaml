@@ -25,18 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    crds:
-      enabled: true
-    replicaCount: 2
-    dns01RecursiveNameservers: https://1.1.1.1:443/dns-query,https://1.0.0.1:443/dns-query
-    dns01RecursiveNameserversOnly: true
-    podDnsPolicy: None
-    podDnsConfig:
-      nameservers:
-        - "1.1.1.1"
-        - "9.9.9.9"
-    prometheus:
-      enabled: true
-      servicemonitor:
-        enabled: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: cert-manager-helm-values
