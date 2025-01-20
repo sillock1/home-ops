@@ -12,8 +12,6 @@ machine:
     - 10.1.7.19
   kubelet:
     image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
-    extraArgs:
-      rotate-server-certificates: "true"
     extraMounts:
       - destination: /var/openebs/local
         type: bind
