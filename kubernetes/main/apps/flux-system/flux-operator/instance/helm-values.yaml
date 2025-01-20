@@ -12,10 +12,9 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    url: ssh://git@github.com/sillock1/home-ops
+    url: https://github.com/sillock1/home-ops
     ref: refs/heads/main
     path: kubernetes/main/flux/cluster
-    pullSecret: github-deploy-key
   commonMetadata:
     labels:
       app.kubernetes.io/name: flux
