@@ -15,7 +15,7 @@ spec:
   path: ./kubernetes/main/apps/home-automation/mosquitto/app
   postBuild:
     substitute:
-      APP: *appname
+      APP: *app
       VOLSYNC_CAPACITY: 512Mi
   prune: true
   sourceRef:
