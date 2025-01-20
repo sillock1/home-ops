@@ -6,19 +6,19 @@ metadata:
   name: &app echo-server
   namespace: flux-system
 spec:
-  targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 30m
   path: ./kubernetes/main/apps/observability/echo-server/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
+  targetNamespace: observability
   timeout: 5m
-  postBuild:
-    substitute:
-      APP: *app
+  wait: false
