@@ -14,7 +14,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/network/external/cloudflare-ddns
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -39,7 +39,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/network/external/cloudflared
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -63,7 +63,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/network/external/external-dns
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -87,7 +87,7 @@ spec:
       namespace: cert-manager
   interval: 30m
   path: ./kubernetes/main/apps/network/external/ingress-nginx
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

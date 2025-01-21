@@ -23,7 +23,7 @@ spec:
       - name: substitution-secret
         kind: Secret
         optional: true
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

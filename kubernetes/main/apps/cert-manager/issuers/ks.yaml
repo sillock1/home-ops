@@ -15,7 +15,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/cert-manager/issuers
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

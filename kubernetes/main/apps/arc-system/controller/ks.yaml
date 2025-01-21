@@ -14,7 +14,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/arc-system/controller/app
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
