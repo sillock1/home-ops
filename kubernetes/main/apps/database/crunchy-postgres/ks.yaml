@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &appname crunchy-postgres-operator
-  namespace: flux-system
+  namespace: &namespace database
 spec:
   commonMetadata:
     labels:
@@ -16,7 +16,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: database
+  targetNamespace: *namespace
   timeout: 5m
   wait: false
 ---
@@ -24,8 +24,8 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname crunchy-postgres-operator-cluster
-  namespace: flux-system
+  name: &appname crunchy-postgres-cluster
+  namespace: &namespace database
 spec:
   commonMetadata:
     labels:
@@ -39,7 +39,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: database
+  targetNamespace: *namespace
   timeout: 5m
   wait: true
 ---
@@ -47,38 +47,14 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname crunchy-postgres-operator-secretstore
-  namespace: flux-system
+  name: &appname userinit-controller
+  namespace: &namespace database
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: external-secrets-stores
-  interval: 30m
-  path: ./kubernetes/main/apps/database/crunchy-postgres/clustersecretstore
-  prune: false # revert back to true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: database
-  timeout: 5m
-  wait: true
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &appname crunchy-postgres-userinit-controller
-  namespace: flux-system
-spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *appname
-  dependsOn:
-    - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-cluster
   interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/userinit-controller
   prune: false # revert back to true
@@ -86,6 +62,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: database
+  targetNamespace: *namespace
   timeout: 5m
   wait: true

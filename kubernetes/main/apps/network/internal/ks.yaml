@@ -4,13 +4,14 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app internal-external-dns
-  namespace: flux-system
+  namespace: &namespace network
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/network/internal/external-dns
   prune: false # revert back to true
@@ -18,7 +19,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: network
+  targetNamespace: *namespace
   timeout: 5m
   wait: true
 ---
@@ -27,13 +28,13 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app internal-ingress-nginx
-  namespace: flux-system
+  namespace: &namespace network
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cert-manager-tls
+    - name: cert-manager-certificates
   interval: 30m
   path: ./kubernetes/main/apps/network/internal/ingress-nginx
   prune: false # revert back to true
@@ -41,6 +42,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: network
+  targetNamespace: *namespace
   timeout: 5m
   wait: false

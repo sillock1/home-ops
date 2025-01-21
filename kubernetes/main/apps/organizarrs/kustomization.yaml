@@ -2,12 +2,15 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: organizarrs
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomisations
-  - ./radarr/ks.yaml
-  - ./sonarr/ks.yaml
-  - ./prowlarr/ks.yaml
-  - ./jellyseerr/ks.yaml
-  - ./recyclarr/ks.yaml
+  # Base resources
+  - namespace.yaml
+  # Flux Kustomisations
+  - radarr/ks.yaml
+  - sonarr/ks.yaml
+  - prowlarr/ks.yaml
+  - jellyseerr/ks.yaml
+  - recyclarr/ks.yaml
+components:
+- ../../flux/components/volsync
