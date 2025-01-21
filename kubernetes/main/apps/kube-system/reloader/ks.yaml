@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/main/apps/kube-system/reloader/resources
+  path: ./kubernetes/main/apps/kube-system/reloader/app
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository

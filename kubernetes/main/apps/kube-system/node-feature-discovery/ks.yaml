@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/main/apps/kube-system/node-feature-discovery/resources
+  path: ./kubernetes/main/apps/kube-system/node-feature-discovery/app
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
