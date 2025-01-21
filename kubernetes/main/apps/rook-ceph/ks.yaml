@@ -39,7 +39,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/cluster
+  path: ./kubernetes/main/apps/rook-ceph/cluster
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
