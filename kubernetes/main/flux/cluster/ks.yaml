@@ -22,6 +22,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: flux-system
+  timeout: 5m
   wait: true
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -38,6 +39,14 @@ spec:
   dependsOn:
     - name: cluster-meta
   interval: 30m
+  path: ./kubernetes/main/apps
+  prune: false # revert back to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: false
   patches:
     - patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -49,30 +58,6 @@ spec:
             provider: sops
             secretRef:
               name: sops-age
-          postBuild:
-            substituteFrom:
-              - name: cluster-settings
-                kind: ConfigMap
-                optional: true
-              - name: cluster-secrets
-                kind: Secret
-                optional: true
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)
-  path: ./kubernetes/main/apps
-  postBuild:
-    substituteFrom:
-      - name: cluster-settings
-        kind: ConfigMap
-        optional: true
-      - name: cluster-secrets
-        kind: Secret
-        optional: true
-  prune: false # revert back to true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false

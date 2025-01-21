@@ -4,13 +4,14 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app rabbitmq
-  namespace: flux-system
+  namespace: &namespace broker
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/broker/rabbitmq/app
   prune: false # revert back to true
@@ -18,6 +19,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: broker
+  targetNamespace: *namespace
   timeout: 5m
   wait: false

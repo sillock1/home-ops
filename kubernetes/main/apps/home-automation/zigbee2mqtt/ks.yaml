@@ -4,13 +4,14 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app zigbee2mqtt
-  namespace: flux-system
+  namespace: &namespace home-automation
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/home-automation/zigbee2mqtt/app
   postBuild:
@@ -26,6 +27,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: home-automation
+  targetNamespace: *namespace
   timeout: 5m
   wait: false
