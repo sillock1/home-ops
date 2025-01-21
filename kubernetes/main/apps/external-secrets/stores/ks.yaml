@@ -13,7 +13,7 @@ spec:
     - name: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/external-secrets/stores/app
-  prune: false # revert back to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
