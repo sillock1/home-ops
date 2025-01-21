@@ -10,13 +10,18 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/substitution-secrets
+    - ../../../../flux/components/substitution-secret
   dependsOn:
     - name: cert-manager-issuers
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/cert-manager/certificates/app
+  postBuild:
+    substituteFrom:
+      - name: substitution-secret
+        kind: Secret
+        optional: true
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
@@ -25,19 +30,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: true
-  patches:
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          decryption:
-            provider: sops
-            secretRef:
-              name: sops-age
-          postBuild:
-            substituteFrom:
-              - name: substitution-secret
-                kind: Secret
-                optional: true
