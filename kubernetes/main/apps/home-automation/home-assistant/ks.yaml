@@ -18,7 +18,7 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
-  prune: true
+  prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system

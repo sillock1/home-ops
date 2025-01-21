@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *appname
   interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/app
-  prune: true
+  prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -34,7 +34,7 @@ spec:
     - name: crunchy-postgres-operator
   interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/cluster
-  prune: true
+  prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -58,7 +58,7 @@ spec:
     - name: external-secrets-stores
   interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/clustersecretstore
-  prune: true
+  prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -81,7 +81,7 @@ spec:
     - name: crunchy-postgres-operator-cluster
   interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/userinit-controller
-  prune: true
+  prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system
