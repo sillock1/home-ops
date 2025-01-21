@@ -4,13 +4,16 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app jellyseerr
-  namespace: flux-system
+  namespace: organizarrs
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../flux/components/gatus/guarded
+    - ../../../flux/components/volsync
   interval: 30m
-  path: ./kubernetes/main/apps/organizarrs/jellyseerr/app
+  path: ./kubernetes/main/apps/organizarrs/jellyseerr/resources
   postBuild:
     substitute:
       APP: *app

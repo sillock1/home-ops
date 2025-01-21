@@ -4,13 +4,15 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app echo-server
-  namespace: flux-system
+  namespace: observability
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../flux/components/gatus/external
   interval: 30m
-  path: ./kubernetes/main/apps/observability/echo-server/app
+  path: ./kubernetes/main/apps/observability/echo-server/resources
   postBuild:
     substitute:
       APP: *app
