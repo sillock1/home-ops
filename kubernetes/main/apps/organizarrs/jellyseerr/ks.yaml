@@ -17,7 +17,7 @@ spec:
       GATUS_SUBDOMAIN: requests
       GATUS_PATH: /api/v1/status
       VOLSYNC_CAPACITY: 5Gi
-  prune: true
+  prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system
