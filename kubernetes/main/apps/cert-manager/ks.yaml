@@ -35,7 +35,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets-stores
   interval: 30m
-  path: ./kubernetes/main/apps/cert-manager/issuers/resources
+  path: ./kubernetes/main/apps/cert-manager/issuers
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
@@ -60,7 +60,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/cert-manager/certificates/resources
+  path: ./kubernetes/main/apps/cert-manager/certificates
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository

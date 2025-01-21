@@ -13,7 +13,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/arc-system/controller/resources
+  path: ./kubernetes/main/apps/arc-system/controller
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
@@ -38,7 +38,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/arc-system/runner/resources
+  path: ./kubernetes/main/apps/arc-system/runner
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
