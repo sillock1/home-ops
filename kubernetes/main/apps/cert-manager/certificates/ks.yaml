@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/substitution-secrets
   dependsOn:
     - name: cert-manager-issuers
     - name: external-secrets-stores
@@ -23,3 +25,19 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: true
+  patches:
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-age
+          postBuild:
+            substituteFrom:
+              - name: substitution-secret
+                kind: Secret
+                optional: true
