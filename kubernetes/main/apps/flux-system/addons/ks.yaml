@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: flux-instance
-  path: ./kubernetes/main/apps/flux-system/addons
+  path: ./kubernetes/main/apps/flux-system/addons/resources
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository

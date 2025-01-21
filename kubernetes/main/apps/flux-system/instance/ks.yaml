@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: flux-operator
-  path: ./kubernetes/main/apps/flux-system/instance
+  path: ./kubernetes/main/apps/flux-system/instance/resources
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
