@@ -6,7 +6,8 @@ namespace: network
 resources:
   # Base resources
   - namespace.yaml
-  - ../../flux/components/alerts
   # Flux Kustomizations
   - external/ks.yaml
   - internal/ks.yaml
+components:
+  - ../../flux/components/alerts

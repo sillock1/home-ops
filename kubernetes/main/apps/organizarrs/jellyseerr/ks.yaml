@@ -11,7 +11,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../flux/components/gatus/guarded
-    - ../../../flux/components/volsync
   interval: 30m
   path: ./kubernetes/main/apps/organizarrs/jellyseerr/resources
   postBuild:

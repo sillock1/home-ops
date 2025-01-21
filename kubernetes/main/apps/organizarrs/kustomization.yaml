@@ -12,3 +12,5 @@ resources:
   - prowlarr/ks.yaml
   - jellyseerr/ks.yaml
   - recyclarr/ks.yaml
+components:
+- ../../flux/components/volsync

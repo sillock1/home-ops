@@ -6,7 +6,8 @@ namespace: media
 resources:
   # Base resources
   - namespace.yaml
-  - ../../flux/components/gatus/guarded
-  - ../../flux/components/volsync
   # Flux Kustomizations
   - plex/ks.yaml
+components:
+  - ../../flux/components/gatus/guarded
+  - ../../flux/components/volsync

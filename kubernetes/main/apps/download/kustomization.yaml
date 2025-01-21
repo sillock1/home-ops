@@ -6,7 +6,8 @@ namespace: download
 resources:
   # Base resources
   - namespace.yaml
-  - ../../flux/components/gatus/guarded
-  - ../../flux/components/volsync
   # Flux Kustomisations
   - sabnzbd/ks.yaml
+components:
+  - ../../flux/components/gatus/guarded
+  - ../../flux/components/volsync
