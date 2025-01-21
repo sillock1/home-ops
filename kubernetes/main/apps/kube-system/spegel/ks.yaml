@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/main/apps/kube-system/spegel/apps
+  path: ./kubernetes/main/apps/kube-system/spegel/app
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
