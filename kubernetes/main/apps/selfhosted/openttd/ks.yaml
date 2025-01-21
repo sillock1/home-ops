@@ -3,22 +3,23 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app dotbot
-  namespace: &namespace self-hosted
+  name: &app openttd
+  namespace: &namespace selfhosted
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../flux/components/sops
+    - ../../../../flux/components/substitution-secrets
     - ../../../../flux/components/gatus/external
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
+    - ../../../../flux/components/volsync
   interval: 30m
-  path: ./kubernetes/main/apps/selfhosted/dotbot/app
+  path: ./kubernetes/main/apps/selfhosted/openttd/app
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 5Gi
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
