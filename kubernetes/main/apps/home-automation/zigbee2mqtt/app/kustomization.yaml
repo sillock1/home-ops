@@ -6,9 +6,9 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: zigbee2mqtt-loki-rules
+  - name: zigbee-loki-rules
     files:
-      - zigbee2mqtt.yaml=./resources/lokirule.yaml
+      - zigbee2mqtt.yaml=./config/lokirule.yaml
     options:
       labels:
         loki_rule: "true"

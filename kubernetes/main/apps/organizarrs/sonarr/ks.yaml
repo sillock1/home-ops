@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app sonarr
-  namespace: organizarrs
+  namespace: &namespace organizarrs
 spec:
   commonMetadata:
     labels:
@@ -17,7 +17,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/organizarrs/sonarr/resources
+  path: ./kubernetes/main/apps/organizarrs/sonarr/app
   postBuild:
     substitute:
       APP: *app
@@ -27,6 +27,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: organizarrs
+  targetNamespace: *namespace
   timeout: 5m
   wait: false

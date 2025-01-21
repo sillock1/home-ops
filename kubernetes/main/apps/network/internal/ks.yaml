@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app internal-external-dns
-  namespace: network
+  namespace: &namespace network
 spec:
   commonMetadata:
     labels:
@@ -19,7 +19,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: network
+  targetNamespace: *namespace
   timeout: 5m
   wait: true
 ---
@@ -28,7 +28,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app internal-ingress-nginx
-  namespace: network
+  namespace: &namespace network
 spec:
   commonMetadata:
     labels:
@@ -42,6 +42,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: network
+  targetNamespace: *namespace
   timeout: 5m
   wait: false

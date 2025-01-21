@@ -3,24 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app gatus
-  namespace: &namespace observability
+  name: &app openebs
+  namespace: &namespace openebs-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../flux/components/volsync
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/observability/gatus/app
-  postBuild:
-    substitute:
-      APP: *app
-      GATUS_SUBDOMAIN: status
-      VOLSYNC_CAPACITY: 5Gi
+  path: ./kubernetes/main/apps/openebs-system/resources
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository

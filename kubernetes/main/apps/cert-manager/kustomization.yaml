@@ -7,4 +7,6 @@ resources:
   # Base resources
   - namespace.yaml
   # Flux Kustomizations
-  - ks.yaml
+  - cert-manager/ks.yaml
+  - issuers/ks.yaml
+  - certificates/ks.yaml

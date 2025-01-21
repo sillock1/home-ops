@@ -7,4 +7,5 @@ resources:
   # Base resources
   - namespace.yaml
   # Flux Kustomizations
-  - ks.yaml
+  - controller/ks.yaml
+  - runner/ks.yaml

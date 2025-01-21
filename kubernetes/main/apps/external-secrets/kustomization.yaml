@@ -7,4 +7,5 @@ resources:
   # Base resources
   - namespace.yaml
   # Flux Kustomizations
-  - ks.yaml
+  - external-secrets/ks.yaml
+  - stores/ks.yaml

@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app grafana
-  namespace: observability
+  namespace: &namespace observability
 spec:
   commonMetadata:
     labels:
@@ -13,12 +13,12 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/main/apps/observability/grafana/resources
+  path: ./kubernetes/main/apps/observability/grafana/app
   prune: false # revert back to true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: observability
+  targetNamespace: *namespace
   timeout: 5m
   wait: false
