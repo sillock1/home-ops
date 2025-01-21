@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: cert-manager
     - name: external-secrets-stores
-      namespace: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/cert-manager/issuers
   prune: false # revert back to true
