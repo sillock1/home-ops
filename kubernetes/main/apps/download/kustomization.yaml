@@ -8,6 +8,3 @@ resources:
   - namespace.yaml
   # Flux Kustomisations
   - sabnzbd/ks.yaml
-components:
-  - ../../flux/components/gatus/guarded
-  - ../../flux/components/volsync
