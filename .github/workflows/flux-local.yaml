@@ -14,7 +14,7 @@ concurrency:
 jobs:
   changed-clusters:
     name: Changed Clusters
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       matrix: ${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}
     steps:
@@ -43,9 +43,9 @@ jobs:
       - name: List All Changed Clusters
         run: echo "${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}"
 
-  flux-diff:
-    name: Flux Diff
-    runs-on: ubuntu-latest
+  flux-local:
+    name: Flux Local
+    runs-on: ubuntu-22.04
     needs: ["changed-clusters"]
     permissions:
       pull-requests: write
@@ -75,6 +75,13 @@ jobs:
           token: "${{ steps.app-token.outputs.token }}"
           ref: "${{ github.event.repository.default_branch }}"
           path: default
+
+      - name: Test
+        id: test
+        uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
+        with:
+          args: >-
+            test /github/workspace/pull/${{ matrix.paths }}
 
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
@@ -123,7 +130,7 @@ jobs:
     if: ${{ always() }}
     needs: ["flux-diff"]
     name: Flux Diff Successful
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         name: Check matrix status
