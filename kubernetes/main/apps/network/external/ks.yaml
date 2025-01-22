@@ -41,6 +41,11 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/main/apps/network/external/cloudflared
+  postBuild:
+    substituteFrom:
+      - name: substitution-secret
+        kind: Secret
+        optional: true
   prune: true
   sourceRef:
     kind: GitRepository
