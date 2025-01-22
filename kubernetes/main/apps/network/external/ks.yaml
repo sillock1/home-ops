@@ -33,6 +33,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/substitution-secret
   dependsOn:
     - name: external-external-dns
     - name: external-secrets-stores
