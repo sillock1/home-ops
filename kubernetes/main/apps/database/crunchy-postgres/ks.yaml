@@ -36,6 +36,11 @@ spec:
     - name: crunchy-postgres-operator
   interval: 30m
   path: ./kubernetes/main/apps/database/crunchy-postgres/cluster
+  postBuild:
+    substituteFrom:
+      - name: substitution-secret
+        kind: Secret
+        optional: true
   prune: true
   sourceRef:
     kind: GitRepository
