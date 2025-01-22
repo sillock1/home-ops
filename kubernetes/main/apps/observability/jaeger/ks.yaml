@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/main/apps/monitoring/jaeger/app
+  path: ./kubernetes/main/apps/observability/jaeger/app
   prune: false
   sourceRef:
     kind: GitRepository
