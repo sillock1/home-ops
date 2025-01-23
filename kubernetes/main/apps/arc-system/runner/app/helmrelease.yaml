@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gha-runner-scale-set-runner
+  name: &name home-ops-runner
 spec:
   interval: 30m
   chart:
@@ -22,52 +22,58 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: actions-runner-controller
+      namespace: actions-runner-system
+    - name: openebs
+      namespace: openebs-system
   valuesFrom:
     - targetPath: githubConfigSecret.github_app_id
       kind: Secret
-      name: actions-runner-controller-auth-secret
+      name: actions-runner-controller-secret
       valuesKey: ACTION_RUNNER_CONTROLLER_GITHUB_APP_ID
     - targetPath: githubConfigSecret.github_app_installation_id
       kind: Secret
-      name: actions-runner-controller-auth-secret
+      name: actions-runner-controller-secret
       valuesKey: ACTION_RUNNER_CONTROLLER_GITHUB_INSTALLATION_ID
     - targetPath: githubConfigSecret.github_app_private_key
       kind: Secret
-      name: actions-runner-controller-auth-secret
+      name: actions-runner-controller-secret
       valuesKey: ACTION_RUNNER_CONTROLLER_GITHUB_PRIVATE_KEY
   values:
-    nameOverride: gha-runner-scale-set
-    runnerScaleSetName: gha-runner-scale-set
     githubConfigUrl: https://github.com/sillock1/home-ops
     minRunners: 1
-    maxRunners: 6
+    maxRunners: 3
     containerMode:
       type: kubernetes
       kubernetesModeWorkVolumeClaim:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: "ceph-block"
+        storageClassName: openebs-hostpath
         resources:
           requests:
-            storage: 1Gi
-      kubernetesModeServiceAccount:
-    annotations:
+            storage: 10Gi
+    controllerServiceAccount:
+      name: actions-runner-controller
+      namespace: actions-runner-system
     template:
       spec:
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 2048
-          runAsGroup: 2048
-          fsGroup: 2048
-          fsGroupChangePolicy: OnRootMismatch
-          seccompProfile: { type: RuntimeDefault }
         containers:
           - name: runner
             image: ghcr.io/onedr0p/actions-runner:2.321.0@sha256:a7539dc157f3f0129f49459826576ab53a529580916bb8a09a395e61e38354c0
             command: ["/home/runner/run.sh"]
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
-    controllerServiceAccount:
-      name: gha-runner-scale-set-controller
-      namespace: actions-runner-system
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"
+              - name: NODE_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            volumeMounts:
+              - mountPath: /var/run/secrets/talos.dev
+                name: talos
+                readOnly: true
+        serviceAccountName: *name
+        volumes:
+          - name: talos
+            secret:
+              secretName: *name
