@@ -57,7 +57,7 @@ spec:
               SONARR__UPDATE__BRANCH: develop
             resources:
               requests:
-                cpu: 200m
+                cpu: 50m
                 memory: 250Mi
               limits:
                 memory: 500Mi
