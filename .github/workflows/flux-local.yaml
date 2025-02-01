@@ -5,7 +5,9 @@ name: "Flux Diff"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["kubernetes/**"]
+    paths:
+      - "kubernetes/**/apps"
+      - "kubernetes/**/flux"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -25,11 +27,10 @@ jobs:
           app-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
-      - name: Checkout Default Branch
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           token: "${{ steps.app-token.outputs.token }}"
-          fetch-depth: 0
 
       - name: Get Changed Clusters
         id: changed-clusters
@@ -80,7 +81,7 @@ jobs:
         id: test
         uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
         with:
-          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/main/flux/cluster -v
+          args: test --enable-helm --all-namespaces --path /github/workspace/${{ matrix.paths }}/flux/cluster -v
 
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
