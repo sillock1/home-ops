@@ -80,8 +80,7 @@ jobs:
         id: test
         uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
         with:
-          args: >-
-            test /github/workspace/pull/${{ matrix.paths }}
+          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/main/flux/cluster -v
 
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
