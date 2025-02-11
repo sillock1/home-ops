@@ -49,6 +49,7 @@ spec:
         secretKeyRef:
           name: qdrant-secret
           key: API_KEY
+    readOnlyApiKey: false
     metrics:
       serviceMonitor:
         enabled: true
