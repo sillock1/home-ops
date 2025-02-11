@@ -47,12 +47,6 @@ spec:
             - path: /
               pathType: Prefix
               servicePort: 6333
-    apiKey:
-      valueFrom:
-        secretKeyRef:
-          name: qdrant-secret
-          key: API_KEY
-    readOnlyApiKey: {} # This is needed because the helm chart is really good
     metrics:
       serviceMonitor:
         enabled: true
