@@ -28,6 +28,8 @@ spec:
     ingress:
       enabled: true
       ingressClassName: external
+      pathType: Prefix
+      path: /interactions
       hosts:
         - &host dotbot.sillock.com
       tls:
