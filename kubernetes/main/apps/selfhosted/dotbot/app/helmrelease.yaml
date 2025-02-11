@@ -37,6 +37,5 @@ spec:
       RabbitMQ__Endpoint: 'rabbitmq.broker.svc.cluster.local'
       RabbitMQ__port: '5672'
       OTEL_EXPORTER_OTLP_ENDPOINT: 'http://opentelemetry-operator.monitoring.svc.cluster.local:8080'
-    configMapAnnotations: {}
     existingAppSecret: 'dotbot-secret'
     existingMigratorSecret: 'dotbot-migrator-secret'
