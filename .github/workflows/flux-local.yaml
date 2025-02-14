@@ -145,9 +145,9 @@ jobs:
             ```
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
-  flux-local-success:
+  diff-success:
     if: ${{ always() }}
-    needs: ["flux-local"]
+    needs: ["diff"]
     name: Flux Local Successful
     runs-on: ubuntu-24.04
     steps:
