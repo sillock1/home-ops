@@ -24,7 +24,7 @@
       "description": ["Custom versioning for janky kobot"],
       "matchPackagePatterns": ["kobot"],
       "datasourceTemplate": "docker",
-      "versioning": "regex:^(release)[.](\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2})$"
+      "versioning": "regex:^(?<compatibility>.*)[.](?<patch>20\\d\\d)-.*$"
     }
   ]
 }
