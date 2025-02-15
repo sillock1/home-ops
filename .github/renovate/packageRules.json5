@@ -19,11 +19,6 @@
       "matchDatasources": ["docker"],
       "matchPackagePatterns": ["plex"],
       "versioning": "loose"
-    },
-    {
-      "description": ["Custom versioning for janky kobot"],
-      "matchPackagePatterns": ["kobot"],
-      "versioning": "regex:^(?<compatibility>.*)[.](?<patch>20\\d\\d)-.*$"
     }
   ]
 }
