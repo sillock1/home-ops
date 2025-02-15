@@ -23,7 +23,6 @@
     {
       "description": ["Custom versioning for janky kobot"],
       "matchPackagePatterns": ["kobot"],
-      "datasourceTemplate": "docker",
       "versioning": "regex:^(?<compatibility>.*)[.](?<patch>20\\d\\d)-.*$"
     }
   ]
