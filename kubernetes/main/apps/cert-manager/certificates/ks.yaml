@@ -9,8 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../flux/components/substitution-secret
   dependsOn:
     - name: cert-manager-issuers
     - name: external-secrets-stores
