@@ -30,8 +30,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  components:
-    - ../../../../flux/components/substitution-secret
   dependsOn:
     - name: crunchy-postgres-operator
   interval: 30m
