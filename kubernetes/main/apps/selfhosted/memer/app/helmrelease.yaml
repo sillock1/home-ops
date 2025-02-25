@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/memer
-              tag: 0.1.3@sha256:b8b0b398bfbb7c77b7223076ec9ffb637b61132002d9c4c09f583236da30416e
+              tag: 0.1.4@sha256:7e5ee7ea8b510b72253e7db46042f8a2e1b64aacac65da09d08105038e7dbafc
             env:
               - name: QDRANT_URL
                 value: qdrant.database.svc.cluster.local:6333
