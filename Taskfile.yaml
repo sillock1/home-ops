@@ -6,16 +6,23 @@ set: [pipefail]
 shopt: [globstar]
 
 vars:
+  BOOSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
   CLUSTER: '{{.CLUSTER | default "main"}}'
-  CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}'
-  BOOTSTRAP_DIR: '{{.CLUSTER_DIR}}/bootstrap'
+  CLUSTER_APPS: '{{.ROOT_DIR}}/kubernetes/apps/{{.CLUSTER}}'
+  CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/clusters/{{.CLUSTER}}'
+  SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
+  SHARED_APPS: '{{.ROOT_DIR}}/kubernetes/apps/base'
+  TALOS_DIR: '{{.ROOT_DIR}}/talos/{{.CLUSTER}}'
+
+dotenv:
+  - '{{.ROOT_DIR}}/onepassword.env'
+  - '{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env'
+
 env:
-  GOPATH: '{{.ROOT_DIR}}/.go'
   KUBECONFIG: '{{.CLUSTER_DIR}}/kubeconfig'
   MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
   SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
-  TALOSCONFIG: '{{.CLUSTER_DIR}}/talosconfig'
-  VIRTUAL_ENV: '{{.ROOT_DIR}}/.venv'
+  TALOSCONFIG: '{{.TALOS_DIR}}/talosconfig'
 
 includes:
   bootstrap: .taskfiles/bootstrap
