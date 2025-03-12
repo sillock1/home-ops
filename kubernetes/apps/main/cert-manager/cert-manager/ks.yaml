@@ -13,15 +13,7 @@ spec:
     - name: external-secrets-store-onepassword
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/apps/base/cert-manager/app
-  patches:
-    - patch: |-
-        - op: add
-          path: /spec/acme/solvers/0/selector/dnszones/-
-          value: ${SECRET_DOMAIN}
-      target:
-        kind: ClusterIssuer
-        labelSelector: app.kubernetes.io/name=cert-manager-issuers
+  path: ./kubernetes/apps/main/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
