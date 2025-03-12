@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        cluster: ["main", "test", "utility"]
+        cluster: ["main"]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

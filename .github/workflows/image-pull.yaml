@@ -98,7 +98,7 @@ jobs:
     strategy:
       matrix:
         images: ${{ fromJSON(needs.compare.outputs.images) }}
-        cluster: ["main", "utility"]
+        cluster: ["main"]
       max-parallel: 4
       fail-fast: false
     steps:
