@@ -7,4 +7,4 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - ks.yaml
+  - actions-runner-controller/ks.yaml
