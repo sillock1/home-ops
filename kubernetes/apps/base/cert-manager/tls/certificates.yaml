@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sillock
+spec:
+  secretName: sillock-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: ${DOMAIN}
+  dnsNames:
+    - ${DOMAIN}
+    - "*.${DOMAIN}"
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: secret-domain
+spec:
+  secretName: secret-domain-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: ${SECRET_DOMAIN}
+  dnsNames:
+    - ${SECRET_DOMAIN}
+    - "*.${SECRET_DOMAIN}"

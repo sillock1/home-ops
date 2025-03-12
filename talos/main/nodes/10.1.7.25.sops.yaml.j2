@@ -1,0 +1,9 @@
+machine:
+  network:
+    hostname: earth
+    interfaces:
+      - deviceSelector:
+          hardwareAddr: 6c:2b:59:d2:97:cd
+  install:
+    image: factory.talos.dev/installer/de3b865124c5616da8084826167f8c0b0fbc9b905b146290db797024e84097fc:{{ ENV.TALOS_VERSION }}
+    disk: /dev/nvme0n1
