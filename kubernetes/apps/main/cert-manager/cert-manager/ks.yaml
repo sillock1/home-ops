@@ -21,7 +21,7 @@ spec:
           value: ${SECRET_DOMAIN}
       target:
         kind: ClusterIssuer
-        name: app.kubernetes.io/name=cert-manager-issuers
+        labelSelector: app.kubernetes.io/name=cert-manager-issuers
   prune: true
   sourceRef:
     kind: GitRepository
