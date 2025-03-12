@@ -16,6 +16,9 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/apps/base/broker/rabbitmq
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository
