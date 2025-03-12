@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../../base/cert-manager/app
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/acme/solvers/0/selector/dnsZones/-
+        value: ${SECRET_DOMAIN}
+    target:
+      kind: ClusterIssuer
+      name: letsencrypt-production
