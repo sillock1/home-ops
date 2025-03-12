@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         repos: ${{ fromJSON(needs.extract.outputs.repos) }}
-        cluster: ["main", "utility"]
+        cluster: ["main"]
       max-parallel: 4
       fail-fast: false
     steps:

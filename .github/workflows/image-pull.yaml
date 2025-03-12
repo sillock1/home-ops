@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
         branches: ["default", "pull"]
-        cluster: ["main", "utility"]
+        cluster: ["main"]
       fail-fast: false
     outputs:
       default: ${{ steps.images.outputs.default }}
