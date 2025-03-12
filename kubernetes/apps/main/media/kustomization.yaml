@@ -6,5 +6,6 @@ namespace: media
 components:
   - ../../../components/clusters/main
   - ../../../components/common
+  - ../../../components/repos
 resources:
   - plex/ks.yaml

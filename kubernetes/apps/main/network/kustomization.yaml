@@ -6,6 +6,7 @@ namespace: network
 components:
   - ../../../components/clusters/main
   - ../../../components/common
+  - ../../../components/repos
 resources:
   - external/ks.yaml
   - internal/ks.yaml

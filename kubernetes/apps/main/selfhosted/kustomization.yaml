@@ -6,6 +6,7 @@ namespace: selfhosted
 components:
   - ../../../components/clusters/main
   - ../../../components/common
+  - ../../../components/repos
 resources:
   - dotbot/ks.yaml
   - kobot/ks.yaml

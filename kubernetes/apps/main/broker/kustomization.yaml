@@ -6,5 +6,6 @@ namespace: broker
 components:
   - ../../../components/clusters/main
   - ../../../components/common
+  - ../../../components/repos
 resources:
   - rabbitmq/ks.yaml

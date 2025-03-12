@@ -6,6 +6,7 @@ namespace: observability
 components:
   - ../../../components/clusters/main
   - ../../../components/common
+  - ../../../components/repos
 resources:
   - blackbox-exporter/ks.yaml
   - blackbox-exporter/probes.yaml
