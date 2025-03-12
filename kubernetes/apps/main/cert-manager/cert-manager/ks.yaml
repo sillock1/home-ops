@@ -13,7 +13,7 @@ spec:
     - name: external-secrets-store-onepassword
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/apps/base/cert-manager/cert-manager/app
+  path: ./kubernetes/apps/base/cert-manager/app
   patches:
     - patch: |-
         - op: add
