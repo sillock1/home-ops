@@ -17,7 +17,7 @@ spec:
   patches:
     - patch: |-
         - op: add
-          path: /spec/acme/solvers/0/selector/dnszones/-
+          path: /spec/acme/solvers/0/selector/dnsZones/-
           value: ${DOMAIN}
       target:
         kind: ClusterIssuer
