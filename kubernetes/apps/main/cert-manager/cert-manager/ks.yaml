@@ -19,6 +19,9 @@ spec:
         - op: add
           path: /spec/acme/solvers/0/selector/dnszones/-
           value: ${SECRET_DOMAIN}
+      target:
+        kind: ClusterIssuer
+        labelSelector: app.kubernetes.io/name=cert-manager-issuers
   prune: true
   sourceRef:
     kind: GitRepository
