@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openttd
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync-system
+  values:
+    controllers:
+      openttd:
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sillock1/openttd
+              tag: 14.1@sha256:cb24c694ed4e9387a63a791b05e5b35f38a97a4359beb3b03cde3ad0b24df6ed
+            envFrom:
+              - secretRef:
+                  name: openttd-secret
+            env:
+              SERVER_NAME: Sillock's OpenTTD Server
+              CLIENT_NAME: sillock_server
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 40Mi
+              limits:
+                memory: 256Mi
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2048
+        runAsGroup: 2048
+        fsGroup: 2048
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: openttd
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 10.1.7.35
+        ports:
+          tcp:
+            port: 3979
+            protocol: TCP
+            targetPort: 3979
+          udp:
+            port: 3979
+            protocol: UDP
+            targetPort: 3979
+    persistence:
+      config-file:
+        type: configMap
+        name: openttd-configmap
+        globalMounts:
+          - path: /data/openttd.cfg
+            subPath: openttd.cfg
+            readOnly: true
+      # I'm not a big fan of mounting the data path here
+      # but openttd won't save it's data to a separate path from the config file
+      data:
+        existingClaim: openttd
+        advancedMounts:
+          openttd:
+            app:
+              - path: /data

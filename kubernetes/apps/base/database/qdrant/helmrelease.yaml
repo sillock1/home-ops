@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app qdrant
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: qdrant
+      version: 1.13.4
+      sourceRef:
+        kind: HelmRepository
+        name: qdrant
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 10m
+        memory: 128Mi
+    persistence:
+      accessModes: ["ReadWriteOnce"]
+      size: 10Gi
+      storageVolumeName: *app
+      storageClassName: ceph-block
+    metrics:
+      serviceMonitor:
+        enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: internal
+      hosts:
+        - host: "{{ .Release.Name }}.{DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+              servicePort: 6333
