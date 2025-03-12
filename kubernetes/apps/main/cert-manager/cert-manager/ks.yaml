@@ -21,7 +21,7 @@ spec:
           value: ${DOMAIN}
       target:
         kind: ClusterIssuer
-        labelSelector: app.kubernetes.io/name=cert-manager-issuers
+        name: letsencrypt-production
   prune: true
   sourceRef:
     kind: GitRepository
