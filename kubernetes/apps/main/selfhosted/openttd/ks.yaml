@@ -18,10 +18,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
-    substituteFrom:
-      - name: substitution-secret
-        kind: Secret
-        optional: true
   prune: true
   sourceRef:
     kind: GitRepository
