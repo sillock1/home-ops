@@ -10,7 +10,7 @@ components:
 resources:
   - system-upgrade-controller/ks.yaml
 configMapGenerator:
-  - name: system-upgrade-plan-versions
+  - name: versions
     env: ../../base/system-upgrade/system-upgrade-controller/versions.env
-generatorOptions:
-  disableNameSuffixHash: true
+configurations:
+  - ./kustomizeconfig.yaml
