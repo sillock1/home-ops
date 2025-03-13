@@ -51,3 +51,4 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
+        labelSelector: substitution.flux/enabled!=false
