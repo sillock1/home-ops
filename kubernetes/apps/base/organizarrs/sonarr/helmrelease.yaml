@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr
+  name: &app sonarr
 spec:
   interval: 30m
   chartRef:
@@ -48,7 +48,7 @@ spec:
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__LEVEL: info
               SONARR__LOG__DBENABLED: 'false'
-              SONARR__SERVER__PORT: &port 8080
+              SONARR__SERVER__PORT: &containerPort 8080
               SONARR__UPDATE__BRANCH: develop
             resources:
               requests:
@@ -63,7 +63,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
+                    port: *containerPort
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -78,19 +78,19 @@ spec:
         controller: sonarr
         ports:
           http:
-            port: 80
-            targetPort: *port
-    ingress:
+            port: &servicePort 80
+            targetPort: *containerPort
+    route:
       app:
-        className: internal
-        hosts:
-          - host: '{{ .Release.Name }}.${DOMAIN}'
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["{{ .Release.Name }}.${DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *servicePort
     persistence:
       config:
         existingClaim: sonarr

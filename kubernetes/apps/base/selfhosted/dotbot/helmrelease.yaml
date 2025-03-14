@@ -20,16 +20,6 @@ spec:
   values:
     api:
       replicas: 2
-    ingress:
-      enabled: true
-      ingressClassName: external
-      pathType: Prefix
-      path: /interactions
-      hosts:
-        - &host dotbot.${DOMAIN}
-      tls:
-        - hosts:
-            - *host
     env:
       RabbitMQ__Endpoint: 'rabbitmq.broker.svc.cluster.local'
       RabbitMQ__port: '5672'

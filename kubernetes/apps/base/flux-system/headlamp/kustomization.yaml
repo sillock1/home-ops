@@ -7,3 +7,4 @@ resources:
   - helmrepository.yaml
   - pushsecret.yaml
   - rbac.yaml
+  - httproute.yaml
