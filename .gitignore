@@ -12,3 +12,6 @@ Thumbs.db
 kubeconfig
 config.xml
 talosctl
+onepassword.env
+*.crt
+*.key
