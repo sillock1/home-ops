@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: jellyseerr
+  name: &app jellyseerr
 spec:
   interval: 30m
   chartRef:
@@ -33,7 +33,7 @@ spec:
             env:
               TZ: Europe/London
               LOG_LEVEL: "info"
-              PORT: &port 8080
+              PORT: &containerPort 8080
             probes:
               liveness: &probes
                 enabled: true
@@ -41,7 +41,7 @@ spec:
                 spec:
                   httpGet:
                     path: /api/v1/status
-                    port: *port
+                    port: *containerPort
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -69,18 +69,21 @@ spec:
         controller: jellyseerr
         ports:
           http:
-            port: 80
-            targetPort: *port
-    ingress:
+            port: &servicePort 80
+            targetPort: *containerPort
+    route:
       app:
-        className: internal
-        hosts:
-          - host: requests.${DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN}"
+          - requests.${DOMAIN}
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *servicePort
     persistence:
       config:
         existingClaim: jellyseerr

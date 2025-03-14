@@ -129,7 +129,7 @@ spec:
       service:
         metadata:
           annotations:
-            io.cilium/lb-ipam-ips: 10.1.7.32
+            lbipam.cilium.io/ips: 10.1.7.32, ::ffff:10.1.7.32
         type: LoadBalancer
       port: 5432
       replicas: *replica

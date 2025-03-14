@@ -8,5 +8,8 @@ components:
   - ../../../components/common
   - ../../../components/repos
 resources:
-  - external/ks.yaml
-  - internal/ks.yaml
+  - bind-dns/ks.yaml
+  - cloudflare-ddns/ks.yaml
+  - cloudflare-dns/ks.yaml
+  - cloudflare-tunnel/ks.yaml
+  - echo/ks.yaml

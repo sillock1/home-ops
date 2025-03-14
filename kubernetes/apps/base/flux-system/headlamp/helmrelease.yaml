@@ -37,14 +37,6 @@ spec:
             name: headlamp-plugins
     config:
       pluginsDir: /build/plugins
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts:
-        - host: headlamp.${DOMAIN}
-          paths:
-            - path: /
-              type: Prefix
     persistentVolumeClaim:
       enabled: true
       accessModes: ["${STORAGECLASS_ACCESSMODE}"]

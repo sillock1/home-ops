@@ -40,12 +40,16 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts:
-        - host: "{{ .Release.Name }}.{DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
-              servicePort: 6333
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN}"
+          - "requests.${DOMAIN}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 6333

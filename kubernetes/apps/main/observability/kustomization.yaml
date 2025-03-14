@@ -10,7 +10,6 @@ components:
 resources:
   - blackbox-exporter/ks.yaml
   - blackbox-exporter/probes.yaml
-  - echo-server/ks.yaml
   - gatus/ks.yaml
   - grafana/ks.yaml
   - kube-prometheus-stack/ks.yaml
