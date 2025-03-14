@@ -49,8 +49,8 @@ spec:
             key: rndc-secret
     policy: sync
     sources: ["gateway-httproute", "service"]
-    txtOwnerId: default
-    txtPrefix: k8s.
+    txtOwnerId: ${CLUSTER}
+    txtPrefix: k8s.${CLUSTER}
     domainFilters: ["${DOMAIN}"] #, "${SECRET_DOMAIN}"]
     serviceMonitor:
       enabled: true
