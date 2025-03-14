@@ -105,21 +105,4 @@ spec:
         server: nas.pill.ac
         path: /mnt/Pool/media
         globalMounts:
-          - path: /media/downloads
-      incomplete:
-        type: custom
-        volumeSpec:
-          ephemeral:
-            volumeClaimTemplate:
-              spec:
-                accessModes:
-                  - ReadWriteOnce
-                storageClassName: openebs-hostpath
-                resources:
-                  requests:
-                    storage: 100Gi
-        advancedMounts:
-          sabnzbd:
-            app:
-              - path: /incomplete
-                subPath: incomplete
+          - path: /media/downloads/sabnzbd
