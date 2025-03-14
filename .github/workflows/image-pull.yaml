@@ -117,7 +117,7 @@ jobs:
         with:
           export-env: true
         env:
-          TALOSCONFIG_BASE64: op://Kubernetes/kubernetes/TALOSCONFIG_${{ env.cluster }}_BASE64
+          TALOSCONFIG_BASE64: op://kubernetes-${{ env.cluster }}/kubernetes/TALOSCONFIG_BASE64
 
       - name: Write talosconfig
         id: talosconfig
