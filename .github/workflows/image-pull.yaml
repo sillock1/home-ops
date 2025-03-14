@@ -110,8 +110,7 @@ jobs:
       - name: Configure 1password
         uses: 1password/load-secrets-action/configure@v2
         with:
-          connect-host: ${{ secrets.OP_CONNECT_HOST}}
-          connect-token: ${{ secrets.OP_CONNECT_TOKEN }}
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN}}
 
       - name: Get Secrets
         uses: 1password/load-secrets-action@v2
