@@ -105,4 +105,4 @@ spec:
         server: nas.pill.ac
         path: /mnt/Pool/media
         globalMounts:
-          - path: /media/downloads/sabnzbd
+          - path: /nas
