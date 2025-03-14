@@ -8,8 +8,8 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/provider/onepassword/vaults
-        name: kubernetes-${CLUSTER}
-        value: 1
+        value:
+          kubernetes-${CLUSTER}: 1
     target:
       kind: ClusterSecretStore
       name: onepassword-connect
