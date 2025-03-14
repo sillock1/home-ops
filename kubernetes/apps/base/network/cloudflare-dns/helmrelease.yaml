@@ -33,7 +33,7 @@ spec:
       - name: &name CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: &secret external-external-dns-secret
+            name: &secret cloudflare-dns-secret
             key: *name
       - name: &name CF_ZONE_ID
         valueFrom:
