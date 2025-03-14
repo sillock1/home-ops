@@ -72,5 +72,3 @@ spec:
           - backendRefs:
               - name: *app
                 port: 15672
-              - name: *app
-                port: 5672
