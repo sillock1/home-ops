@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app jellyseerr
+  name: &app echo-server
 spec:
   interval: 30m
   chartRef:
@@ -17,31 +17,29 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-    - name: volsync
   values:
     controllers:
-      jellyseerr:
-        annotations:
-          reloader.stakater.com/auto: "true"
+      echo-server:
+        replicas: 2
+        strategy: RollingUpdate
         containers:
           app:
             image:
-              repository: docker.io/fallenbagel/jellyseerr
-              tag: 2.5.0@sha256:92dc0eb9ba260a11886ac52c3a82c5490769238f120e6312a2793809842021a6
+              repository: ghcr.io/mendhak/http-https-echo
+              tag: 35
             env:
-              TZ: Europe/London
-              LOG_LEVEL: "info"
-              PORT: &containerPort 8080
+              HTTP_PORT: &port 80
+              LOG_WITHOUT_NEWLINE: true
+              LOG_IGNORE_PATH: /healthz
+              PROMETHEUS_ENABLED: true
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /api/v1/status
-                    port: *containerPort
+                    path: /healthz
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -51,51 +49,42 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+              seccompProfile:
+                type: RuntimeDefault
             resources:
               requests:
                 cpu: 10m
               limits:
-                memory: 2Gi
+                memory: 64Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 2048
         runAsGroup: 2048
-        fsGroup: 2048
-        fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: jellyseerr
+        controller: echo-server
         ports:
           http:
-            port: &servicePort 80
-            targetPort: *containerPort
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: echo-server
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     route:
       app:
-        hostnames:
-          - "{{ .Release.Name }}.${DOMAIN}"
-          - requests.${DOMAIN}
+        hostnames: ["{{ .Release.Name }}.${DOMAIN}"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
               - name: *app
-                port: *servicePort
-    persistence:
-      config:
-        existingClaim: jellyseerr
-        globalMounts:
-          - path: /app/config
-      cache:
-        existingClaim: jellyseerr-cache
-        globalMounts:
-          - path: /app/config/cache
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /app/config/logs
-      tmp:
-        type: emptyDir
+                port: *port

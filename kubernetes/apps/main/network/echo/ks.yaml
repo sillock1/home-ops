@@ -3,22 +3,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cert-manager
-  namespace: &namespace cert-manager
+  name: &app echo-server
+  namespace: &namespace network
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets-store-onepassword
-      namespace: external-secrets
+  components:
+    - ../../../../components/gatus/external
   interval: 30m
-  path: ./kubernetes/apps/main/cert-manager/cert-manager/app
-  prune: true
+  path: ./kubernetes/apps/base/network/echo-server
+  postBuild:
+    substitute:
+      APP: *app
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: true
+  wait: false

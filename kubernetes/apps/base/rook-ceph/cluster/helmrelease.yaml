@@ -14,7 +14,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
-        namespace: rook-ceph
   install:
     remediation:
       retries: 3
@@ -32,12 +31,6 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
-    ingress:
-      dashboard:
-        ingressClassName: internal
-        host:
-          name: rook.${DOMAIN}
-          path: /
     toolbox:
       enabled: true
     configOverride: |
