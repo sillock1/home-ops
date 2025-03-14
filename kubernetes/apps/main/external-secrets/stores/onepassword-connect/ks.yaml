@@ -17,7 +17,7 @@ spec:
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
-  path: ./kubernetes/apps/base/external-secrets/stores/onepassword-connect
+  path: ./kubernetes/apps/main/external-secrets/stores/onepassword-connect/app
   prune: true
   retryInterval: 2m
   sourceRef:
