@@ -41,12 +41,12 @@ spec:
         valueFrom:
           secretKeyRef:
             name: &secret bind-dns-secret
-            key: rndc-algorithm
+            key: RNDC_ALGORITHM
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
             name: *secret
-            key: rndc-secret
+            key: RNDC_SECRET
     policy: sync
     sources: ["gateway-httproute", "service"]
     txtOwnerId: ${CLUSTER}
