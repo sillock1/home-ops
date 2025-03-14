@@ -51,7 +51,7 @@ spec:
         controller: rabbitmq
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.1.7.35, ::ffff:10.1.7.35
+          lbipam.cilium.io/ips: 10.1.7.36, ::ffff:10.1.7.36
         ports:
           http:
             port: 15672
