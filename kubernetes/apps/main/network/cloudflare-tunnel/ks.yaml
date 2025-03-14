@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-external-dns
+    - name: cloudflare-dns
     - name: external-secrets-store-onepassword
       namespace: external-secrets
   interval: 30m
