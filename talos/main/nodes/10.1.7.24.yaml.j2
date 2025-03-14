@@ -4,6 +4,10 @@ machine:
     interfaces:
       - deviceSelector:
           hardwareAddr: d8:9e:f3:93:85:d8
+        mtu: 1500
+        dhcp: true
+        vip:
+          ip: 10.1.7.19
   install:
     image: factory.talos.dev/installer/de3b865124c5616da8084826167f8c0b0fbc9b905b146290db797024e84097fc:{{ ENV.TALOS_VERSION }}
     disk: /dev/nvme0n1
