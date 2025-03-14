@@ -70,7 +70,7 @@ spec:
         parentRefs:
           - name: internal
             namespace: kube-system
-            sectionName: https
+            sectionName: ${DOMAIN}-https
         rules:
           - backendRefs:
               - name: *app
