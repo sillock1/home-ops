@@ -51,7 +51,7 @@ spec:
         controller: rabbitmq
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.1.7.5, ::ffff:10.1.7.5
+          lbipam.cilium.io/ips: 10.1.7.35, ::ffff:10.1.7.35
         ports:
           http:
             port: 15672
@@ -72,3 +72,5 @@ spec:
           - backendRefs:
               - name: *app
                 port: 15672
+              - name: *app
+                port: 5672
