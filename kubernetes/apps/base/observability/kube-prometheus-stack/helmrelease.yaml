@@ -36,7 +36,7 @@ spec:
           parentRefs:
             - name: internal
               namespace: kube-system
-              sectionName: https
+              sectionName: ${DOMAIN}-https
       alertmanagerSpec:
         useExistingSecret: true
         configSecret: alertmanager-secret
@@ -71,7 +71,7 @@ spec:
           parentRefs:
             - name: internal
               namespace: kube-system
-              sectionName: https
+              sectionName: ${DOMAIN}-https
       prometheusSpec:
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false
