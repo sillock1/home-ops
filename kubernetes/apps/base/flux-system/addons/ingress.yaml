@@ -1,18 +1,21 @@
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://kubernetes.pages.dev/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
   name: github-webhook
 spec:
-  ingressClassName: external
+  hostnames: ["${SUBDOMAIN}.${DOMAIN}"]
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
   rules:
-    - host: ${SUBDOMAIN}.${DOMAIN}
-      http:
-        paths:
-          - path: /hook/
-            pathType: Prefix
-            backend:
-              service:
-                name: webhook-receiver
-                port:
-                  number: 80
+    - backendRefs:
+        - name: webhook-receiver
+          namespace: flux-system
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /hook/

@@ -20,8 +20,6 @@ spec:
   values:
     api:
       replicas: 2
-    ingress:
-      enabled: false
     env:
       RabbitMQ__Endpoint: 'rabbitmq.broker.svc.cluster.local'
       RabbitMQ__port: '5672'
