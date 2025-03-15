@@ -31,7 +31,7 @@ releases:
     namespace: kube-system
     atomic: true
     chart: cilium/cilium
-    version: 1.17.1
+    version: 1.17.2
     values: ['{{ requiredEnv "SHARED_APPS" }}/kube-system/cilium/helm/values.yaml']
     hooks:
       - # Wait for cilium CRDs to be available
