@@ -19,11 +19,11 @@ jobs:
       all_changed_and_modified_files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Get Changed Files
         id: changed-files
-        uses: tj-actions/changed-files@v45
+        uses: JJGadgets/tj-actions-changed-files@9200e69727eb73eb060652b19946b8a2fdfb654b
         with:
           files: kubernetes/**/helmrelease.yaml
 
@@ -36,7 +36,7 @@ jobs:
       repos: ${{ steps.extract.outputs.repos }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Extract Repos
         id: extract
@@ -64,12 +64,12 @@ jobs:
       fail-fast: false
     steps:
       - name: Configure 1password
-        uses: 1password/load-secrets-action/configure@v2
+        uses: 1password/load-secrets-action/configure@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2
         with:
           service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN}}
 
       - name: Get Secrets
-        uses: 1password/load-secrets-action@v2
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2
         with:
           export-env: true
         env:
@@ -77,7 +77,7 @@ jobs:
 
       - name: Write kubeconfig
         id: kubeconfig
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@784a1a4a994315802b7d8e2084e116e783d157be # v1.2.4
         with:
           encodedString: ${{ env.KUBECONFIG_BASE64 }}
           fileName: kubeconfig
