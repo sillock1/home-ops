@@ -28,7 +28,7 @@ function main() {
     # shellcheck disable=SC2034
     local -r LOG_LEVEL="info"
 
-    check_env KUBERNETES_VERSION TALOS_VERSION
+    check_env KUBERNETES_VERSION TALOS_VERSION CLUSTER
     check_cli minijinja-cli op yq
 
     if [[ -z "${NODE_BASE}" || -z "${NODE_PATCH}" ]]; then

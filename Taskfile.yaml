@@ -7,7 +7,6 @@ shopt: [globstar]
 
 vars:
   BOOSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
-  CLUSTER: '{{.CLUSTER | default "main"}}'
   CLUSTER_APPS: '{{.ROOT_DIR}}/kubernetes/apps/{{.CLUSTER}}'
   CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/clusters/{{.CLUSTER}}'
   SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
@@ -23,6 +22,7 @@ env:
   MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
   SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
   TALOSCONFIG: '{{.TALOS_DIR}}/talosconfig'
+  CLUSTER: '{{.CLUSTER | default "main"}}'
 
 includes:
   bootstrap: .taskfiles/bootstrap
