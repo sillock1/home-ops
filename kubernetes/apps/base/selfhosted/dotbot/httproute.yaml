@@ -14,7 +14,7 @@ spec:
     - backendRefs:
         - name: dotbot
           namespace: selfhosted
-          port: 8080
+          port: 80
       matches:
         - path:
             type: PathPrefix
