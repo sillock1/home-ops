@@ -19,8 +19,12 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - cidr: 10.1.7.0/24
-    - cidr: ::ffff:10.1.7.0/112 # IPv4-mapped IPv6
+    - cidr: 10.1.7.19/32
+    - cidr: ::ffff:10.1.7.19/32
+    - start: "10.1.7.200"
+      stop: "10.1.7.255"
+    - start: ::ffff:10.1.7.200 # IPv4-mapped IPv6
+      stop: ::ffff:10.1.7.255
 ---
 apiVersion: v1
 kind: Service
