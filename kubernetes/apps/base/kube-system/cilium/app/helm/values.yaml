@@ -4,10 +4,8 @@ bandwidthManager:
   enabled: true
   bbr: true
 bpf:
-  datapathMode: netkit
   masquerade: true
-  preallocateMaps: true
-  # tproxy: true
+  tproxy: true
 cgroup:
   automount:
     enabled: false
@@ -20,10 +18,10 @@ cni:
 dashboards:
   enabled: true
 devices: en+
-enableIPv4BIGTCP: true
+enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true
-gatewayAPI:
+envoy:
   enabled: false
 hubble:
   enabled: false
