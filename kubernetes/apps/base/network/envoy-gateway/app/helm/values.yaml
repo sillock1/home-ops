@@ -1,0 +1,9 @@
+deployment:
+  replicas: 2
+config:
+  envoy-gateway:
+    gateway:
+      controllerName: gateway.envoyproxy.io/gatewayclass-controller
+  logging:
+    level:
+      default: debug

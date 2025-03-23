@@ -4,8 +4,12 @@ bandwidthManager:
   enabled: true
   bbr: true
 bpf:
+  datapathMode: netkit
   masquerade: true
-  tproxy: true
+  preallocateMaps: true
+  # tproxy: true
+bgpControlPlane:
+  enabled: true
 cgroup:
   automount:
     enabled: false
@@ -18,16 +22,18 @@ cni:
 dashboards:
   enabled: true
 devices: en+
-enableRuntimeDeviceDetection: true
+enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
 envoy:
+  enabled: false
+gatewayAPI:
   enabled: false
 hubble:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: 10.42.0.0/16
+ipv4NativeRoutingCIDR: 10.244.0.0/16
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
@@ -39,14 +45,14 @@ loadBalancer:
   mode: dsr
 localRedirectPolicy: true
 operator:
-  dashboards:
-    enabled: true
+  replicas: 2
+  rollOutPods: true
   prometheus:
     enabled: true
     serviceMonitor:
       enabled: true
-  replicas: 2
-  rollOutPods: true
+  dashboards:
+    enabled: true
 prometheus:
   enabled: true
   serviceMonitor:
@@ -74,3 +80,6 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+tls:
+  secretsNamespace:
+    create: false
