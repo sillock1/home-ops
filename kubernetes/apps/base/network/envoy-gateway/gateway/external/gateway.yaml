@@ -11,11 +11,13 @@ spec:
   addresses:
     - type: IPAddress
       value: 10.1.7.202
-    - type: IPAddress
-      value: ::ffff:10.1.7.202
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: external-proxy-config
   listeners:
     - name: ${DOMAIN}-http
       protocol: HTTP
