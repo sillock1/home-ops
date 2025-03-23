@@ -72,7 +72,7 @@ spec:
         controller: mosquitto
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.1.7.212, ::ffff:10.1.7.212
+          lbipam.cilium.io/ips: 10.1.7.212
         ports:
           mqtt:
             enabled: true

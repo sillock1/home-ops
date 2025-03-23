@@ -68,7 +68,7 @@ spec:
         controller: openttd
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.1.7.214, ::ffff:10.1.7.214
+          lbipam.cilium.io/ips: 10.1.7.214
         ports:
           tcp:
             port: 3979
