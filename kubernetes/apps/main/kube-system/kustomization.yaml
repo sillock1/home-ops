@@ -10,7 +10,6 @@ resources:
   - coredns/ks.yaml
   - cilium/ks.yaml
   - descheduler/ks.yaml
-  - envoy-gateway/ks.yaml
   - intel-device-plugin/ks.yaml
   - metrics-server/ks.yaml
   - node-feature-discovery/ks.yaml

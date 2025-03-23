@@ -5,6 +5,5 @@ kind: Kustomization
 resources:
   - certificates.yaml
   - pushsecret.yaml
-  - gatewayclass.yaml
-  - internal.yaml
-  - external.yaml
+  - internal
+  - external

@@ -6,8 +6,6 @@ metadata:
   name: external
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname external.${DOMAIN}
-  labels:
-    gateway: external
 spec:
   gatewayClassName: envoy-gateway
   addresses:
