@@ -7,7 +7,7 @@
       "automerge": true,
       "automergeType": "branch",
       "matchUpdateTypes": ["digest"],
-      "matchPackagePatterns": ["/bjw-s/", "/onedr0p/", "/sillock1/"],
+      "matchPackagePatterns": ["/bjw-s/", "/home-operations/", "/sillock1/"],
     },
     {
       "description": "Auto-merge Helm Releases",
