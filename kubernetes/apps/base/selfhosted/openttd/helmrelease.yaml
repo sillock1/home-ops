@@ -94,3 +94,28 @@ spec:
           openttd:
             app:
               - path: /data
+    route:
+      udp:
+        kind: UDPRoute
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN}"
+        parentRefs:
+          - name: external
+            namespace: network
+            sectionName: openttd-udp
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *servicePort
+      tcp:
+        kind: TCPRoute
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN}"
+        parentRefs:
+          - name: external
+            namespace: network
+            sectionName: openttd-tcp
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *servicePort
