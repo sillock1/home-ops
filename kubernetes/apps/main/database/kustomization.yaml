@@ -8,5 +8,4 @@ components:
   - ../../../components/common
   - ../../../components/repos
 resources:
-  - crunchy-postgres/ks.yaml
   - qdrant/ks.yaml
