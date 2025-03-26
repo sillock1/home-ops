@@ -37,21 +37,15 @@ spec:
         certificateRefs:
           - kind: Secret
             name: ${DOMAIN}-tls
-    - name: ${SECRET_DOMAIN}-http
-      protocol: HTTP
-      port: 80
-      hostname: "*.${SECRET_DOMAIN}"
+    - name: openttd-udp
+      protocol: UDP
+      port: 3979
       allowedRoutes:
         namespaces:
           from: All
-    - name: ${SECRET_DOMAIN}-https
-      protocol: HTTPS
-      port: 443
-      hostname: "*.${SECRET_DOMAIN}"
+    - name: openttd-tcp
+      protocol: TCP
+      port: 3979
       allowedRoutes:
         namespaces:
           from: All
-      tls:
-        certificateRefs:
-          - kind: Secret
-            name: ${SECRET_DOMAIN}-tls
