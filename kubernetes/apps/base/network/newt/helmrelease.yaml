@@ -55,4 +55,6 @@ spec:
         controller: *app
         ports:
           wireguard:
-            port: *port
+            port: 51820
+            protocol: UDP
+            targetPort: 51820
