@@ -73,7 +73,7 @@ jobs:
         with:
           export-env: true
         env:
-          KUBECONFIG_BASE64: op://kubernetes-${{ env.cluster }}/kubernetes/KUBECONFIG_BASE64
+          KUBECONFIG_BASE64: op://kubernetes-${{ matrix.cluster }}/kubernetes/KUBECONFIG_BASE64
 
       - name: Write kubeconfig
         id: kubeconfig
