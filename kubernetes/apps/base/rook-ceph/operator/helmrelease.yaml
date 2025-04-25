@@ -37,11 +37,16 @@ spec:
       namespace: volsync-system
   values:
     csi:
-      enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
       cephFSKernelMountOptions: ms_mode=prefer-crc
+      # NOTE: Enable the driver and shapshotter if you want to use CephFS
+      enableCephfsDriver: true
+      enableCephfsSnapshotter: true
       enableLiveness: true
       serviceMonitor:
         enabled: true
+    enableDiscoveryDaemon: true
+    image:
+      repository: ghcr.io/rook/ceph
     monitoring:
       enabled: true
     resources:
