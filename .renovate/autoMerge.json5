@@ -17,6 +17,13 @@
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": ["/kube-prometheus-stack/"],
       "ignoreTests": false
-    }
+    },
+    {
+      "description": ["Auto-merge opentoucan containers and helm charts"],
+      "matchDatasources": ["helm", "docker"],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchPackagePatterns": ["/opentoucan/"],
+    },
   ]
 }
