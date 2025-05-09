@@ -5,7 +5,7 @@
       "description": ["Auto-merge container digests updates for trusted containers"],
       "matchDatasources": ["docker"],
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "matchUpdateTypes": ["digest"],
       "matchPackagePatterns": ["/bjw-s/", "/home-operations/", "/sillock1/"],
     },
@@ -22,7 +22,7 @@
       "description": ["Auto-merge opentoucan containers and helm charts"],
       "matchDatasources": ["helm", "docker"],
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "matchPackagePatterns": ["/opentoucan/"],
     },
   ]
