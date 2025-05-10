@@ -48,3 +48,12 @@ spec:
           - name: external
             namespace: network
             sectionName: ${DOMAIN}-https
+        rules:
+          - backendRefs:
+              - name: dotbot
+                namespace: selfhosted
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /interactions
