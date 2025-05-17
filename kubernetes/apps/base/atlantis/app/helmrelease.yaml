@@ -30,10 +30,11 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  valuesFrom:
-    - kind: Secret
-      name: atlantis-secret
+  # valuesFrom:
+  #   - kind: Secret
+  #     name: atlantis-secret
   values:
+    vcsSecretName: atlantis-secret
     githubApp:
       id: "1110841"
       installationId: "59529854"
