@@ -36,6 +36,8 @@ spec:
       repos:
         - id: /.*/
           allowed_workflows: [prod]
+          apply_requirements: [mergeable, approved, undiverged]
+          import_requirements: [mergeable, approved, undiverged]
           allowed_overrides:
             - workflow
             - delete_source_branch_on_merge
