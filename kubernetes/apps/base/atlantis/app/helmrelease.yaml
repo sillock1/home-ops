@@ -35,8 +35,16 @@ spec:
       name: atlantis-secret
   values:
     githubApp:
-      id: 1110841
-      installationId: 59529854
+      id: "1110841"
+      installationId: "59529854"
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 4141
+    servicemonitor:
+      enabled: true
+    ingress:
+      enabled: false
     volumeClaim:
       enabled: true
       dataStorage: 10Gi
