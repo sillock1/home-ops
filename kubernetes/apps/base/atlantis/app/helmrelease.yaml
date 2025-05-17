@@ -50,17 +50,17 @@ spec:
             - init:
                 extra_args: ["-reconfigure"]
             - plan:
-                extra_args: ["-var-file", "prod.tfvars", "-var", "environment=prod"]
+                extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           apply:
             steps:
               - apply:
-                  extra_args: ["-var-file", "prod.tfvars", "-var", "environment=prod"]
+                  extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           import:
             steps:
               - init:
                   extra_args: ["-reconfigure"]
               - import:
-                  extra_args: ["-var-file", "prod.tfvars"]
+                  extra_args: ["-var-file", "./env/prod.tfvars"]
           state_rm:
             steps:
               - init
