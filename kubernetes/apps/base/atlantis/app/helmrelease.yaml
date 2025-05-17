@@ -47,7 +47,8 @@ spec:
         prod:
           plan:
             steps:
-            - init
+            - init:
+                extra_args: ["-upgrade"]
             - plan:
                 extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           apply:
@@ -56,12 +57,14 @@ spec:
                   extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           import:
             steps:
-              - init
+              - init:
+                  extra_args: ["-upgrade"]
               - import:
                   extra_args: ["-var-file", "./env/prod.tfvars"]
           state_rm:
             steps:
-              - init
+              - init:
+                  extra_args: ["-upgrade"]
               - state_rm:
                   extra_args: ["-lock=false"]
     defaultTFDistribution: opentofu
