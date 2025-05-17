@@ -17,7 +17,7 @@ spec:
   interval: 1h
   chart:
     spec:
-      chart: runatlantis
+      chart: atlantis
       version: 5.17.2
       sourceRef:
         kind: HelmRepository
