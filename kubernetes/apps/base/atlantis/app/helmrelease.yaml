@@ -36,6 +36,7 @@ spec:
       repos:
         - id: /.*/
           allowed_workflows: [prod]
+          allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge, repo_locking, repo_locks, custom_policy_check]
       workflows:
         prod:
           plan:
