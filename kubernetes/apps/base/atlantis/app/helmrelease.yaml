@@ -64,7 +64,7 @@ spec:
               - init
               - state_rm:
                   extra_args: ["-lock=false"]
-
+    defaultTFDistribution: opentofu
     vcsSecretName: atlantis-github-secret
     loadEnvFromSecrets:
       - atlantis-env-secret
