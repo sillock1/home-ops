@@ -33,6 +33,7 @@ spec:
   values:
     repoConfig: |
       ---
+      allowed_workflows: [prod]
       workflows:
         prod:
           plan:
