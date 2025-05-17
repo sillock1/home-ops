@@ -37,3 +37,8 @@ spec:
     githubApp:
       id: 1110841
       installationId: 59529854
+    volumeClaim:
+      enabled: true
+      dataStorage: 10Gi
+      storageClassName: "openebs-hostpath"
+      accessModes: ["ReadWriteOnce"]
