@@ -30,11 +30,11 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  # valuesFrom:
-  #   - kind: Secret
-  #     name: atlantis-secret
   values:
-    vcsSecretName: atlantis-secret
+    vcsSecretName: atlantis-github-secret
+    loadEnvFromSecrets:
+      - atlantis-env-secret
+    orgAllowlist: github.com/opentoucan/*
     githubApp:
       id: "1110841"
       installationId: "59529854"
