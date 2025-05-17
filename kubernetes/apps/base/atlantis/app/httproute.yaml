@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: atlantis-webhook
+spec:
+  hostnames: ["atlantis-webhook.${DOMAIN}"]
+  parentRefs:
+    - name: external
+      namespace: network
+      sectionName: ${DOMAIN}-https
+  rules:
+    - backendRefs:
+        - name: atlantis
+          namespace: atlantis
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /events
