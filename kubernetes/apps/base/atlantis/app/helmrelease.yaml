@@ -31,6 +31,30 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    repoConfig: |
+      ---
+      workflows:
+        prod:
+          plan:
+            steps:
+            - init
+            - plan:
+                extra_args: ["-var-file", "prod.tfvars", "-var", "environment=prod"]
+          apply:
+            steps:
+              - apply:
+                  extra_args: ["-var-file", "prod.tfvars", "-var", "environment=prod"]
+          import:
+            steps:
+              - init
+              - import:
+                  extra_args: ["-var-file", "prod.tfvars"]
+          state_rm:
+            steps:
+              - init
+              - state_rm:
+                  extra_args: ["-lock=false"]
+
     vcsSecretName: atlantis-github-secret
     loadEnvFromSecrets:
       - atlantis-env-secret
