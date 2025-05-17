@@ -34,7 +34,8 @@ spec:
     repoConfig: |
       ---
       repos:
-        - allowed_workflows: [prod]
+        - id: /.*/
+          allowed_workflows: [prod]
       workflows:
         prod:
           plan:
