@@ -55,8 +55,7 @@ spec:
                 extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           apply:
             steps:
-              - apply:
-                  extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
+              - apply
           import:
             steps:
               - init:
