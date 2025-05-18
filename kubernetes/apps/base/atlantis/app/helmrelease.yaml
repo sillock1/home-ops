@@ -73,6 +73,8 @@ spec:
     vcsSecretName: atlantis-github-secret
     loadEnvFromSecrets:
       - atlantis-env-secret
+    loadEnvFromConfigMaps:
+      - atlantis-env
     orgAllowlist: github.com/opentoucan/*
     githubApp:
       id: "1110841"
