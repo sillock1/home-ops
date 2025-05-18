@@ -9,6 +9,6 @@ resources:
 configMapGenerator:
   - name: atlantis-env
     literals:
-      - ATLANTIS_GH_TEAM_ALLOWLIST="devops:plan, devops:apply, devops:import, devops:state_rm"
+      - ATLANTIS_GH_TEAM_ALLOWLIST="developers:plan, devops:plan, devops:apply, devops:import, devops:state_rm, devops:unlock"
 generatorOptions:
   disableNameSuffixHash: true
