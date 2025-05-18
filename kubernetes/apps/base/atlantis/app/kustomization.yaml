@@ -6,3 +6,9 @@ resources:
   - externalsecret.yaml
   - helmrelease.yaml
   - httproute.yaml
+configMapGenerator:
+  - name: atlantis-env
+    literals:
+      - ATLANTIS_GH_TEAM_ALLOWLIST="devops:plan, devops:apply, devops:import, devops:state_rm"
+generatorOptions:
+  disableNameSuffixHash: true
