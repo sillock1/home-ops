@@ -55,7 +55,8 @@ spec:
                 extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           apply:
             steps:
-              - apply
+            - apply:
+              extra_args: ["--auto-merge-method squash"]
           import:
             steps:
               - init:
