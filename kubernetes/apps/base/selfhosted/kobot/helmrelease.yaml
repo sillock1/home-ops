@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/kobot
-              tag: 135.0.0@sha256:cd20f96e1b82f115f5d448638a17350f6e5736abf60a7afc7555a8fbc57b3e70
+              tag: 136.0.0@sha256:beef2ff46d3352589da2dd67e93f56c436bd9b8d775e318ac4697460cfb12021
             envFrom:
               - secretRef:
                   name: kobot-secret
