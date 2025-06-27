@@ -7,5 +7,4 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - snapshot-controller/ks.yaml
   - volsync/ks.yaml
