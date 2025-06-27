@@ -7,8 +7,9 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - coredns/ks.yaml
   - cilium/ks.yaml
+  - coredns/ks.yaml
+  - csi-driver-nfs/ks.yaml
   - descheduler/ks.yaml
   - intel-device-plugin/ks.yaml
   - metrics-server/ks.yaml
