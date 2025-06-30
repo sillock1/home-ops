@@ -7,6 +7,10 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "cluster"
+  spec:
+    datasources:
+      - inputName: "DS_GRAPHITE"
+        datasourceName: "prometheus"
   grafanaCom:
     # renovate: depName="TrueNAS Scale - Graphite"
     id: 20439
