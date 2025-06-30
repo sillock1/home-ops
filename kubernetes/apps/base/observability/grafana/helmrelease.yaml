@@ -45,6 +45,12 @@ spec:
       GF_SERVER_ROOT_URL: https://grafana.${DOMAIN}
     envFromSecrets:
       - name: grafana-secret
+    extraSecretMounts:
+      - name: auth-github-oauth-secret-mount
+        secretName: grafana-github-oauth-secret
+        defaultMode: 0440
+        mountPath: /etc/secrets/auth_github_oauth
+        readOnly: true
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -55,6 +61,12 @@ spec:
         org_id: 1
         org_name: Main Org.
         org_role: Viewer
+      auth.github:
+        enabled: true
+        client_id: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_id}
+        client_secret: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_secret}
+        scopes: user:email,read:org
+        allowed_organizations: ["OpenToucan"]
       news:
         news_feed_enabled: false
     datasources:
