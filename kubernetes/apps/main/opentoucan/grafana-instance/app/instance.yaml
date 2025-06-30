@@ -6,11 +6,6 @@ metadata:
   labels:
     dashboards: "opentoucan"
 spec:
-  envs:
-    - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
-      value: true
-    - name: GF_SERVER_ROOT_URL
-      value: https://grafana.sillock.com
   deployment:
     spec:
       template:
@@ -28,6 +23,10 @@ spec:
                     secretKeyRef:
                       key: admin-password
                       name: grafana-secret
+                - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
+                  value: true
+                - name: GF_SERVER_ROOT_URL
+                  value: https://grafana.${DOMAIN}
   config:
     analytics:
       check_for_updates: 'false'
