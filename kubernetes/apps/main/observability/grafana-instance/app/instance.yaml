@@ -2,7 +2,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: Grafana
 metadata:
-  name: cluster
+  name: grafana-cluster
   labels:
     dashboards: "cluster"
 spec:
