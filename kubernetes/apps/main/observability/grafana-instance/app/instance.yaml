@@ -6,23 +6,37 @@ metadata:
   labels:
     dashboards: "cluster"
 spec:
-  external:
-    url: https://grafana.${DOMAIN}
-    adminPassword:
-      name: grafana-secret
-      key: admin-password
-    adminUser:
-      name: grafana-secret
-      key: admin-user
+  envs:
+    - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
+      value: true
+    - name: GF_SERVER_ROOT_URL
+      value: https://grafana.sillock.com
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: grafana
+              env:
+                - name: admin-user
+                  valueFrom:
+                    secretKeyRef:
+                      key: admin-user
+                      name: grafana-secret
+                - name: admin-password
+                  valueFrom:
+                    secretKeyRef:
+                      key: admin-password
+                      name: grafana-secret
   config:
     analytics:
-      check_for_updates: "false"
-      check_for_plugin_updates: "false"
-      reporting_enabled: "false"
-    news:
-      news_feed_enabled: "false"
+      check_for_plugin_updates: 'false'
+      check_for_updates: 'false'
+      reporting_enabled: 'false'
     auth.anonymous:
-      enabled: "true"
-      org_id: "1"
+      enabled: 'true'
+      org_id: '1'
       org_name: Main Org.
       org_role: Viewer
+    news:
+      news_feed_enabled: 'false'
