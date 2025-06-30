@@ -43,7 +43,7 @@ spec:
     route:
       main:
         enabled: true
-        hostnames: ["{{ .Release.Name }}.${DOMAIN}"]
+        hostnames: ["{{ .Release.Name }}.opentoucan.com"]
         parentRefs:
           - name: external
             namespace: network

@@ -11,9 +11,6 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/base/opentoucan/kobot
-  postBuild:
-    substitute:
-      DOMAIN: opentoucan.com
   prune: true
   sourceRef:
     kind: GitRepository

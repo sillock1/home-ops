@@ -16,10 +16,6 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/apps/base/opentoucan/dotbot
-  postBuild:
-    substitute:
-      APP: *app
-      DOMAIN: opentoucan.com
   prune: true
   sourceRef:
     kind: GitRepository

@@ -98,7 +98,7 @@ spec:
       udp:
         kind: UDPRoute
         hostnames:
-          - "{{ .Release.Name }}.${DOMAIN}"
+          - "{{ .Release.Name }}.opentoucan.com"
         parentRefs:
           - name: external
             namespace: network
@@ -110,7 +110,7 @@ spec:
       tcp:
         kind: TCPRoute
         hostnames:
-          - "{{ .Release.Name }}.${DOMAIN}"
+          - "{{ .Release.Name }}.opentoucan.com"
         parentRefs:
           - name: external
             namespace: network
