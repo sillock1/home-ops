@@ -11,6 +11,9 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/base/selfhosted/kobot
+  postBuild:
+    substitute:
+      DOMAIN: opentoucan.com
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,13 +22,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-  patches:
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          postBuild:
-            substitute:
-              DOMAIN: opentoucan.com

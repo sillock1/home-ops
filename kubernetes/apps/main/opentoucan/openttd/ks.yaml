@@ -18,6 +18,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
+      DOMAIN: opentoucan.com
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,13 +27,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-  patches:
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          postBuild:
-            substitute:
-              DOMAIN: opentoucan.com
