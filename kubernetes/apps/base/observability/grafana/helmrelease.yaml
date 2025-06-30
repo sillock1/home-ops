@@ -67,7 +67,7 @@ spec:
         client_secret: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_secret}
         scopes: user:email,read:org
         allowed_organizations: ["OpenToucan"]
-        org_mapping: "@OpenToucan/Developers:OpenToucan:Viewer"
+        org_mapping: "@opentoucan/developers:OpenToucan:Viewer"
       news:
         news_feed_enabled: false
     datasources:
