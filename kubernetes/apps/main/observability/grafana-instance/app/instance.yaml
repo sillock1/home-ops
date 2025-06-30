@@ -24,7 +24,7 @@ spec:
                       key: admin-password
                       name: grafana-secret
                 - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
-                  value: true
+                  value: 'true'
                 - name: GF_SERVER_ROOT_URL
                   value: https://grafana.${DOMAIN}
   config:
