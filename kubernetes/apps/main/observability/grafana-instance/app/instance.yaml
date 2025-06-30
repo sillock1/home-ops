@@ -16,13 +16,13 @@ spec:
       key: admin-user
   config:
     analytics:
-      check_for_updates: false
-      check_for_plugin_updates: false
-      reporting_enabled: false
+      check_for_updates: "false"
+      check_for_plugin_updates: "false"
+      reporting_enabled: "false"
     news:
-      news_feed_enabled: false
+      news_feed_enabled: "false"
     auth.anonymous:
-      enabled: true
-      org_id: 1
+      enabled: "true"
+      org_id: "1"
       org_name: Main Org.
       org_role: Viewer
