@@ -2,9 +2,11 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: Grafana
 metadata:
-  name: opentoucan
+  name: grafana-opentoucan
   labels:
     dashboards: "opentoucan"
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   deployment:
     spec:
@@ -23,10 +25,20 @@ spec:
                     secretKeyRef:
                       key: admin-password
                       name: grafana-secret
+                - name: AUTH_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      key: opentoucan-client-id
+                      name: grafana-secret
+                - name: AUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: opentoucan-client-secret
+                      name: grafana-secret
                 - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
                   value: 'true'
                 - name: GF_SERVER_ROOT_URL
-                  value: https://grafana.${DOMAIN}
+                  value: https://grafana.opentoucan.com
   config:
     analytics:
       check_for_updates: 'false'
@@ -38,8 +50,8 @@ spec:
       enabled: 'false'
     auth.github:
       enabled: 'true'
-      client_id: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_id}
-      client_secret: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_secret}
+      client_id: ${AUTH_CLIENT_ID}
+      client_secret: ${AUTH_CLIENT_SECRET}
       scopes: user:email,read:org
       allowed_organizations: '[OpenToucan]'
       org_mapping: '@opentoucan/developers:OpenToucan:Viewer,@opentoucan/devops:OpenToucan:Admin'

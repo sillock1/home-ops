@@ -10,6 +10,6 @@ components:
 resources:
   - dotbot/ks.yaml
   - kobot/ks.yaml
-  - grafana-instance/ks.yaml
+  - grafana/ks.yaml
   - memer/ks.yaml
   - openttd/ks.yaml
