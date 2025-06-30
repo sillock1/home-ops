@@ -4,13 +4,13 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app memer
-  namespace: &namespace selfhosted
+  namespace: &namespace opentoucan
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/apps/base/selfhosted/memer
+  path: ./kubernetes/apps/base/opentoucan/memer
   postBuild:
     substitute:
       DOMAIN: opentoucan.com

@@ -51,7 +51,6 @@ spec:
         rules:
           - backendRefs:
               - name: dotbot
-                namespace: selfhosted
                 port: 80
             matches:
               - path:
