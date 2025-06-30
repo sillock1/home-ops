@@ -11,7 +11,8 @@ resources:
   - blackbox-exporter/ks.yaml
   - blackbox-exporter/probes.yaml
   - gatus/ks.yaml
-  - grafana/ks.yaml
+  - grafana-operator/ks.yaml
+  - grafana-instance/ks.yaml
   - kube-prometheus-stack/ks.yaml
   - kube-prometheus-stack/scrapeconfig.yaml
   - loki/ks.yaml

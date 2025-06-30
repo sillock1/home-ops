@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: selfhosted
+namespace: opentoucan
 components:
   - ../../../components/clusters/main
   - ../../../components/common
@@ -10,5 +10,6 @@ components:
 resources:
   - dotbot/ks.yaml
   - kobot/ks.yaml
+  - grafana-instance/ks.yaml
   - memer/ks.yaml
   - openttd/ks.yaml

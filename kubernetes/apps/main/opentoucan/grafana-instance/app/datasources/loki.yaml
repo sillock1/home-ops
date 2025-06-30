@@ -1,0 +1,17 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: loki
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "cluster"
+  datasource:
+    name: Loki
+    type: loki
+    uid: loki
+    access: proxy
+    url: http://loki-headless.observability.svc.cluster.local:3100
+    jsonData:
+      maxLines: 250
