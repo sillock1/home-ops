@@ -5,7 +5,7 @@ kind: Gateway
 metadata:
   name: external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external.${DOMAIN},external.opentoucan.com
+    external-dns.alpha.kubernetes.io/target: &hostname external.${DOMAIN} #,external.opentoucan.com
 spec:
   gatewayClassName: envoy
   addresses:
