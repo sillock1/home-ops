@@ -1,0 +1,32 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: opentoucan
+  labels:
+    dashboards: "opentoucan"
+spec:
+  external:
+    url: https://grafana.${DOMAIN}
+    adminPassword:
+      name: grafana-secret
+      key: admin-password
+    adminUser:
+      name: grafana-secret
+      key: admin-user
+  config:
+    analytics:
+      check_for_updates: false
+      check_for_plugin_updates: false
+      reporting_enabled: false
+    news:
+      news_feed_enabled: false
+    auth.anonymous:
+      enabled: false
+    auth.github:
+      enabled: true
+      client_id: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_id}
+      client_secret: $__file{/etc/secrets/auth_github_oauth/opentoucan_client_secret}
+      scopes: user:email,read:org
+      allowed_organizations: ["OpenToucan"]
+      org_mapping: "@opentoucan/developers:OpenToucan:Viewer,@opentoucan/devops:OpenToucan:Admin"
