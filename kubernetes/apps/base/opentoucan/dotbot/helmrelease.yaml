@@ -43,10 +43,10 @@ spec:
     route:
       main:
         enabled: true
-        hostnames: ["{{ .Release.Name }}.opentoucan.com"]
+        hostnames: ["{{ .Release.Name }}.${DOMAIN}"]
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: ${DOMAIN}-https
         rules:
           - backendRefs:

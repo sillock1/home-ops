@@ -104,7 +104,7 @@ spec:
           - status.${DOMAIN}
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: ${DOMAIN}-https
         rules:
           - backendRefs:

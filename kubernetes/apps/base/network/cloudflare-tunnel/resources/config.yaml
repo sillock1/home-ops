@@ -7,8 +7,4 @@ ingress:
     service: &svc https://envoy-gateway-external.network.svc.cluster.local
   - hostname: "*.${DOMAIN}"
     service: *svc
-  - hostname: opentoucan.com
-    service: &svc https://envoy-gateway-external.network.svc.cluster.local
-  - hostname: "*.opentoucan.com"
-    service: *svc
   - service: http_status:404

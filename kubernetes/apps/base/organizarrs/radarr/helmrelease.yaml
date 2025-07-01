@@ -85,7 +85,7 @@ spec:
         hostnames: ["{{ .Release.Name }}.${DOMAIN}"]
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: ${DOMAIN}-https
         rules:
           - backendRefs:

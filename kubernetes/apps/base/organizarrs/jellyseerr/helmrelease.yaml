@@ -75,7 +75,7 @@ spec:
           - requests.${DOMAIN}
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: ${DOMAIN}-https
         rules:
           - backendRefs:

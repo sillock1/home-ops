@@ -98,10 +98,10 @@ spec:
       udp:
         kind: UDPRoute
         hostnames:
-          - "{{ .Release.Name }}.opentoucan.com"
+          - "{{ .Release.Name }}.${DOMAIN}"
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: openttd-udp
         rules:
           - backendRefs:
@@ -110,10 +110,10 @@ spec:
       tcp:
         kind: TCPRoute
         hostnames:
-          - "{{ .Release.Name }}.opentoucan.com"
+          - "{{ .Release.Name }}.${DOMAIN}"
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: openttd-tcp
         rules:
           - backendRefs:

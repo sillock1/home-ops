@@ -6,9 +6,9 @@ metadata:
   name: openttd
 spec:
   endpoints:
-    - dnsName: "openttd.opentoucan.com"
+    - dnsName: "openttd.${DOMAIN}"
       recordType: CNAME
-      targets: ["pangolin.opentoucan.com"]
+      targets: ["pangolin.${DOMAIN}"]
       providerSpecific:
         - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
           value: 'false'

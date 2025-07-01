@@ -5,10 +5,10 @@ kind: HTTPRoute
 metadata:
   name: grafana-opentoucan
 spec:
-  hostnames: ["grafana.opentoucan.com"]
+  hostnames: ["opentoucan-dashboard.${DOMAIN}"]
   parentRefs:
     - name: external
-      namespace: network
+      namespace: kube-system
       sectionName: ${DOMAIN}-https
   rules:
     - backendRefs:

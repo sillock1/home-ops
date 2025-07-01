@@ -89,7 +89,7 @@ spec:
           - downloads.${DOMAIN}
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: ${DOMAIN}-https
         rules:
           - backendRefs:
