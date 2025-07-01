@@ -47,7 +47,7 @@ spec:
         parentRefs:
           - name: external
             namespace: kube-system
-            sectionName: ${DOMAIN}-https
+            sectionName: https
         rules:
           - backendRefs:
               - name: dotbot
