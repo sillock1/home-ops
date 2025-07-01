@@ -1,0 +1,6 @@
+[project]
+name = "localdev"
+version = "1.0"
+dependencies = [
+  "flux-local == 7.5.6"
+]
