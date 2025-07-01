@@ -18,12 +18,12 @@ spec:
                 - name: admin-user
                   valueFrom:
                     secretKeyRef:
-                      key: admin-user
+                      key: GF_SECURITY_ADMIN_USER
                       name: grafana-secret
                 - name: admin-password
                   valueFrom:
                     secretKeyRef:
-                      key: admin-password
+                      key: GF_SECURITY_ADMIN_PASSWORD
                       name: grafana-secret
                 - name: AUTH_CLIENT_ID
                   valueFrom:
