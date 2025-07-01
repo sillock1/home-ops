@@ -10,7 +10,5 @@ spec:
   datasources:
     - inputName: "DS_GRAPHITE"
       datasourceName: "prometheus"
-  grafanaCom:
-    # renovate: depName="TrueNAS Scale - Graphite"
-    id: 20439
-    revision: 1
+  # renovate: depName="TrueNAS Scale / Overview"
+  url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/tags/v2.0.1/dashboards/truenas_scale.json
