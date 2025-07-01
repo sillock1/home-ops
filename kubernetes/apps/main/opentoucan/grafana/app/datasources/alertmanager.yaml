@@ -6,7 +6,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      dashboards: "cluster"
+      dashboards: "opentoucan"
   datasource:
     name: Alertmanager
     type: alertmanager
