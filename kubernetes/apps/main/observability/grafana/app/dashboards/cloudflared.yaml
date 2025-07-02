@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
@@ -11,6 +12,6 @@ spec:
     # renovate: depName="Cloudflare Tunnels (cloudflared)"
     id: 17457
     revision: 6
-    datasources:
-      - name: DS_PROMETHEUS
-        value: Prometheus
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: Prometheus

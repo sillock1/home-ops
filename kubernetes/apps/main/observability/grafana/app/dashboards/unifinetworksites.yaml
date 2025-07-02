@@ -11,3 +11,6 @@ spec:
     # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
     id: 11311
     revision: 5
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: Prometheus

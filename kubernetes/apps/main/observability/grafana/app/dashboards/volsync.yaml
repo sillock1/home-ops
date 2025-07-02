@@ -11,8 +11,8 @@ spec:
     # renovate: depName="VolSync Dashboard"
     id: 21356
     revision: 3
-    datasources:
-      - name: DS_PROMETHEUS
-        value: Prometheus
-      - name: VAR_REPLICATIONDESTNAME
-        value: .*-dst
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: Prometheus
+    - inputName: VAR_REPLICATIONDESTNAME
+      datasourceName: .*-dst
