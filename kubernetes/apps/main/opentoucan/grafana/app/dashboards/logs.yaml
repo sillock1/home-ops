@@ -7,7 +7,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "opentoucan"
-  jsonData: >
+  json: >
     {
       "annotations": {
         "list": [
