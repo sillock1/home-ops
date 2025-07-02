@@ -1,0 +1,16 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: envoy
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "cluster"
+  grafanaCom:
+    # renovate: depName="Envoy Proxy Monitoring gRPC"
+    id: 23239
+    revision: 1
+    datasources:
+      - name: DS_AFRANET_PROMETHEUS
+        value: Prometheus

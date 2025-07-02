@@ -1,0 +1,18 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: volsync
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "cluster"
+  grafanaCom:
+    # renovate: depName="VolSync Dashboard"
+    id: 21356
+    revision: 3
+    datasources:
+      - name: DS_PROMETHEUS
+        value: Prometheus
+      - name: VAR_REPLICATIONDESTNAME
+        value: .*-dst

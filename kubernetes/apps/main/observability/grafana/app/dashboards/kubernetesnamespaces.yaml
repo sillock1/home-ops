@@ -1,0 +1,13 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: kubernetes-namespaces
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "cluster"
+  grafanaCom:
+    # renovate: depName="Kubernetes / Views / Namespaces"
+    id: 15758
+    revision: 42
