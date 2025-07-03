@@ -15,7 +15,7 @@ spec:
     - name: external-secrets-store-onepassword
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/apps/base/observability/gatus
+  path: ./kubernetes/apps/main/observability/gatus/app
   postBuild:
     substitute:
       APP: *app
