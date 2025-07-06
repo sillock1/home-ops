@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: logs
+  name: kobot
 spec:
   instanceSelector:
     matchLabels:
@@ -72,48 +72,6 @@ spec:
             }
           ],
           "title": "Kobot Logs",
-          "type": "logs"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 19,
-            "w": 24,
-            "x": 0,
-            "y": 17
-          },
-          "id": 1,
-          "options": {
-            "dedupStrategy": "none",
-            "enableLogDetails": true,
-            "prettifyLogMessage": false,
-            "showCommonLabels": false,
-            "showLabels": false,
-            "showTime": true,
-            "sortOrder": "Ascending",
-            "wrapLogMessage": false
-          },
-          "pluginVersion": "11.3.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "loki",
-                "uid": "loki"
-              },
-              "editorMode": "builder",
-              "expr": "{app=\"dotbot\"} |= `` | logfmt | label_format level=detected_level",
-              "queryType": "range",
-              "refId": "A"
-            }
-          ],
-          "title": "Dotbot Logs",
           "type": "logs"
         }
       ],
