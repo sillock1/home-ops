@@ -10,6 +10,6 @@ spec:
       dashboards: "opentoucan"
   datasources:
     - inputName: DS_PROMETHEUS
-      datasourceName: prometheus
+      datasourceName: Prometheus
   # renovate: depName="dotbot"
   url: https://raw.githubusercontent.com/opentoucan/dotbot/refs/heads/main/dashboards/dotbot.json
