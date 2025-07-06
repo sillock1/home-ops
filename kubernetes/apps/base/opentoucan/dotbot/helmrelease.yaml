@@ -56,3 +56,6 @@ spec:
               - path:
                   type: PathPrefix
                   value: /interactions
+              - path:
+                  type: PathPrefix
+                  value: /
