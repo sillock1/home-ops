@@ -6,7 +6,7 @@ spec:
   endpoints:
     - interval: 10s
       path: /metrics
-      port: 80
+      port: http
       scheme: http
   namespaceSelector:
     matchNames:
