@@ -4,13 +4,12 @@ metadata:
   name: dotbot
 spec:
   endpoints:
-    - interval: 10s
-      path: /metrics
+    - path: /metrics
       port: http
-      scheme: http
+  jobLabel: app.kubernetes.io/instance
   namespaceSelector:
     matchNames:
       - opentoucan
   selector:
     matchLabels:
-      app: dotbot
+      app.kubernetes.io/name: dotbot
