@@ -71,10 +71,13 @@ function log() {
 function check_env() {
     local envs=("${@}")
     local missing=()
+    local values=()
 
     for env in "${envs[@]}"; do
         if [[ -z "${!env-}" ]]; then
             missing+=("${env}")
+        else
+            values+=("${env}=${!env}")
         fi
     done
 
@@ -82,7 +85,7 @@ function check_env() {
         log error "Missing required env variables" "envs=${missing[*]}"
     fi
 
-    log debug "Env variables are set" "envs=${envs[*]}"
+    log debug "Env variables are set" "envs=${values[*]}"
 }
 
 # Check if required CLI tools are installed
@@ -101,38 +104,6 @@ function check_cli() {
     fi
 
     log debug "Deps are installed" "deps=${deps[*]}"
-}
-
-# Wait for CRDs to be available
-function wait_for_crds() {
-    local crds=("${@}")
-
-    for crd in "${crds[@]}"; do
-        until kubectl --context ${CLUSTER} get crd "${crd}" &>/dev/null; do
-            log info "CRD is not available. Retrying in 10 seconds..." "crd=${crd}"
-            sleep 10
-        done
-    done
-}
-
-# Apply a config file using kubectl
-function apply_config_file() {
-    local -r namespace="${1}"
-    local -r file="${2}"
-
-    if [[ ! -d "${file}" ]]; then
-        log error "No config file found" "file=${file}"
-    fi
-
-    if kubectl --context ${CLUSTER} --namespace "${namespace}" diff --file "${file}" &>/dev/null; then
-        log info "Config file is up-to-date"
-    else
-        if kubectl --context ${CLUSTER} apply --namespace "${namespace}" --server-side --field-manager kustomize-controller --file "${file}" &>/dev/null; then
-            log info "Config file applied successfully"
-        else
-            log error "Failed to apply config file"
-        fi
-    fi
 }
 
 # Render a template using minijinja and inject secrets using op
