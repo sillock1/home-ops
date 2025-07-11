@@ -10,9 +10,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
-  pre-job:
-    name: Image Pull - Pre-Job
+  filter:
+    name: Image Pull - filter
     runs-on: ubuntu-latest
     outputs:
       any_changed: ${{ steps.changed-files.outputs.any_changed }}
@@ -29,13 +32,13 @@ jobs:
           files: kubernetes/**
 
   extract:
-    if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
+    if: ${{ needs.filter.outputs.any_changed == 'true' }}
     name: Image Pull - Extract Images
-    needs: pre-job
+    needs: filter
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: ["default", "pull"]
+        branch: ["default", "pull"]
         cluster: ["main"]
       fail-fast: false
     outputs:
@@ -46,7 +49,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           persist-credentials: false
-          ref: "${{ matrix.branches == 'default' && github.event.repository.default_branch || '' }}"
+          ref: "${{ matrix.branch == 'default' && github.event.repository.default_branch || '' }}"
 
       - name: Gather Images
         uses: docker://ghcr.io/allenporter/flux-local:v7.5.6
@@ -60,66 +63,114 @@ jobs:
             --output json
             --output-file images.json
 
-      - name: Output Images
-        id: images
+      - name: Extract Images and Summarize
         run: |
-          echo "${{ matrix.branches }}=$(jq --compact-output '.' images.json)" >> $GITHUB_OUTPUT
+          mkdir -p output
+          jq --compact-output '.' images.json > output/images.json
 
-          echo '## Branch ${{ matrix.branches }} images' >> $GITHUB_STEP_SUMMARY
+          echo "## Branch: \`${{ matrix.branch }}\` — Cluster: \`${{ matrix.cluster }}\` Images" >> $GITHUB_STEP_SUMMARY
           echo '```json' >> $GITHUB_STEP_SUMMARY
           jq '.' images.json >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
-  compare:
-    if: ${{ needs.pre-job.outputs.any_changed == 'true' && needs.extract.outputs.default != needs.extract.outputs.pull }}
-    name: Image Pull - Compare Images
+      - name: Upload Image JSON
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: images-${{ matrix.cluster }}-${{ matrix.branch }}
+          path: output/images.json
+
+  diff:
+    name: Image Pull - Diff Images
+    needs: extract
     runs-on: ubuntu-latest
-    needs: ["pre-job", "extract"]
+    strategy:
+      matrix:
+        cluster: ["main"]
+      fail-fast: false
     outputs:
-      images: ${{ steps.compare.outputs.images }}
+      images: ${{ steps.diff.outputs.images }}
     steps:
-      - name: Compare Images
-        id: compare
+      - name: Download Artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          path: artifacts
+
+      - name: Diff Images
+        id: diff
         run: |
+          default_file="artifacts/images-${{ matrix.cluster }}-default/images.json"
+          pull_file="artifacts/images-${{ matrix.cluster }}-pull/images.json"
+
+          if [[ ! -f "$default_file" || ! -f "$pull_file" ]]; then
+            echo "images=[]" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           images=$(jq --compact-output --null-input \
-              --argjson f1 '${{ needs.extract.outputs.default }}' \
-              --argjson f2 '${{ needs.extract.outputs.pull }}' \
-              '$f2 - $f1' \
-          )
-          echo "images=${images}" >> $GITHUB_OUTPUT
+            --argjson f1 "$(cat "$default_file")" \
+            --argjson f2 "$(cat "$pull_file")" \
+            '$f2 - $f1')
+
+          echo "images=$images" >> $GITHUB_OUTPUT
 
           echo '## New images to Pull' >> $GITHUB_STEP_SUMMARY
           echo '```json' >> $GITHUB_STEP_SUMMARY
           echo $images | jq >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
+      - name: Save Image List
+        run: |
+          echo '${{ steps.diff.outputs.images }}' > images.json
+        # Upload image list for pull step
+      - name: Upload Diff
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: diff-${{ matrix.cluster }}
+          path: images.json
+
   pull:
-    if: ${{ needs.pre-job.outputs.any_changed == 'true' && needs.compare.outputs.images != '[]' }}
+    needs: diff
     name: Image Pull - Pull Images
     runs-on: home-ops-runner
-    needs: ["pre-job", "compare"]
     strategy:
       matrix:
-        images: ${{ fromJSON(needs.compare.outputs.images) }}
         cluster: ["main"]
-      max-parallel: 4
       fail-fast: false
     steps:
-      - name: Uppercase Cluster Name
+      - name: Download Diff
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: diff-${{ matrix.cluster }}
+          path: .
+
+      - name: Read Images from JSON
+        id: read-images
         run: |
-          cluster="${{ matrix.cluster }}"
-          echo "cluster=${cluster^^}" >> $GITHUB_ENV
+          mapfile -t images < <(jq -r '.[]' images.json)
+          echo "images_count=${#images[@]}" >> $GITHUB_OUTPUT
+          for i in "${!images[@]}"; do
+            echo "image_$i=${images[$i]}" >> $GITHUB_OUTPUT
+          done
+          if [[ -z "$images" ]]; then
+            echo "No images to pull for cluster ${{ matrix.cluster }}"
+            exit 0
+          fi
 
       - name: Install talosctl
         run: curl -fsSL https://talos.dev/install | sh
 
-      - name: Pull Image
-        run: talosctl --nodes $NODE image pull ${{ matrix.images }}
+      - name: Pull Images
+        run: |
+          images=$(jq -r '.[]' images.json)
+          for image in $images; do
+            echo "Pulling $image"
+            talosctl --nodes $NODE image pull "$image"
+          done
 
-  status:
-    if: ${{ always() }}
-    name: Image Pull - Success
+  success:
+    if: ${{ !cancelled() }}
     needs: pull
+    name: Image Pull - Success
     runs-on: ubuntu-latest
     steps:
       - name: Any jobs failed?
