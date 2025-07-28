@@ -1,9 +1,9 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
+  - externalsecret.yaml
+  - replicationdestination.yaml
+  - replicationsource.yaml
   - pvc.yaml
-  - local-s3
-  - local-nfs
-  - remote
