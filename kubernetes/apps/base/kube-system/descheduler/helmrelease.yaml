@@ -1,12 +1,17 @@
 ---
-# yaml-language-server: $schema=https://kubernetes.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json
+# yaml-language-server: $schema=https://kubernetes.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+kind: OCIRepository
 metadata:
   name: descheduler
 spec:
-  interval: 1h
-  url: https://kubernetes-sigs.github.io/descheduler
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.33.0
+  url: oci://ghcr.io/home-operations/charts-mirror/descheduler
 ---
 # yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -15,23 +20,17 @@ metadata:
   name: descheduler
 spec:
   interval: 1h
-  chart:
-    spec:
-      chart: descheduler
-      version: 0.33.0
-      sourceRef:
-        kind: HelmRepository
-        name: descheduler
+  chartRef:
+    kind: OCIRepository
+    name: descheduler
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
-    replicas: 2
     kind: Deployment
     deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
@@ -43,7 +42,18 @@ spec:
                 evictFailedBarePods: true
                 evictLocalStoragePods: true
                 evictSystemCriticalPods: true
-                nodeFit: true
+            - name: RemoveFailedPods
+              args:
+                reasons:
+                  - ContainerStatusUnknown
+                  - NodeAffinity
+                  - NodeShutdown
+                  - Terminated
+                  - UnexpectedAdmissionError
+                includingInitContainers: true
+                excludeOwnerKinds:
+                  - Job
+                minPodLifetimeSeconds: 1800
             - name: RemovePodsViolatingInterPodAntiAffinity
             - name: RemovePodsViolatingNodeAffinity
               args:
@@ -51,16 +61,13 @@ spec:
                   - requiredDuringSchedulingIgnoredDuringExecution
             - name: RemovePodsViolatingNodeTaints
             - name: RemovePodsViolatingTopologySpreadConstraint
-              args:
-                constraints:
-                  - DoNotSchedule
-                  - ScheduleAnyway
           plugins:
             balance:
               enabled:
                 - RemovePodsViolatingTopologySpreadConstraint
             deschedule:
               enabled:
+                - RemoveFailedPods
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
