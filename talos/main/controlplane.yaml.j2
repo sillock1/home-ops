@@ -10,11 +10,10 @@ machine:
   certSANs: ["127.0.0.1", "10.1.7.19"]
   kubelet:
     image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
-    extraMounts:
-      - destination: /var/openebs/local
-        type: bind
-        source: /var/openebs/local
-        options: ["bind", "rshared", "rw"]
+    extraConfig:
+      featureGates:
+        ImageVolume: true
+      serializeImagePulls: false
     defaultRuntimeSeccompProfileEnabled: true
     nodeIP:
       validSubnets: ["10.1.7.0/24"]
@@ -22,13 +21,6 @@ machine:
   install:
     wipe: false
     disk: /dev/nvme0n1
-    extraKernelArgs:
-      - apparmor=0
-      - init_on_alloc=0
-      - init_on_free=0
-      - mitigations=off
-      - module_blacklist=igc
-      - security=none
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -63,18 +55,12 @@ machine:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
     kubePrism:
-      enabled: true
-      port: 7445
+      enabled: false
     hostDNS:
       enabled: true
       resolveMemberNames: true
       forwardKubeDNSToHost: false
-  udev:
-    rules:
-      # Intel GPU for plex HW transcoding
-      - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
   nodeLabels:
-    intel.feature.node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: home
     topology.kubernetes.io/zone: main
 cluster:
@@ -91,11 +77,6 @@ cluster:
     serviceSubnets: ["10.43.0.0/16"]
   coreDNS:
     disabled: true
-  extraManifests:
-    - # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-      https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/experimental-install.yaml
-    - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-      https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.80.1/stripped-down-crds.yaml
   token: op://kubernetes-{{ ENV.CLUSTER }}/talos/CLUSTER_TOKEN
   secretboxEncryptionSecret: op://kubernetes-{{ ENV.CLUSTER }}/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
   ca:
@@ -129,20 +110,35 @@ cluster:
     image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: false
-      service:
-        disabled: false
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
   etcd:
     ca:
       crt: op://kubernetes-{{ ENV.CLUSTER }}/talos/CLUSTER_ETCD_CA_CRT
       key: op://kubernetes-{{ ENV.CLUSTER }}/talos/CLUSTER_ETCD_CA_KEY
     extraArgs:
-      election-timeout: "50000"
-      heartbeat-interval: "5000"
       listen-metrics-urls: http://0.0.0.0:2381
     advertisedSubnets: ["10.1.7.0/24"]
   allowSchedulingOnControlPlanes: true
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: disk.transport == "nvme" && !system_disk
