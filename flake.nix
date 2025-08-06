@@ -35,6 +35,7 @@
           kubectl
           restic
           kubectl
+          renovate
         ];
 
       };
