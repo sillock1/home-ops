@@ -10,5 +10,3 @@ configMapGenerator:
       - config.alloy=./resources/config.alloy
 generatorOptions:
   disableNameSuffixHash: true
-configurations:
-  - ./helm/kustomizeconfig.yaml

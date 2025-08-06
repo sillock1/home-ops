@@ -7,6 +7,6 @@ resources:
 configMapGenerator:
   - name: flux-operator-helm-values
     files:
-      - values.yaml=./helm/values.yaml
+      - values.yaml=./helmvalues.yaml
 configurations:
   - ./helm/kustomizeconfig.yaml

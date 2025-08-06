@@ -8,5 +8,3 @@ configMapGenerator:
   - name: coredns-helm-values
     files:
       - values.yaml=./helm/values.yaml
-configurations:
-  - ./helm/kustomizeconfig.yaml
