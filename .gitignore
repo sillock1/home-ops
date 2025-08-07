@@ -15,6 +15,7 @@ talosctl
 onepassword.env
 *.crt
 *.key
+*.iso
 
 # Devenv
 .devenv*
