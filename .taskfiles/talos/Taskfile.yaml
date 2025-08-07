@@ -2,9 +2,6 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: '3'
 
-vars:
-  TALOS_SCHEMATIC_FILE: '{{.TALOS_DIR}}/schematic.yaml'
-
 tasks:
 
   apply-node:
@@ -108,7 +105,9 @@ tasks:
       curl -o {{.TALOS_DIR}}/talos-{{.VERSION}}-${SCHEMATIC:0:8}.iso \
         "https://factory.talos.dev/image/${SCHEMATIC}/{{.VERSION}}/metal-amd64.iso"
     requires:
-      vars: [VERSION]
+      vars: [VERSION, CLUSTER]
+    vars:
+      TALOS_SCHEMATIC_FILE: '{{.TALOS_DIR}}/{{.CLUSTER}}/schematic.yaml'
     preconditions:
       - test -f {{.TALOS_SCHEMATIC_FILE}}
       - which curl jq
