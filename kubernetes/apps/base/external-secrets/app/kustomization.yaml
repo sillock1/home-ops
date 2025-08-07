@@ -7,6 +7,4 @@ resources:
 configMapGenerator:
   - name: external-secrets-helm-values
     files:
-      - values.yaml=./helm/values.yaml
-configurations:
-  - ./helm/kustomizeconfig.yaml # Ensures the generated configMap is the same as the name ref in the helm values
+      - values.yaml=./helmvalues.yaml
