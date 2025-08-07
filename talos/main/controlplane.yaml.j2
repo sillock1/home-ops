@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 version: v1alpha1
 debug: false
 persist: true
@@ -19,8 +21,9 @@ machine:
       validSubnets: ["10.1.7.0/24"]
     disableManifestsDirectory: true
   install:
-    wipe: false
     disk: /dev/nvme0n1
+    image: factory.talos.dev/metal-installer/16ee05adba2c50fd43dfa11b574f6755451c4449a5fc8b4a1c748918e0ed2fbe:v1.11.0-beta.1
+    wipe: false
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -55,7 +58,8 @@ machine:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
     kubePrism:
-      enabled: false
+      enabled: true
+      port: 7445
     hostDNS:
       enabled: true
       resolveMemberNames: true
