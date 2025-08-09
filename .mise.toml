@@ -13,5 +13,4 @@ TALOS_DIR = "{{config_root}}/talos"
 # Included file paths
 _.file = [
   "{{config_root}}/onepassword.env",
-  "{{config_root}}/kubernetes/apps/base/system-upgrade/system-upgrade-controller/versions.env"
 ]
