@@ -11,11 +11,16 @@ machine:
     key: op://kubernetes-{{ ENV.CLUSTER }}/talos/MACHINE_CA_KEY
   certSANs: ["127.0.0.1", "10.1.7.19"]
   kubelet:
-    image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
+    image: ghcr.io/siderolabs/kubelet:v1.33.3
     extraConfig:
       featureGates:
         ImageVolume: true
       serializeImagePulls: false
+    extraMounts:
+      - destination: /var/openebs/local
+        type: bind
+        source: /var/openebs/local
+        options: ["bind", "rshared", "rw"]
     defaultRuntimeSeccompProfileEnabled: true
     nodeIP:
       validSubnets: ["10.1.7.0/24"]
@@ -92,7 +97,7 @@ cluster:
   serviceAccount:
     key: op://kubernetes-{{ ENV.CLUSTER }}/talos/CLUSTER_SERVICEACCOUNT_KEY
   apiServer:
-    image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
+    image: registry.k8s.io/kube-apiserver:v1.33.3
     extraArgs:
       runtime-config: admissionregistration.k8s.io/v1alpha1=true
       feature-gates: MutatingAdmissionPolicy=true
@@ -104,14 +109,13 @@ cluster:
       rules:
         - level: Metadata
   controllerManager:
-    image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
+    image: registry.k8s.io/kube-controller-manager:v1.33.3
     extraArgs:
       bind-address: 0.0.0.0
   proxy:
-    image: registry.k8s.io/kube-proxy:{{ ENV.KUBERNETES_VERSION }}
     disabled: true
   scheduler:
-    image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
+    image: registry.k8s.io/kube-scheduler:v1.33.3
     extraArgs:
       bind-address: 0.0.0.0
     config:
