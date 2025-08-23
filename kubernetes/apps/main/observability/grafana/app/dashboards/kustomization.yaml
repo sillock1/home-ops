@@ -8,6 +8,7 @@ resources:
   - cephpools.yaml
   - certmanager.yaml
   - cloudflared.yaml
+  - dragonfly.yaml
   - envoy.yaml
   - externaldns.yaml
   - kubernetesapiserver.yaml

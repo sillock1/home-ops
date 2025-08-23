@@ -8,4 +8,6 @@ components:
   - ../../../components/common
   - ../../../components/repos
 resources:
+  - dragonfly-operator/ks.yaml
+  - dragonfly-instance/ks.yaml
   - qdrant/ks.yaml
