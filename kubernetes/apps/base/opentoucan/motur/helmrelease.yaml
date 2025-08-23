@@ -44,9 +44,24 @@ spec:
               limits:
                 memory: 1Gi
             probes:
-              liveness: &probes
+              liveness:
                 enabled: false
-              readiness: *probes
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
     persistence:
       motur-configfile:
         type: configMap
