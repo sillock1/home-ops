@@ -53,15 +53,10 @@ spec:
                   httpGet:
                     path: /docs
                     port: 8080
-                  initialDelaySeconds: 0
+                  initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 10
     persistence:
       motur-configfile:
         type: configMap
