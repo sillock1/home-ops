@@ -1,0 +1,66 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: motur
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      kobot:
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          app:
+            image:
+              repository: ghcr.io/opentoucan/motur
+              tag: 2.0.0@sha256:cafe56b61f12627f7a0dac6954a62c7396ae9d9cecbf8d60847a764879c61e13
+            envFrom:
+              - secretRef:
+                  name: motur-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+    persistence:
+      motur-configfile:
+        type: configMap
+        name: motur-configmap
+        advancedMounts:
+          motur:
+            app:
+              - path: /config.yaml
+                subPath: config.yaml
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2048
+        runAsGroup: 2048
+        fsGroup: 2048
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
