@@ -10,7 +10,7 @@ spec:
   authentication:
     passwordFromSecret:
       name: dragonfly-secret
-      key: passwor
+      key: password
   env:
     - name: MAX_MEMORY
       valueFrom:
