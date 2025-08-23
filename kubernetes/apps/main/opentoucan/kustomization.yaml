@@ -12,4 +12,5 @@ resources:
   - kobot/ks.yaml
   - grafana/ks.yaml
   - memer/ks.yaml
+  - motur/ks.yaml
   - openttd/ks.yaml
