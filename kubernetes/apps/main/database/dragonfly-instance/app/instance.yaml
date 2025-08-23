@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/dragonflydb.io/dragonfly_v1alpha1.json
+apiVersion: dragonflydb.io/v1alpha1
+kind: Dragonfly
+metadata:
+  name: dragonfly-instance
+spec:
+    authentication:
+      passwordFromSecret:
+        name: dragonfly-secret
+        key: password
+    replicas: 2
