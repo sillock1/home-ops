@@ -71,7 +71,7 @@ spec:
         advancedMounts:
           motur:
             app:
-              - path: /config.yaml
+              - path: /app/config.yaml
                 subPath: config.yaml
     defaultPodOptions:
       securityContext:
