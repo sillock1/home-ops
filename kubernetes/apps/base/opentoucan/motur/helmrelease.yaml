@@ -52,11 +52,18 @@ spec:
                 spec:
                   httpGet:
                     path: /docs
-                    port: 8080
+                    port: &containerPort 8080
                   initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
+    service:
+      app:
+        controller: motur
+        ports:
+          http:
+            port: 80
+            targetPort: *containerPort
     persistence:
       motur-configfile:
         type: configMap
