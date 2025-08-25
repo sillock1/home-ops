@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/motur
-              tag: 2.0.1@sha256:434fefd8505c6fc59310b6fbf5d3361f61ba0765a65ebbda8ea9b41e071b0ce1
+              tag: 2.0.2@sha256:6e6ff29ff09d61b1cdc1d1d07c80ba7930819a01d49989bf042132867578f540
             envFrom:
               - secretRef:
                   name: motur-secret
