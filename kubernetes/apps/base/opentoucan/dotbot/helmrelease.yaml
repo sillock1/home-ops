@@ -69,6 +69,8 @@ spec:
                 value: 5672
               - name: MotUrl
                 value: motur.opentoucan.svc.cluster.local
+              - name: OTLP_ENDPOINT_URL
+                value: http://alloy.observability.svc.cluster.local:4318
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
