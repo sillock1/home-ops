@@ -114,6 +114,16 @@
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
+    },
+    {
+      description: "Dotbot Group",
+      groupName: "Dotbot",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/dotbot/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      minimumGroupSize: 2,
     }
   ],
 }
