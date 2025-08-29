@@ -29,7 +29,7 @@ spec:
           parallelism: 1
           ttlSecondsAfterFinished: 3600
         containers:
-          init:
+          migration:
             image:
               repository: ghcr.io/opentoucan/dotbot.migrator
               tag: 3.2.2@sha256:7c47369c557f2580b4b9fd95454b7e60e700ae130216e8bb1301924def610feb
@@ -51,11 +51,11 @@ spec:
                 memory: 512Mi
         pod:
           restartPolicy: Never
-      api:
+      dotbot:
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
-          app:
+          dotbot:
             image:
               repository: ghcr.io/opentoucan/dotbot.api
               tag: 3.2.2@sha256:7676261ec2510722831bdb92ae9dd48c1d05b806546e34a44bce9516f10af8dd
@@ -91,11 +91,11 @@ spec:
         type: emptyDir
         advancedMounts:
           migration:
-            init:
+            migration:
               - path: /cache
                 subPath: cache
     service:
-      app:
+      dotbot:
         controller: dotbot
         ports:
           http:
@@ -110,8 +110,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     serviceMonitor:
-      app:
-        enabled: true
+      dotbot:
+        serviceName: dotbot
         endpoints:
           - path: /metrics
             scheme: http
