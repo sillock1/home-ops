@@ -58,7 +58,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/dotbot.api
-              tag: 3.2.2@sha256:7676261ec2510722831bdb92ae9dd48c1d05b806546e34a44bce9516f10af8dd
+              tag: 3.2.3@sha256:b70261f3760b27947ceeea0ad3e993d60b97f9f0262d65ecdc08f9306cc49ed6
             envFrom:
               - secretRef:
                   name: dotbot-secret
