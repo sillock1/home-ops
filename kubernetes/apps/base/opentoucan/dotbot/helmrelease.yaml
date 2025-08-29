@@ -62,6 +62,13 @@ spec:
             envFrom:
               - secretRef:
                   name: dotbot-secret
+            env:
+              - name: RabbitMQ__Endpoint
+                value: rabbitmq.broker.svc.cluster.local
+              - name: RabbitMQ__Port
+                value: 5672
+              - name: MotUrl
+                value: motur.opentoucan.svc.cluster.local
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
