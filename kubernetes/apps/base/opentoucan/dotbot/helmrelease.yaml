@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: dotbot
+  name: &app dotbot
 spec:
   interval: 1h
   chartRef:
@@ -29,7 +29,7 @@ spec:
           parallelism: 1
           ttlSecondsAfterFinished: 3600
         containers:
-          migration:
+          init:
             image:
               repository: ghcr.io/opentoucan/dotbot.migrator
               tag: 3.2.2@sha256:7c47369c557f2580b4b9fd95454b7e60e700ae130216e8bb1301924def610feb
@@ -55,7 +55,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: 'true'
         containers:
-          dotbot:
+          app:
             image:
               repository: ghcr.io/opentoucan/dotbot.api
               tag: 3.2.2@sha256:7676261ec2510722831bdb92ae9dd48c1d05b806546e34a44bce9516f10af8dd
@@ -93,21 +93,38 @@ spec:
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-    persistence:
-      cache:
-        type: emptyDir
-        advancedMounts:
-          migration:
-            migration:
-              - path: /cache
-                subPath: cache
     service:
       dotbot:
         controller: dotbot
         ports:
           http:
-            port: 80
+            port: &servicePort 80
             targetPort: *containerPort
+    route:
+      dotbot:
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN}"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *servicePort
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /interactions
+                method: POST
+    persistence:
+      cache:
+        type: emptyDir
+        advancedMounts:
+          migration:
+            init:
+              - path: /cache
+                subPath: cache
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -118,7 +135,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     serviceMonitor:
       dotbot:
-        serviceName: dotbot
+        serviceName: *app
         endpoints:
           - path: /metrics
             scheme: http
