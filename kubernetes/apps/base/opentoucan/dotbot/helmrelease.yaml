@@ -68,9 +68,7 @@ spec:
               - name: RabbitMQ__Port
                 value: 5672
               - name: MotUrl
-                value: motur.opentoucan.svc.cluster.local
-              - name: OTLP_ENDPOINT_URL
-                value: http://alloy.observability.svc.cluster.local:4318
+                value: http://motur.opentoucan.svc.cluster.local
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
