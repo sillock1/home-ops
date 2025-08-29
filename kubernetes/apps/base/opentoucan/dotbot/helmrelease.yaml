@@ -1,19 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: dotbot
-spec:
-  interval: 5m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 1.3.2
-  url: oci://ghcr.io/opentoucan/charts/dotbot
----
-# yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -22,41 +8,113 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: dotbot
+    name: app-template
+  maxHistory: 2
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    api:
-      replicas: 2
-    env:
-      RabbitMQ__Endpoint: 'rabbitmq.broker.svc.cluster.local'
-      RabbitMQ__port: '5672'
-      OTEL_EXPORTER_OTLP_ENDPOINT: 'http://opentelemetry-operator.monitoring.svc.cluster.local:8080'
-      MotUrl: 'http://motur.opentoucan.svc.cluster.local'
-    existingAppSecret: 'dotbot-secret'
-    existingMigratorSecret: 'dotbot-migrator-secret'
-    route:
-      main:
+    controllers:
+      migration:
+        type: job
+        job:
+          backoffLimit: 5
+          parallelism: 1
+          ttlSecondsAfterFinished: 3600
+        containers:
+          init:
+            image:
+              repository: ghcr.io/opentoucan/dotbot.migrator
+              tag: 3.2.2@sha256:7c47369c557f2580b4b9fd95454b7e60e700ae130216e8bb1301924def610feb
+            envFrom:
+              - secretRef:
+                  name: dotbot-migrator-secret
+            env:
+              - name: DOTNET_BUNDLE_EXTRACT_BASE_DIR
+                value: /cache
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+        pod:
+          restartPolicy: Never
+      api:
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          app:
+            image:
+              repository: ghcr.io/opentoucan/dotbot.api
+              tag: 3.2.2@sha256:7676261ec2510722831bdb92ae9dd48c1d05b806546e34a44bce9516f10af8dd
+            envFrom:
+              - secretRef:
+                  name: dotbot-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &containerPort 8080
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+    persistence:
+      cache:
+        type: emptyDir
+        advancedMounts:
+          migration:
+            init:
+              - path: /cache
+                subPath: cache
+    service:
+      app:
+        controller: dotbot
+        ports:
+          http:
+            port: 80
+            targetPort: *containerPort
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2048
+        runAsGroup: 2048
+        fsGroup: 2048
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    serviceMonitor:
+      app:
         enabled: true
-        hostnames: ["{{ .Release.Name }}.${DOMAIN}"]
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: dotbot
-                port: 80
-            matches:
-              - path:
-                  type: PathPrefix
-                  value: /interactions
-              - path:
-                  type: PathPrefix
-                  value: /
+        endpoints:
+          - path: /metrics
+            scheme: http
+            port: http
+            interval: 1m
+            scrapeTimeout: 30s

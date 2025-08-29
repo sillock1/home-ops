@@ -57,6 +57,12 @@ spec:
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2048
+        runAsGroup: 2048
+        fsGroup: 2048
     service:
       app:
         controller: motur
@@ -73,11 +79,3 @@ spec:
             app:
               - path: /app/config.yaml
                 subPath: config.yaml
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 2048
-        runAsGroup: 2048
-        fsGroup: 2048
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
