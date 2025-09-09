@@ -30,9 +30,6 @@ spec:
             image:
               repository: ghcr.io/opentoucan/motur
               tag: 3.0.0@sha256:3caa83e6ff4b1e207cfd529ca0769246ec5cba036b5147b13276fbba1cf059dc
-            envFrom:
-              - secretRef:
-                  name: motur-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false

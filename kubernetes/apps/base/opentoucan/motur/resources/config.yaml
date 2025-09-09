@@ -4,10 +4,6 @@ enabled_sites:
   - www.pistonheads.com
   - www.facebook.com
   - www.gumtree.com
-redis:
-  host: dragonfly-instance.database.svc.cluster.local
-  port: 6379
-  ttl: 86400
 scraper:
   chrome_binary_location: /usr/bin/chromium
   disable_sandbox: True
