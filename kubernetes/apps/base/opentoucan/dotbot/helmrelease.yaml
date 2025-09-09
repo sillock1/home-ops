@@ -67,7 +67,7 @@ spec:
                 value: rabbitmq.broker.svc.cluster.local
               - name: RabbitMQ__Port
                 value: 5672
-              - name: MotUrl
+              - name: MoturUrl
                 value: http://motur.opentoucan.svc.cluster.local
             securityContext:
               allowPrivilegeEscalation: false
