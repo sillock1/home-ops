@@ -32,7 +32,7 @@ spec:
           init:
             image:
               repository: ghcr.io/opentoucan/dotbot.migrator
-              tag: 3.2.3@sha256:0498f447d7fb122469d7ae00d2b7acb56132ef9501a2ab913c002a8a3d392029
+              tag: 3.3.0@sha256:ba8d979a6bebc5dc730066fd67e838735d8678b1627aa3c2ea66784065ff7626
             envFrom:
               - secretRef:
                   name: dotbot-migrator-secret
@@ -58,7 +58,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/dotbot.api
-              tag: 3.2.3@sha256:b70261f3760b27947ceeea0ad3e993d60b97f9f0262d65ecdc08f9306cc49ed6
+              tag: 3.3.0@sha256:046fea992fe566cd581e12f55c7b982b2aa6cb5631d92aaa8a368ea407fc97ac
             envFrom:
               - secretRef:
                   name: dotbot-secret
@@ -67,7 +67,7 @@ spec:
                 value: rabbitmq.broker.svc.cluster.local
               - name: RabbitMQ__Port
                 value: 5672
-              - name: MotUrl
+              - name: MoturUrl
                 value: http://motur.opentoucan.svc.cluster.local
             securityContext:
               allowPrivilegeEscalation: false
