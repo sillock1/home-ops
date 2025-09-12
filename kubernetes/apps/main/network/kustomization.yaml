@@ -9,7 +9,6 @@ components:
   - ../../../components/repos
 resources:
   - bind-dns/ks.yaml
-  - cloudflare-ddns/ks.yaml
   - cloudflare-dns/ks.yaml
   - cloudflare-tunnel/ks.yaml
   - echo/ks.yaml
