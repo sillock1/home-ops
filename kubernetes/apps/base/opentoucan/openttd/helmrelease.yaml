@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sillock1/openttd
-              tag: 15.0.0-beta1@sha256:ad4750ca582f3ea5828a024e628261394d571cc70b62a611db51d90bcef9455b
+              tag: 15.0.0-beta1@sha256:72234e5b9d0a206d56ba2d1de8a66b2fde0e278c22e9666bb24122f207ce302c
             envFrom:
               - secretRef:
                   name: openttd-secret
