@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: pgbackrest
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "opentoucan"
+  grafanaCom:
+    # renovate: depName="pgBackRest Exporter Dashboard"
+    id: 17709
+    revision: 6
