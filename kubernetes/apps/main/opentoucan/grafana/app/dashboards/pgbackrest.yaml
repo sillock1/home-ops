@@ -8,6 +8,9 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "opentoucan"
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: Prometheus
   grafanaCom:
     # renovate: depName="pgBackRest Exporter Dashboard"
     id: 17709
