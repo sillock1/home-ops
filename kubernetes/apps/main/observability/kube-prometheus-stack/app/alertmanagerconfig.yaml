@@ -27,14 +27,16 @@ spec:
           - name: alertname
             value: Watchdog
             matchType: =
+      - receiver: opentoucan-discord
+        matchers:
+          - name: namespace
+            value: opentoucan
+            matchType: =
       - receiver: pushover
         matchers:
           - name: severity
             value: critical
             matchType: =
-      - receiver: opentoucan-discord
-        match:
-          namespace: opentoucan
   inhibitRules:
     - equal:
         - alertname
@@ -55,6 +57,11 @@ spec:
             name: &secret alertmanager-secret
             key: ALERTMANAGER_CLUSTER_MAIN_HEARTBEAT_URL
           sendResolved: true
+    - name: opentoucan-discord
+      discordConfigs:
+        - apiURL:
+            key: OPENTOUCAN_DISCORD_WEBHOOK_URL
+            name: *secret
     - name: pushover
       pushoverConfigs:
         - html: true
@@ -91,8 +98,3 @@ spec:
             name: *secret
             key: PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager
-    - name: opentoucan-discord
-      discordConfigs:
-        - apiURL:
-            key: *secret
-            name: OPENTOUCAN_DISCORD_WEBHOOK_URL
