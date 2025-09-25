@@ -32,6 +32,9 @@ spec:
           - name: severity
             value: critical
             matchType: =
+      - receiver: opentoucan-discord
+        match:
+          namespace: opentoucan
   inhibitRules:
     - equal:
         - alertname
@@ -88,3 +91,8 @@ spec:
             name: *secret
             key: PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager
+    - name: opentoucan-discord
+      discordConfigs:
+        - apiURL:
+            key: *secret
+            name: OPENTOUCAN_DISCORD_WEBHOOK_URL

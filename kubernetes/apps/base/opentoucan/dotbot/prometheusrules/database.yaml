@@ -1,0 +1,79 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dotbot-database-rules
+spec:
+  groups:
+    - name: dotbot.database.rules
+      rules:
+        - alert: StanzaPathMissing
+          expr: |-
+            pgbackrest_stanza_status == 1
+          for: 5m
+          annotations:
+            summary: >-
+              Path for stanza is missing
+          labels:
+            severity: critical
+
+        - alert: StanzaNoValidBackups
+          expr: |-
+            pgbackrest_stanza_status == 2
+          for: 5m
+          annotations:
+            summary: >-
+              Stanza has no valid backups
+          labels:
+            severity: critical
+
+        - alert: StanzaMissingData
+          expr: |-
+            pgbackrest_stanza_status == 3
+          for: 5m
+          annotations:
+            summary: >-
+              Stanza has missing data
+          labels:
+            severity: critical
+
+        - alert: StanzaRepositoriesOutOfSync
+          expr: |-
+            pgbackrest_stanza_status == 4
+          for: 5m
+          annotations:
+            summary: >-
+              Stanza mismatched data in the repositories
+          labels:
+            severity: warning
+
+        - alert: StanzaRepositoriesMismatchDatabase
+          expr: |-
+            pgbackrest_stanza_status == 5
+          for: 5m
+          annotations:
+            summary: >-
+              Stanza has mismatched databases between repositories
+          labels:
+            severity: warning
+
+        - alert: StanzaBackupMissing
+          expr: |-
+            pgbackrest_stanza_status == 6
+          for: 5m
+          annotations:
+            summary: >-
+              Stanza backup is missing
+          labels:
+            severity: error
+
+        - alert: StanzaUnknownState
+          expr: |-
+            pgbackrest_stanza_status == 99
+          for: 5m
+          annotations:
+            summary: >-
+              Stanza is in an unknown state
+          labels:
+            severity: critical
