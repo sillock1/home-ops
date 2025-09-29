@@ -18,7 +18,7 @@
     {
       devShells."x86_64-linux".default = with pkgs; mkShell {
         packages = [
-          helm
+          kubernetes-helm
           helmfile
           kustomize
           talosctl
