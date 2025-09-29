@@ -56,7 +56,7 @@ spec:
           apply:
             steps:
             - apply:
-              extra_args: ["--auto-merge-method squash"]
+                extra_args: ["--auto-merge-method squash"]
           import:
             steps:
               - init:
