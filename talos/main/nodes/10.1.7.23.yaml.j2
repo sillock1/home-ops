@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  install:
+    diskSelector:
+      model: Corsair MP600 ELITE
+  network:
+    hostname: mercury
+    interfaces:
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - permanentAddr: e4:b9:7a:f8:90:c4
+          mode: 802.3ad
+          lacpRate: fast
+          xmitHashPolicy: layer3+4
+          miimon: 100
+          updelay: 200
+          downdelay: 200
+        dhcp: true
+        vlans:
+          - vlanId: 30
+            dhcp: false
+            mtu: 1500
+          - vlanId: 70
+            dhcp: false
+            mtu: 1500
+  type: controlplane
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: system_disk
+  maxSize: 512GiB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: system_disk
+  maxSize: 256GiB
