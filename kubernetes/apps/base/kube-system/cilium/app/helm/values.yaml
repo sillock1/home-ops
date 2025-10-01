@@ -12,26 +12,16 @@ cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-cluster:
-  id: 1
-  name: main
 cni:
   exclusive: false
 dashboards:
   enabled: true
-devices: en+
+#devices: en+
 enableIPv4BIGTCP: false
 endpointRoutes:
   enabled: true
 envoy:
-  rollOutPods: true
-  prometheus:
-    serviceMonitor:
-      enabled: true
-gatewayAPI:
-  enabled: true
-  enableAlpn: true
-  xffNumTrustedHops: 1
+  enabled: false
 hubble:
   enabled: false
 ipam:
