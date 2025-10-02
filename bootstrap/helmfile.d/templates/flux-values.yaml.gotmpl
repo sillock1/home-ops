@@ -1,0 +1,1 @@
+{{ (fromYaml (readFile (printf "../../../kubernetes/clusters/%s/flux-instance/helmrelease.yaml" (requiredEnv "CLUSTER")))) | toYaml }}
