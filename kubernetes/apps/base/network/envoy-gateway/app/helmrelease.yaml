@@ -8,14 +8,18 @@ spec:
   chartRef:
     kind: OCIRepository
     name: *app
-  interval: 1h
+  install:
+    crds: CreateReplace
+  interval: 30m
+  upgrade:
+    crds: CreateReplace
   values:
-    deployment:
-      replicas: 2
     config:
-      envoy-gateway:
-        gateway:
-          controllerName: gateway.envoyproxy.io/gatewayclass-controller
-      logging:
-        level:
-          default: debug
+      envoyGateway:
+        provider:
+          type: Kubernetes
+          kubernetes:
+            deploy:
+              type: GatewayNamespace
+    global:
+      imageRegistry: mirror.gcr.io
