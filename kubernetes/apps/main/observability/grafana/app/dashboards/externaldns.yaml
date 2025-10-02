@@ -10,5 +10,5 @@ spec:
       dashboards: "cluster"
   grafanaCom:
     # renovate: depName="External-dns"
-    id: 15038
-    revision: 3
+    id: 23969
+    revision: 1
