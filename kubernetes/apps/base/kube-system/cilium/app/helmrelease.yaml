@@ -1,74 +1,92 @@
 ---
-# yaml-language-server: $schema=https://kubernetes.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: cilium
-spec:
-  interval: 1h
-  url: https://helm.cilium.io
----
 # yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cilium
+  name: &app cilium
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: *app
   interval: 1h
-  chart:
-    spec:
-      chart: cilium
-      version: 1.18.2
-      sourceRef:
-        kind: HelmRepository
-        name: cilium
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: cilium-helm-values
   values:
+    dashboards:
+      enabled: true
     hubble:
       enabled: true
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-        dashboards:
-          enabled: true
-      relay:
-        enabled: true
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: true
-        rollOutPods: true
     operator:
+      dashboards:
+        enabled: true
       prometheus:
         enabled: true
         serviceMonitor:
           enabled: true
-      dashboards:
-        enabled: true
     prometheus:
       enabled: true
       serviceMonitor:
         enabled: true
         trustCRDsExist: true
-    dashboards:
+    autoDirectNodeRoutes: true
+    bandwidthManager:
       enabled: true
+      bbr: true
+    bpf:
+    #  datapathMode: netkit
+      masquerade: true
+    #  preallocateMaps: true
+      tproxy: true
+    cgroup:
+      automount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+    cni:
+      exclusive: false
+
+    devices: bond+,en+
+    enableIPv4BIGTCP: false
+    endpointRoutes:
+      enabled: true
+    envoy:
+      rollOutPods: true
+      prometheus:
+        serviceMonitor:
+          enabled: true
+    gatewayAPI:
+      enabled: true
+      enableAlpn: true
+      xffNumTrustedHops: 1
+    ipam:
+      mode: kubernetes
+    ipv4NativeRoutingCIDR: 10.42.0.0/16
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 7445
+    kubeProxyReplacement: true
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    l2announcements:
+      enabled: true
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+    localRedirectPolicy: true
+    rollOutCiliumPods: true
+    routingMode: native
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - PERFMON
+          - BPF
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE

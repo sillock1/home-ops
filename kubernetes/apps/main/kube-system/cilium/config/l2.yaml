@@ -31,12 +31,9 @@ metadata:
     lbipam.cilium.io/ips: 10.1.7.19
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
   selector:
     k8s-app: kube-apiserver
     tier: control-plane
   ports:
-    - name: https
-      port: 6443
-      protocol: TCP
-      targetPort: 6443
+    - port: 6443

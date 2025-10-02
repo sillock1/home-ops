@@ -5,25 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app plex
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: intel-device-plugin-gpu
-      namespace: kube-system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync-system
+    name: *app
+  interval: 1h
   values:
     controllers:
       plex:

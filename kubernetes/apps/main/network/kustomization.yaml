@@ -6,7 +6,6 @@ namespace: network
 components:
   - ../../../components/clusters/main
   - ../../../components/common
-  - ../../../components/repos
 resources:
   - bind-dns/ks.yaml
   - cloudflare-dns/ks.yaml

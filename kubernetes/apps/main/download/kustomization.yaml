@@ -6,6 +6,5 @@ namespace: download
 components:
   - ../../../components/clusters/main
   - ../../../components/common
-  - ../../../components/repos
 resources:
   - sabnzbd/ks.yaml

@@ -6,7 +6,6 @@ namespace: system-upgrade
 components:
   - ../../../components/clusters/main
   - ../../../components/common
-  - ../../../components/repos
 resources:
   - system-upgrade-controller/ks.yaml
 configMapGenerator:
