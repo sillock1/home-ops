@@ -37,7 +37,7 @@
           kubectl
           renovate
           act
-          yq
+          yq-go
         ];
 
       };
