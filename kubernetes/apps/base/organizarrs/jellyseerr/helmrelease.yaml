@@ -66,8 +66,8 @@ spec:
           - "{{ .Release.Name }}.${DOMAIN}"
           - requests.${DOMAIN}
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

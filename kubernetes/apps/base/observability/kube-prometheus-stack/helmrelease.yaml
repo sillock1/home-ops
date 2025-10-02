@@ -18,8 +18,8 @@ spec:
           hostnames:
             - alertmanager.${DOMAIN}
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       alertmanagerSpec:
         alertmanagerConfiguration:
@@ -46,8 +46,8 @@ spec:
           enabled: true
           hostnames: ["prometheus.${DOMAIN}"]
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       prometheusSpec:
         scrapeInterval: 1m
