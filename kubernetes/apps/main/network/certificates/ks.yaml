@@ -3,20 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cilium
-  namespace: &namespace kube-system
+  name: &app certificates-import
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
-  path: ./kubernetes/apps/base/kube-system/cilium
-  prune: false # never should be deleted
+  interval: 1h
+  path: ./kubernetes/apps/base/network/certificates/import
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: network
   timeout: 5m
   wait: true
 ---
@@ -24,19 +23,18 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cilium-config
-  namespace: &namespace kube-system
+  name: &app certificates-export
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
-  path: ./kubernetes/apps/main/kube-system/cilium/config
-  prune: false # never should be deleted
+  interval: 1h
+  path: ./kubernetes/apps/base/network/certificates/export
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: network
   timeout: 5m
   wait: true

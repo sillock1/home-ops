@@ -41,20 +41,12 @@ spec:
       hostRoot: /sys/fs/cgroup
     cni:
       exclusive: false
-
     devices: bond+,en+
     enableIPv4BIGTCP: false
     endpointRoutes:
       enabled: true
     envoy:
-      rollOutPods: true
-      prometheus:
-        serviceMonitor:
-          enabled: true
-    gatewayAPI:
-      enabled: true
-      enableAlpn: true
-      xffNumTrustedHops: 1
+      enabled: false
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.42.0.0/16
