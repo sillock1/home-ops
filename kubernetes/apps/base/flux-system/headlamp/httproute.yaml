@@ -8,7 +8,7 @@ spec:
   hostnames: ["headlamp.${DOMAIN}"]
   parentRefs:
     - name: envoy-internal
-      namespace: internal
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:
