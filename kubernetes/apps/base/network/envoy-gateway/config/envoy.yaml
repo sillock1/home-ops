@@ -47,7 +47,7 @@ kind: Gateway
 metadata:
   name: envoy-external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname ${EXTERNAL_DOMAIN}.jory.dev
+    external-dns.alpha.kubernetes.io/target: &hostname ${EXTERNAL_DOMAIN}.${DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -70,7 +70,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: jory-dev-tls
+            name: ${DOMAIN}-tls
 ---
 # yaml-language-server: $schema=https://kubernetes.pages.dev/gateway.networking.k8s.io/gateway_v1.json
 apiVersion: gateway.networking.k8s.io/v1
@@ -78,7 +78,7 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname ${INTERNAL_DOMAIN}.jory.dev
+    external-dns.alpha.kubernetes.io/target: &hostname ${INTERNAL_DOMAIN}.${DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -101,7 +101,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: jory-dev-tls
+            name: ${DOMAIN}-tls
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backendtrafficpolicies.yaml
 apiVersion: gateway.envoyproxy.io/v1alpha1
