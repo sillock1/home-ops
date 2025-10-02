@@ -1,37 +1,18 @@
 ---
-# yaml-language-server: $schema=https://kubernetes.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: bind-dns
-spec:
-  interval: 1h
-  url: https://kubernetes-sigs.github.io/external-dns
----
 # yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app bind-dns
 spec:
-  interval: 1h
   chart:
     spec:
       chart: external-dns
       version: 1.19.0
       sourceRef:
         kind: HelmRepository
-        name: bind-dns
-  install:
-    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
-    remediation:
-      strategy: rollback
-      retries: 3
+        name: *app
+  interval: 1h
   values:
     fullnameOverride: *app
     provider: rfc2136

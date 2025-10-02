@@ -1,18 +1,3 @@
-
----
-# yaml-language-server: $schema=https://kubernetes.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: grafana-operator
-spec:
-  interval: 5m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: v5.19.4
-  url: oci://ghcr.io/grafana/helm-charts/grafana-operator
 ---
 # yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -20,15 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app grafana-operator
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: grafana-operator
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+    name: *app
+  interval: 1h

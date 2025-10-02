@@ -6,7 +6,6 @@ namespace: home-automation
 components:
   - ../../../components/clusters/main
   - ../../../components/common
-  - ../../../components/repos
 resources:
   - home-assistant/ks.yaml
   - mosquitto/ks.yaml

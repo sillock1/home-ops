@@ -9,6 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: observability
   interval: 30m
   path: ./kubernetes/apps/base/observability/smartctl-exporter
   prune: true

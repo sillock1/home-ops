@@ -6,7 +6,6 @@ namespace: organizarrs
 components:
   - ../../../components/clusters/main
   - ../../../components/common
-  - ../../../components/repos
 resources:
   - radarr/ks.yaml
   - sonarr/ks.yaml

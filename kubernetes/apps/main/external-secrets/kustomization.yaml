@@ -6,7 +6,6 @@ namespace: external-secrets
 components:
   - ../../../components/clusters/main
   - ../../../components/common
-  - ../../../components/repos
 resources:
   - external-secrets/ks.yaml
   - stores/onepassword-connect/ks.yaml
