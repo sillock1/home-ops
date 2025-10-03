@@ -3,14 +3,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: system-upgrade-controller
+  name: tuppr
 spec:
-  interval: 1h
+  interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 3.7.3
-  url: oci://ghcr.io/bjw-s/helm/app-template
-  verify:
-    provider: cosign
+    tag: 0.0.38
+  url: oci://ghcr.io/home-operations/charts/tuppr
