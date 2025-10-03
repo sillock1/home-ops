@@ -11,6 +11,8 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyService:
+        externalTrafficPolicy: Cluster
       envoyDeployment:
         replicas: ${REPLICAS:=1}
         container:
