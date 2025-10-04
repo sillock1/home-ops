@@ -34,14 +34,13 @@ spec:
         prod:
           plan:
             steps:
-            - init:
-                extra_args: ["-upgrade"]
-            - plan:
-                extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
+              - init:
+                  extra_args: ["-upgrade"]
+              - plan:
+                  extra_args: ["-var-file", "./env/prod.tfvars", "-var", "environment=prod"]
           apply:
             steps:
-            - apply:
-                extra_args: ["--auto-merge-method squash"]
+              - apply
           import:
             steps:
               - init:
