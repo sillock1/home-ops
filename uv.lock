@@ -62,7 +62,7 @@ wheels = [
 
 [[package]]
 name = "flux-local"
-version = "7.10.0"
+version = "7.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
@@ -75,9 +75,9 @@ dependencies = [
     { name = "python-slugify" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/18/bc4bfeac779af42f5bc3702c8f387b818e773acc98d5fc68097b81a61a27/flux_local-7.10.0.tar.gz", hash = "sha256:7932c0b5138183d72ea56151b34d7de77530c2f8133b45b8cc20cf341e2322af", size = 98224, upload-time = "2025-09-15T13:57:25.697Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/fa/9788316de8afd35f7ee8a0716d93683a821ca28baa051074b4bd67812427/flux_local-7.10.1.tar.gz", hash = "sha256:fa2c3181fae51928943ab96fb42a8aea682b1e769a3308fcd749968bd329429f", size = 98205, upload-time = "2025-10-04T14:57:08.168Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/60/013fc7fa2e0b618a37973c808a1444bb4b2f27bc6efc8d74a5fffb0b0dc4/flux_local-7.10.0-py3-none-any.whl", hash = "sha256:67539f15116bc1d35f50592ced6891573cffe151f4af07e51ab6215a1ab14d70", size = 107027, upload-time = "2025-09-15T13:57:24.435Z" },
+    { url = "https://files.pythonhosted.org/packages/20/b9/110345f2fedb76a705c285f0e3690b68a1044ee4192a86defa4a79082f1e/flux_local-7.10.1-py3-none-any.whl", hash = "sha256:c89c44e3ec71d519b5ff4528b57781d30b49295381307980c0038ae88e01c8f6", size = 107028, upload-time = "2025-10-04T14:57:06.372Z" },
 ]
 
 [[package]]
@@ -158,7 +158,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "flux-local", specifier = "==7.10.0" }]
+requires-dist = [{ name = "flux-local", specifier = "==7.10.1" }]
 
 [[package]]
 name = "mashumaro"
