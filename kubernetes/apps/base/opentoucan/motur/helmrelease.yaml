@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/motur
-              tag: 3.0.0@sha256:3caa83e6ff4b1e207cfd529ca0769246ec5cba036b5147b13276fbba1cf059dc
+              tag: 3.1.0@sha256:4dd44e5f4130e96fdeaa58c708fb9d00072668ad985ee43c79784988a6fc90b0
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
