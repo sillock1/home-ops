@@ -54,5 +54,5 @@ spec:
       client_id: ${AUTH_CLIENT_ID}
       client_secret: ${AUTH_CLIENT_SECRET}
       scopes: user:email,read:org
-      allowed_organizations: '[opentoucan]'
+      allowed_organizations: '["opentoucan"]'
       org_mapping: '@opentoucan/developers:1:Viewer,@opentoucan/devops:1:Admin'
