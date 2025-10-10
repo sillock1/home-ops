@@ -15,10 +15,12 @@ spec:
     type: postgres
     uid: postgres
     access: proxy
-    url: https://postgres.opentoucan.com:5432
+    url: postgres.opentoucan.com:5432
     user: grafana
     secureJsonData:
       "password": ${POSTGRES_PASSWORD}
+    jsonData:
+      "database": production
   valuesFrom:
     - targetPath: secureJsonData.password
       valueFrom:
