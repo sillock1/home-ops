@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: postgres
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: opentoucan
+  datasource:
+    name: Postgres
+    type: postgres
+    uid: postgres
+    url: https://postgres.opentoucan.com:5432
+    user: grafana
+    secureJsonData:
+      password: ${POSTGRES_PASSWORD}
+  valuesFrom:
+    - targetPath: secureJsonData.password
+      valueFrom:
+        secretKeyRef:
+          key: postgres-password
+          name: grafana-secret
