@@ -18,7 +18,7 @@ spec:
     url: postgres.opentoucan.com:5432
     user: grafana
     secureJsonData:
-      "password": ${POSTGRES_PASSWORD}
+      "password": ${postgres-password}
     jsonData:
       "database": production
   valuesFrom:
