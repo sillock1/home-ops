@@ -27,8 +27,9 @@ spec:
       exclusive: false
     dashboards:
       enabled: true
+      annotations:
+        grafana_folder: Cilium
     devices: bond+
-    enableIPv4BIGTCP: false
     endpointRoutes:
       enabled: true
     envoy:
