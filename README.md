@@ -17,7 +17,7 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
         <th>Description</th>
     </tr>
     <tr>
-        <td><img width="32" src="https://www.talos.dev/images/logo.svg"></td>
+        <td><img width="32" src="https://avatars.githubusercontent.com/u/13804887"></td>
         <td><a href="https://www.talos.dev">Talos OS</a></td>
         <td>An API driven operating system design for Kubernetes</td>
     </tr>
