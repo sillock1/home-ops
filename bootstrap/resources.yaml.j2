@@ -5,8 +5,8 @@ metadata:
   name: onepassword-secret
   namespace: external-secrets
 stringData:
-  token: op://kubernetes-${CLUSTER}/1password/OP_CONNECT_TOKEN
-  1password-credentials.json: op://kubernetes-${CLUSTER}/1password/OP_CREDENTIALS_JSON
+  token: op://kubernetes/1password/OP_CONNECT_TOKEN
+  1password-credentials.json: op://kubernetes/1password/OP_CREDENTIALS_JSON
 ---
 apiVersion: v1
 kind: Secret
@@ -14,4 +14,4 @@ metadata:
   name: sops-age
   namespace: flux-system
 stringData:
-  age.agekey: op://kubernetes-${CLUSTER}/flux/FLUX_SOPS_PRIVATE_KEY
+  age.agekey: op://kubernetes/sops/SOPS_PRIVATE_KEY
