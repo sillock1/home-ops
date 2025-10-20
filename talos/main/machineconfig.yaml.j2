@@ -75,7 +75,7 @@ cluster:
     {% endif %}
   clusterName: main
   controlPlane:
-    endpoint: https://k8s.pill.ac:6443
+    endpoint: https://k8s.main.pill.ac:6443
   discovery:
     enabled: true
     registries:
@@ -101,7 +101,7 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    certSANs: ["k8s.pill.ac"]
+    certSANs: ["k8s.main.pill.ac"]
     disablePodSecurityPolicy: true
   controllerManager:
     image: registry.k8s.io/kube-controller-manager:v1.34.1
