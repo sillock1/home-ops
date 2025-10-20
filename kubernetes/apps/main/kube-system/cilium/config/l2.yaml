@@ -19,7 +19,7 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - cidr: 10.1.7.19/32
+    - cidr: 10.1.7.20/32
     - start: "10.1.7.200"
       stop: "10.1.7.255"
 ---
@@ -28,7 +28,7 @@ kind: Service
 metadata:
   name: kube-api
   annotations:
-    lbipam.cilium.io/ips: 10.1.7.19
+    lbipam.cilium.io/ips: 10.1.7.20
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
