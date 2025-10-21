@@ -29,9 +29,9 @@ spec:
             restartPolicy: Always
             resources: &resources
               requests:
-                cpu: 100m
+                cpu: 10m
               limits:
-                memory: 512Mi
+                memory: 64Mi
         containers:
           app:
             image:
@@ -61,8 +61,12 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources: *resources
+              capabilities: {add: ["NET_RAW"], drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       dnsConfig:
         options:
@@ -102,9 +106,26 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+    rbac:
+      roles:
+        gatus:
+          type: ClusterRole
+          rules:
+            - apiGroups: [""]
+              resources: ["services"]
+              verbs: ["get", "watch", "list"]
+            - apiGroups: ["gateway.networking.k8s.io"]
+              resources: ["gateways", "httproutes"]
+              verbs: ["get", "watch", "list"]
+      bindings:
+        gatus:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: gatus
+          subjects:
+            - identifier: gatus
     serviceAccount:
-      create: true
-      name: gatus
+      gatus: {}
     persistence:
       config:
         existingClaim: gatus
