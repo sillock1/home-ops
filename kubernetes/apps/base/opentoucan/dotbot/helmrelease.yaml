@@ -105,6 +105,9 @@ spec:
               - path:
                   type: PathPrefix
                   value: /interactions
+              - path:
+                  type: PathPrefix
+                  value: /health
     persistence:
       cache:
         type: emptyDir
