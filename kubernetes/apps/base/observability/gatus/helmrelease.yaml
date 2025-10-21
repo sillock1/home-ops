@@ -15,23 +15,20 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-config:
+          gatus-sidecar:
             image:
-              repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.30.11@sha256:91b49e5b6d2fb03e7a9014f8b072d0de199987845b02d96ce458dd9f14e753f5
-            env:
-              FOLDER: /config
-              LABEL: gatus.io/enabled
-              NAMESPACE: ALL
-              RESOURCE: both
-              UNIQUE_FILENAMES: true
-              METHOD: WATCH
-            restartPolicy: Always
-            resources: &resources
+              repository: ghcr.io/home-operations/gatus-sidecar
+              tag: 0.0.9@sha256:31a52dd0e579c1f865b2580a4bb715d2a893deb1351fedeaba73598e9a578cbe
+            args:
+              - --auto-httproute
+              - --enable-httproute
+              - --enable-service
+            resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 64Mi
+            restartPolicy: Always
         containers:
           app:
             image:
@@ -80,21 +77,17 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: gatus
         ports:
           http:
             port: *port
     serviceMonitor:
       app:
-        serviceName: gatus
         endpoints:
           - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
     route:
       app:
+        annotations:
+          gatus.home-operations.com/enabled: "false"
         hostnames:
           - "{{ .Release.Name }}.${DOMAIN}"
           - status.${DOMAIN}
@@ -111,25 +104,38 @@ spec:
         gatus:
           type: ClusterRole
           rules:
-            - apiGroups: [""]
-              resources: ["configmaps", "secrets"]
-              verbs: ["get", "watch", "list"]
+            - apiGroups:
+                - ""
+              resources:
+                - services
+              verbs:
+                - get
+                - watch
+                - list
+            - apiGroups:
+                - gateway.networking.k8s.io
+              resources:
+                - gateways
+                - httproutes
+              verbs:
+                - get
+                - watch
+                - list
       bindings:
         gatus:
           type: ClusterRoleBinding
           roleRef:
-            identifier: *app
+            identifier: gatus
           subjects:
-            - identifier: *app
+            - identifier: gatus
     serviceAccount:
       gatus: {}
     persistence:
-      config:
-        existingClaim: gatus
       config-file:
         type: configMap
-        name: gatus-configmap
+        name: "{{ .Release.Name }}-configmap"
         globalMounts:
+          - path: /config/buddy.yaml
+            subPath: buddy.yaml
           - path: /config/config.yaml
             subPath: config.yaml
-            readOnly: true
