@@ -112,18 +112,15 @@ spec:
           type: ClusterRole
           rules:
             - apiGroups: [""]
-              resources: ["services"]
-              verbs: ["get", "watch", "list"]
-            - apiGroups: ["gateway.networking.k8s.io"]
-              resources: ["gateways", "httproutes"]
+              resources: ["configmaps", "secrets"]
               verbs: ["get", "watch", "list"]
       bindings:
         gatus:
           type: ClusterRoleBinding
           roleRef:
-            identifier: gatus
+            identifier: *app
           subjects:
-            - identifier: gatus
+            - identifier: *app
     serviceAccount:
       gatus: {}
     persistence:
