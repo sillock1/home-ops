@@ -56,6 +56,8 @@ machine:
     nodeIP:
       validSubnets: ["10.1.7.0/24"]
     disableManifestsDirectory: true
+  network:
+    searchDomains: ["sillock.com"]
   nodeLabels:
     topology.kubernetes.io/region: home
     topology.kubernetes.io/zone: {{ 'm' if ENV.IS_CONTROLPLANE else 'w' }}
