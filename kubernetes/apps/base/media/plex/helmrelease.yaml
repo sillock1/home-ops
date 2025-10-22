@@ -52,6 +52,9 @@ spec:
                 gpu.intel.com/i915: 1
                 memory: 6Gi
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: plex
       securityContext:
         runAsNonRoot: true
         runAsUser: 2048
@@ -60,8 +63,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [44]
         seccompProfile: { type: RuntimeDefault }
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
     service:
       app:
         controller: plex
@@ -99,21 +100,7 @@ spec:
     persistence:
       config:
         existingClaim: plex
-        # TODO: If setting up Plex for the first time, you'll want to add the globalMounts section
-        # globalMounts:
-        #   - path: /config/Library/Application Support/Plex Media Server
-      # Separate PVC for cache to avoid backing up cache files
-      cache:
-        existingClaim: plex-cache
-        globalMounts:
-          - path: /config/Library/Application Support/Plex Media Server/Cache
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /config/Library/Application Support/Plex Media Server/Logs
       tmp:
-        type: emptyDir
-      transcode:
         type: emptyDir
       media:
         type: nfs

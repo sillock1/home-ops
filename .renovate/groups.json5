@@ -62,16 +62,6 @@
       minimumGroupSize: 4,
     },
     {
-      description: "Intel Device Plugins Group",
-      groupName: "Intel-Device-Plugins",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/intel-device-plugins-operator/", "/intel-device-plugins-gpu/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      minimumGroupSize: 2,
-    },
-    {
       decription: "Kubernetes Group",
       groupName: "Kubernetes",
       matchDatasources: ["docker"],
