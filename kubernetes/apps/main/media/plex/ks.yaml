@@ -15,7 +15,7 @@ spec:
   dependsOn:
     - name: external-secrets-store-onepassword
       namespace: external-secrets
-    - name: intel-device-plugin-gpu
+    - name: intel-gpu-resource-driver
       namespace: kube-system
     - name: rook-ceph-cluster
       namespace: rook-ceph
