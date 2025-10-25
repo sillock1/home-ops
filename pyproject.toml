@@ -2,5 +2,5 @@
 name = "localdev"
 version = "1.0"
 dependencies = [
-  "flux-local ==7.10.1"
+  "flux-local ==7.11.0"
 ]
