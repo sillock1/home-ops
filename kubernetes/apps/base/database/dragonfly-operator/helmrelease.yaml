@@ -13,4 +13,6 @@ spec:
     crds:
       keep: false
     serviceMonitor:
+      enabled: true
+    rbacProxy:
       enabled: false
