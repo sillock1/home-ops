@@ -53,6 +53,9 @@ spec:
                   extra_args: ["-upgrade"]
               - state_rm:
                   extra_args: ["-lock=false"]
+      metrics:
+        prometheus:
+          endpoint: /metrics
     defaultTFDistribution: opentofu
     vcsSecretName: atlantis-github-secret
     loadEnvFromSecrets:
