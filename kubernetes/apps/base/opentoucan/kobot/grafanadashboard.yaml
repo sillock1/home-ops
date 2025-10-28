@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: kobot
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: opentoucan
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  json: >
+      {
+        "annotations": {
+          "list": [
+            {
+              "builtIn": 1,
+              "datasource": {
+                "type": "grafana",
+                "uid": "-- Grafana --"
+              },
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "type": "dashboard"
+            }
+          ]
+        },
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "graphTooltip": 0,
+        "id": 1,
+        "links": [],
+        "panels": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "loki"
+            },
+            "fieldConfig": {
+              "defaults": {},
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 17,
+              "w": 24,
+              "x": 0,
+              "y": 0
+            },
+            "id": 2,
+            "options": {
+              "dedupStrategy": "none",
+              "enableLogDetails": true,
+              "prettifyLogMessage": false,
+              "showCommonLabels": false,
+              "showLabels": false,
+              "showTime": true,
+              "sortOrder": "Ascending",
+              "wrapLogMessage": false
+            },
+            "pluginVersion": "11.3.0",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "loki"
+                },
+                "editorMode": "builder",
+                "expr": "{app=\"kobot\"} |= `` | logfmt",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "title": "Kobot Logs",
+            "type": "logs"
+          }
+        ],
+        "preload": false,
+        "schemaVersion": 40,
+        "tags": [],
+        "templating": {
+          "list": []
+        },
+        "time": {
+          "from": "now-30m",
+          "to": "now"
+        },
+        "timepicker": {},
+        "timezone": "browser",
+        "title": "Logs",
+        "uid": "beqmmrcssd3pca",
+        "version": 9,
+        "weekStart": ""
+      }
