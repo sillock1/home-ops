@@ -5,9 +5,7 @@ kind: Grafana
 metadata:
   name: grafana-opentoucan
   labels:
-    dashboards: "opentoucan"
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana.internal/instance: opentoucan
 spec:
   deployment:
     spec:
@@ -39,7 +37,17 @@ spec:
                 - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
                   value: 'true'
                 - name: GF_SERVER_ROOT_URL
-                  value: https://opentoucan-dashboard.sillock.com
+                  value: https://opentoucan-dashboard.${DOMAIN}
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: {drop: ["ALL"]}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 2048
+            runAsGroup: 2048
+            fsGroup: 2048
+            fsGroupChangePolicy: OnRootMismatch
   config:
     analytics:
       check_for_updates: 'false'
@@ -47,12 +55,14 @@ spec:
       reporting_enabled: 'false'
     news:
       news_feed_enabled: 'false'
+    auth:
+      disable_login_form: "false"
     auth.anonymous:
       enabled: 'false'
     auth.github:
       enabled: 'true'
-      client_id: ${AUTH_CLIENT_ID}
-      client_secret: ${AUTH_CLIENT_SECRET}
+      client_id: $${AUTH_CLIENT_ID}
+      client_secret: $${AUTH_CLIENT_SECRET}
       scopes: user:email,read:org
       allowed_organizations: '["opentoucan"]'
       org_mapping: '@opentoucan/developers:1:Viewer,@opentoucan/devops:1:Admin'

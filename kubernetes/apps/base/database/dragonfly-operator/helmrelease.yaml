@@ -16,3 +16,10 @@ spec:
       enabled: true
     rbacProxy:
       enabled: false
+    grafanaDashboard:
+      enabled: true
+      grafanaOperator:
+        enabled: true
+        allowCrossNamespaceImport: true
+        matchLabels:
+          grafana.internal/instance: cluster

@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: truenas-scale
+  name: volsync
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -11,5 +11,8 @@ spec:
       grafana.internal/instance: cluster
   datasources:
     - datasourceName: prometheus
-      inputName: DS_GRAPHITE
-url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/refs/heads/main/dashboards/truenas_scale.json
+      inputName: DS_PROMETHEUS
+  envs:
+    - name: VAR_REPLICATIONDESTNAME
+      value: .*-dst
+  url: https://grafana.com/api/dashboards/21356/revisions/3/download

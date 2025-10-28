@@ -3,15 +3,13 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: cloudflared
+  name: cert-manager
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      dashboards: "cluster"
-  grafanaCom:
-    # renovate: depName="Cloudflare Tunnels (cloudflared)"
-    id: 17457
-    revision: 6
+      grafana.internal/instance: cluster
   datasources:
-    - inputName: DS_PROMETHEUS
-      datasourceName: Prometheus
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://grafana.com/api/dashboards/20842/revisions/3/download

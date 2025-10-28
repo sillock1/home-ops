@@ -9,7 +9,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      dashboards: opentoucan
+      grafana.internal/instance: opentoucan
   datasource:
     name: Postgres
     type: postgres

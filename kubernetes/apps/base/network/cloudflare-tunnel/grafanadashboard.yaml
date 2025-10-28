@@ -3,15 +3,13 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: envoy
+  name: cloudflare-tunnels
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      dashboards: "cluster"
-  grafanaCom:
-    # renovate: depName="Envoy Proxy Monitoring gRPC"
-    id: 23239
-    revision: 1
+      grafana.internal/instance: cluster
   datasources:
-    - inputName: DS_AFRANET_PROMETHEUS
-      datasourceName: Prometheus
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://grafana.com/api/dashboards/17457/revisions/6/download

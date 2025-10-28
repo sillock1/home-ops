@@ -7,7 +7,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      dashboards: "cluster"
+      grafana.internal/instance: cluster
   datasource:
     name: Loki
     type: loki
