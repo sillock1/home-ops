@@ -3,15 +3,15 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: node-exporter-full
+  name: grafana-operator
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      dashboards: "cluster"
-  grafanaCom:
-    # renovate: depName="Node Exporter Full"
-    id: 1860
-    revision: 41
+      grafana.internal/instance: cluster
   datasources:
-    - inputName: DS_PROMETHEUS
-      datasourceName: Prometheus
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: grafana-operator-dashboard
+    key: grafana-operator.json

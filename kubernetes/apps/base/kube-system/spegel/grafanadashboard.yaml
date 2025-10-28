@@ -3,12 +3,15 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: kubernetes-namespaces
+  name: spegel
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      dashboards: "cluster"
-  grafanaCom:
-    # renovate: depName="Kubernetes / Views / Namespaces"
-    id: 15758
-    revision: 42
+      grafana.internal/instance: cluster
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: spegel-dashboard
+    key: spegel.json

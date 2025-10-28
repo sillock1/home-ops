@@ -5,7 +5,7 @@ kind: Grafana
 metadata:
   name: grafana-cluster
   labels:
-    dashboards: "cluster"
+    grafana.internal/instance: cluster
 spec:
   deployment:
     spec:
@@ -28,15 +28,35 @@ spec:
                   value: 'true'
                 - name: GF_SERVER_ROOT_URL
                   value: https://grafana.${DOMAIN}
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: {drop: ["ALL"]}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 2048
+            runAsGroup: 2048
+            fsGroup: 2048
+            fsGroupChangePolicy: OnRootMismatch
   config:
     analytics:
-      check_for_plugin_updates: 'false'
-      check_for_updates: 'false'
-      reporting_enabled: 'false'
+      check_for_updates: "false"
+      check_for_plugin_updates: "false"
+      feedback_links_enabled: "false"
+      reporting_enabled: "false"
+    auth:
+      disable_login_form: "false"
     auth.anonymous:
-      enabled: 'true'
-      org_id: '1'
-      org_name: Main Org.
-      org_role: Viewer
+      enabled: "true"
+    log:
+      mode: console
+    metrics:
+      enabled: "true"
     news:
-      news_feed_enabled: 'false'
+      news_feed_enabled: "false"
+    plugins:
+      plugin_admin_enabled: "false"
+    security:
+      angular_support_enabled: "true"
+    server:
+      enable_gzip: "true"
