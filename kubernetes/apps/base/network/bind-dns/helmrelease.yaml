@@ -41,7 +41,7 @@ spec:
     sources: ["gateway-httproute", "service"]
     txtOwnerId: ${CLUSTER}
     txtPrefix: k8s.${CLUSTER}
-    domainFilters: ["${DOMAIN}"] #, "${SECRET_DOMAIN}"]
+    domainFilters: ["${DOMAIN}"]
     serviceMonitor:
       enabled: true
     podAnnotations:
