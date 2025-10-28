@@ -7,4 +7,5 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - volsync/ks.yaml
+  - ./namespace.yaml
+  - ./volsync/ks.yaml

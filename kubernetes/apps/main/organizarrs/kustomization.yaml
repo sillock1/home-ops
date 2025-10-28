@@ -7,8 +7,9 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - radarr/ks.yaml
-  - sonarr/ks.yaml
-  - prowlarr/ks.yaml
-  - jellyseerr/ks.yaml
-  - recyclarr/ks.yaml
+  - ./namespace.yaml
+  - ./radarr/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./prowlarr/ks.yaml
+  - ./jellyseerr/ks.yaml
+  - ./recyclarr/ks.yaml

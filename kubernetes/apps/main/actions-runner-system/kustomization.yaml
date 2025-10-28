@@ -7,4 +7,5 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - ks.yaml
+  - ./namespace.yaml
+  - ./ks.yaml

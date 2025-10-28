@@ -7,5 +7,6 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - external-secrets/ks.yaml
-  - stores/onepassword-connect/ks.yaml
+  - ./namespace.yaml
+  - ./external-secrets/ks.yaml
+  - ./stores/onepassword-connect/ks.yaml

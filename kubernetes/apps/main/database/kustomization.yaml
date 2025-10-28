@@ -7,6 +7,7 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - dragonfly-operator/ks.yaml
-  - dragonfly-instance/ks.yaml
-  - qdrant/ks.yaml
+  - ./namespace.yaml
+  - ./dragonfly-operator/ks.yaml
+  - ./dragonfly-instance/ks.yaml
+  - ./qdrant/ks.yaml

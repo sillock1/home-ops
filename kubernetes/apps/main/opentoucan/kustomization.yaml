@@ -7,9 +7,10 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - dotbot/ks.yaml
-  - kobot/ks.yaml
-  - grafana/ks.yaml
-  - memer/ks.yaml
-  - motur/ks.yaml
-  - openttd/ks.yaml
+  - ./namespace.yaml
+  - ./dotbot/ks.yaml
+  - ./kobot/ks.yaml
+  - ./grafana/ks.yaml
+  - ./memer/ks.yaml
+  - ./motur/ks.yaml
+  - ./openttd/ks.yaml

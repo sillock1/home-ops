@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app atlantis
-  namespace: &namespace atlantis
 spec:
   commonMetadata:
     labels:
@@ -16,6 +15,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: atlantis
   timeout: 5m
   wait: false

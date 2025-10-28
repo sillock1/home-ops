@@ -7,4 +7,5 @@ components:
   - ../../../components/clusters/main
   - ../../../components/common
 resources:
-  - sabnzbd/ks.yaml
+  - ./namespace.yaml
+  - ./sabnzbd/ks.yaml
