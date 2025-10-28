@@ -12,6 +12,9 @@ spec:
       name: sops-age
   interval: 30m
   path: ./kubernetes/apps/main
+  postBuild:
+    substitute:
+      CLUSTER: main
   patches:
     - patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -27,15 +30,6 @@ spec:
             substitute:
               DOMAIN: sillock.com
             substituteFrom:
-              - kind: ConfigMap
-                name: cluster-settings
-                optional: true
-              - kind: ConfigMap
-                name: cluster-settings-shared
-                optional: true
-              - kind: Secret
-                name: cluster-secrets
-                optional: true
               - kind: Secret
                 name: cluster-secrets-shared
                 optional: true

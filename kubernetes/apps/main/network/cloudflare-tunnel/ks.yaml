@@ -15,6 +15,10 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/apps/base/network/cloudflare-tunnel
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: cloudflare-tunnel-secret
   prune: true
   sourceRef:
     kind: GitRepository
