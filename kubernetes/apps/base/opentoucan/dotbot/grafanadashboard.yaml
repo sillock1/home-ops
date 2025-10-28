@@ -30,7 +30,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  url: https://raw.githubusercontent.com/opentoucan/dotbot/refs/heads/main/dashboards/dotbot.json
+  url: https://raw.githubusercontent.com/opentoucan/dotbot/refs/heads/main/dashboards/overview.json
 ---
 # yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
