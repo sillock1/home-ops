@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: dotbot-vehicles
+  name: dotbot-single-vehicle
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -15,13 +15,13 @@ spec:
     - inputName: DS_POSTGRES
       datasourceName: Postgres
   # renovate: depName="dotbot"
-  url: https://raw.githubusercontent.com/opentoucan/dotbot/refs/heads/main/dashboards/vehicle-dashboard-for-registration-plate.json
+  url: https://raw.githubusercontent.com/opentoucan/dotbot/refs/heads/main/dashboards/single-vehicle-dashboard.json
 ---
 # yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: dotbot-legacy
+  name: dotbot-overview
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
