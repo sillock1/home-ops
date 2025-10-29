@@ -26,6 +26,7 @@ spec:
   staticConfigs:
     - targets:
         - nas.pill.ac:9100
+        - pikvm.pill.ac:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
