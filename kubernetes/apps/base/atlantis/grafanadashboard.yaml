@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: atlantis
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: opentoucan
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://raw.githubusercontent.com/opentoucan/infrastructure-config/refs/heads/main/dashboards/atlantis.json
