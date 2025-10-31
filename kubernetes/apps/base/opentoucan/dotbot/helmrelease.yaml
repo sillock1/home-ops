@@ -21,7 +21,7 @@ spec:
           init:
             image:
               repository: ghcr.io/opentoucan/dotbot.migrator
-              tag: 3.4.5@sha256:524fca7b52d9b4be98efdf38f58bea3194ede47c862c6c0b63b9f28767fe7b1e
+              tag: 3.4.6@sha256:2a9a589f49be2ed3ebd2e6d323610b7489fcfdfe1fcc542a6bf8417bd5f841a5
             envFrom:
               - secretRef:
                   name: dotbot-migrator-secret
@@ -47,7 +47,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentoucan/dotbot.api
-              tag: 3.4.5@sha256:8bb191b85b28cd81dba7518f1aaf17eaa2b78940f6f34ec097f2799c04ae0ebb
+              tag: 3.4.6@sha256:53e295a8ee2ce2d1880ff7bc24c26fe8f7a2d81726eca5cb9572733b8505a1fb
             envFrom:
               - secretRef:
                   name: dotbot-secret
