@@ -12,11 +12,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: *app
-   # https://github.com/runatlantis/helm-charts/pull/486
-  install:
-    disableSchemaValidation: true
-  upgrade:
-    disableSchemaValidation: true
   interval: 1h
   values:
     repoConfig: |
