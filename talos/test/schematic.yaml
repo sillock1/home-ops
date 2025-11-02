@@ -1,0 +1,13 @@
+---
+customization:
+  extraKernelArgs:
+    - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
+    - intel_iommu=on                      # PCI Passthrough
+    - iommu=pt                            # PCI Passthrough
+    - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU / iGPU
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/i915 # Direct Rendering Manager Intel GPU firmware and drivers
+      - siderolabs/intel-ucode # Intel CPU microcode updates firmware
+      - siderolabs/mei # Driver for Intel Management Engine
+      - siderolabs/nfsrahead # NFS read-ahead tool
