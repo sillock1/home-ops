@@ -7,7 +7,7 @@ endpoints:
       hide-hostname: true
       hide-url: true
     dns:
-      query-name: "${GATUS_SUBDOMAIN:=${APP}}.${DOMAIN}"
+      query-name: "${SUBDOMAIN:=${APP}}.${DOMAIN}"
       query-type: A
     conditions:
       - "len([BODY]) == 0"

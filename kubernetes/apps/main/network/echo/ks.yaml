@@ -15,6 +15,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      SUBDOMAIN: *app
   prune: false
   sourceRef:
     kind: GitRepository

@@ -41,7 +41,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: rook
+      SUBDOMAIN: rook
   prune: false
   sourceRef:
     kind: GitRepository
