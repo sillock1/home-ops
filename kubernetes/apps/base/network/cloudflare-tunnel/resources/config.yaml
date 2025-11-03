@@ -1,6 +1,6 @@
 ---
 originRequest:
-  originServerName: external.${DOMAIN}
+  originServerName: ${EXTERNAL_SUBDOMAIN}.${DOMAIN}
 
 ingress:
   - hostname: ${DOMAIN}
