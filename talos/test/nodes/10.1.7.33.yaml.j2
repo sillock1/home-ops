@@ -5,12 +5,12 @@ machine:
     diskSelector:
       model:
   network:
-    hostname: polaris
+    hostname: sirius
     interfaces:
       - interface: bond0
         bond:
           deviceSelectors:
-            - permanentAddr: 18:66:da:32:f7:b0
+            - permanentAddr: 18:66:da:42:33:e7
           mode: 802.3ad
           lacpRate: fast
           xmitHashPolicy: layer3+4
@@ -18,6 +18,8 @@ machine:
           updelay: 200
           downdelay: 200
         dhcp: true
+        vip:
+          ip: 10.1.7.30
         vlans:
           - vlanId: 30
             dhcp: false
