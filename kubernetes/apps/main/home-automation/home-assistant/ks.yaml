@@ -19,7 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: hass
+      SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   sourceRef:
