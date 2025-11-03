@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: hubble-dashboard
 spec:
-  hostnames: ["hubble.${DOMAIN}"]
+  hostnames: ["${SUBDOMAIN}.${DOMAIN}"]
   parentRefs:
     - name: envoy-internal
       namespace: network

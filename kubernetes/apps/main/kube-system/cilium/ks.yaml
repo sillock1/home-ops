@@ -10,6 +10,9 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/base/kube-system/cilium
+  postBuild:
+    substitute:
+      SUBDOMAIN: hubble
   prune: false
   sourceRef:
     kind: GitRepository
