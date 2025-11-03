@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: headlamp-dashboard
 spec:
-  hostnames: ["headlamp.${DOMAIN}"]
+  hostnames: ["${SUBDOMAIN}.${DOMAIN}"]
   parentRefs:
     - name: envoy-internal
       namespace: network

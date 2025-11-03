@@ -13,8 +13,6 @@ spec:
   postBuild:
     substitute:
       SUBDOMAIN: *app
-      STORAGECLASS: ceph-filesystem
-      STORAGECLASS_ACCESSMODE: ReadWriteMany
   prune: true
   retryInterval: 2m
   sourceRef:
