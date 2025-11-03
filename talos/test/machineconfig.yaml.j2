@@ -2,11 +2,11 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 version: v1alpha1
 machine:
-  token: op://kubernetes/talos-test/MACHINE_TOKEN
+  token: op://test-kubernetes/talos/MACHINE_TOKEN
   ca:
-    crt: op://kubernetes/talos-test/MACHINE_CA_CRT
+    crt: op://test-kubernetes/talos/MACHINE_CA_CRT
     {% if ENV.IS_CONTROLPLANE %}
-    key: op://kubernetes/talos-test/MACHINE_CA_KEY
+    key: op://test-kubernetes/talos/MACHINE_CA_KEY
     {% endif %}
   features:
     apidCheckExtKeyUsage: true
@@ -72,9 +72,9 @@ machine:
     servers: ["time.cloudflare.com"]
 cluster:
   ca:
-    crt: op://kubernetes/talos-test/CLUSTER_CA_CRT
+    crt: op://test-kubernetes/talos/CLUSTER_CA_CRT
     {% if ENV.IS_CONTROLPLANE %}
-    key: op://kubernetes/talos-test/CLUSTER_CA_KEY
+    key: op://test-kubernetes/talos/CLUSTER_CA_KEY
     {% endif %}
   clusterName: test
   controlPlane:
@@ -84,19 +84,19 @@ cluster:
     registries:
       kubernetes: { disabled: true }
       service: { disabled: true }
-  id: op://kubernetes/talos-test/CLUSTER_ID
+  id: op://test-kubernetes/talos/CLUSTER_ID
   network:
     cni:
       name: none
     dnsDomain: cluster.local
-    podSubnets: ["10.244.0.0/16"]
-    serviceSubnets: ["10.96.0.0/12"]
-  secret: op://kubernetes/talos-test/CLUSTER_SECRET
-  token: op://kubernetes/talos-test/CLUSTER_TOKEN
+    podSubnets: ["10.42.0.0/16"]
+    serviceSubnets: ["10.43.0.0/16"]
+  secret: op://test-kubernetes/talos/CLUSTER_SECRET
+  token: op://test-kubernetes/talos/CLUSTER_TOKEN
   {% if ENV.IS_CONTROLPLANE %}
   aggregatorCA:
-    crt: op://kubernetes/talos-test/CLUSTER_AGGREGATORCA_CRT
-    key: op://kubernetes/talos-test/CLUSTER_AGGREGATORCA_KEY
+    crt: op://test-kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
+    key: op://test-kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
   allowSchedulingOnControlPlanes: true
   apiServer:
     image: registry.k8s.io/kube-apiserver:v1.34.1
@@ -105,6 +105,7 @@ cluster:
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
     certSANs: ["k8s.test.pill.ac"]
+    disablePodSecurityPolicy: true
   controllerManager:
     image: registry.k8s.io/kube-controller-manager:v1.34.1
     extraArgs: { bind-address: 0.0.0.0 }
@@ -112,13 +113,13 @@ cluster:
   etcd:
     advertisedSubnets: ["10.1.7.0/24"]
     ca:
-      crt: op://kubernetes/talos-test/CLUSTER_ETCD_CA_CRT
-      key: op://kubernetes/talos-test/CLUSTER_ETCD_CA_KEY
+      crt: op://test-kubernetes/talos/CLUSTER_ETCD_CA_CRT
+      key: op://test-kubernetes/talos/CLUSTER_ETCD_CA_KEY
     extraArgs: { listen-metrics-urls: http://0.0.0.0:2381 }
   proxy:
     disabled: true
     image: registry.k8s.io/kube-proxy:v1.34.1
-  secretboxEncryptionSecret: op://kubernetes/talos-test/CLUSTER_SECRETBOXENCRYPTIONSECRET
+  secretboxEncryptionSecret: op://test-kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
   scheduler:
     image: registry.k8s.io/kube-scheduler:v1.34.1
     extraArgs: { bind-address: 0.0.0.0 }
@@ -139,7 +140,7 @@ cluster:
                     topologyKey: kubernetes.io/hostname
                     whenUnsatisfiable: ScheduleAnyway
   serviceAccount:
-    key: op://kubernetes/talos-test/CLUSTER_SERVICEACCOUNT_KEY
+    key: op://test-kubernetes/talos/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
 ---
 apiVersion: v1alpha1
