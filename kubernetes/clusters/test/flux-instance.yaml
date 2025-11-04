@@ -12,7 +12,7 @@ spec:
   decryption:
     provider: sops
   interval: 30m
-  path: ./kubernetes/clusters/main/flux-instance
+  path: ./kubernetes/clusters/test/flux-instance
   prune: true
   sourceRef:
     kind: GitRepository
