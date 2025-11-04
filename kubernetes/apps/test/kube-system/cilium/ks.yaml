@@ -29,7 +29,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/apps/main/kube-system/cilium/config
+  path: ./kubernetes/apps/test/kube-system/cilium/config
   prune: false
   sourceRef:
     kind: GitRepository
