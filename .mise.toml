@@ -1,6 +1,6 @@
 [env]
 # File paths
-KUBECONFIG = "{{config_root}}/kubernetes/clusters/main/kubeconfig"
+KUBECONFIG = "{{config_root}}/kubernetes/clusters/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
 # File paths
