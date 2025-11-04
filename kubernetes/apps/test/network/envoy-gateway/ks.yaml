@@ -38,8 +38,8 @@ spec:
       EXTERNAL_DOMAIN: external
       INTERNAL_DOMAIN: internal
       REPLICAS: "2"
-      SVC_GATEWAY_EXTERNAL: 10.1.7.201
-      SVC_GATEWAY_INTERNAL: 10.1.7.202
+      SVC_GATEWAY_EXTERNAL: 10.1.7.203
+      SVC_GATEWAY_INTERNAL: 10.1.7.204
   prune: true
   sourceRef:
     kind: GitRepository
