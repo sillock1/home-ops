@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app cloudflare-tunnel
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cloudflare-dns
+    - name: external-secrets-store-onepassword
+      namespace: external-secrets
+  interval: 30m
+  path: ./kubernetes/apps/test/network/cloudflare-tunnel/app
+  postBuild:
+    substitute:
+      EXTERNAL_SUBDOMAIN: test-external
+    substituteFrom:
+      - kind: Secret
+        name: cloudflare-tunnel-id-secret
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: network
+  timeout: 5m
+  wait: false
