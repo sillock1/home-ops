@@ -14,6 +14,7 @@ releases:
     version: 1.18.3
     values:
       - templates/values.yaml.gotmpl
+      - '{{ requiredEnv "CLUSTER_APPS" }}/kube-system/cilium/config/helm-values.yaml'
     hooks:
       - # Wait for Cilium CRDs to be available
         command: bash
