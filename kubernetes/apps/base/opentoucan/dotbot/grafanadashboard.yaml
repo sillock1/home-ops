@@ -12,8 +12,10 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-    - inputName: DS_POSTGRES
-      datasourceName: Postgres
+    - datasourceName: Postgres
+      inputName: DS_POSTGRES
+    - datasourceName: VictoriaLogs
+      inputName: DS_VICTORIALOGS
   # renovate: depName="dotbot"
   url: https://raw.githubusercontent.com/opentoucan/dotbot/refs/heads/main/dashboards/single-vehicle-dashboard.json
 ---

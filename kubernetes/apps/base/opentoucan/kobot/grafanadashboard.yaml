@@ -12,4 +12,6 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
+    - datasourceName: VictoriaLogs
+      inputName: DS_VICTORIALOGS
   url: https://raw.githubusercontent.com/opentoucan/kobot/refs/heads/main/dashboards/overview.json
