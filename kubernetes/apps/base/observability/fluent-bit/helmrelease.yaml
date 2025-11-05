@@ -13,15 +13,15 @@ spec:
     config:
       outputs: |-
         [OUTPUT]
-          name http
-          match *
-          host victoria-logs-server.observability.svc.cluster.local
-          port 9428
-          uri /insert/jsonline?_stream_fields=kube.namespace_name,kube.pod_name,kube.app&_msg_field=log&_time_field=date
-          format json_lines
-          json_date_format iso8601
-          compress gzip
-          log_response_payload false
+            name http
+            match *
+            host victoria-logs-server.observability.svc.cluster.local
+            port 9428
+            uri /insert/jsonline?_stream_fields=kubernetes.namespace_name,kubernetes.pod_name,kubernetes.host,kubernetes.container_name&_msg_field=log&_time_field=date
+            format json_lines
+            json_date_format iso8601
+            compress gzip
+            log_response_payload false
     dashboards:
       enabled: true
     serviceMonitor:
