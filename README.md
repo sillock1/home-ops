@@ -77,8 +77,8 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
         <td>Observability dashboards</td>
     </tr>
     <tr>
-        <td><img width="32" src="https://grafana.com/static/img/logos/logo-loki.svg"></td>
-        <td><a href="https://grafana.com/oss/loki">Loki</a></td>
+        <td><img width="32" src="https://victoriametrics.com/icons/apple-touch-icon.webp"></td>
+        <td><a href="https://docs.victoriametrics.com/victorialogs/">Victoria Logs</a></td>
         <td>Log aggregation system</td>
     </tr>
     <tr>
@@ -92,9 +92,9 @@ Welcome to my Home Ops Repository, this is where I mostly manage my self-hosted 
         <td>Trace monitoring system</td>
     </tr>
     <tr>
-        <td><img width="32" src="https://avatars.githubusercontent.com/u/49998002?s=48&v=4"></td>
-        <td><a href="https://opentelemetry.io/docs/collector/">Open Telemetry Collector</a></td>
-        <td>Vendor agnostic collection tool for handling telemetry data</td>
+        <td><img width="32" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRqMWjvW84j0UpnxebCVopI0uin_-K4_vSYA&s"></td>
+        <td><a href="https://fluentbit.io/">Fluent Bit</a></td>
+        <td>Log Pipeline processor and forwarder</td>
     </tr>
     <tr>
         <td><img width="32" src="https://docs.renovatebot.com/assets/images/logo.png"></td>
