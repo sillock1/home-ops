@@ -7,3 +7,4 @@ resources:
   - ./loki.yaml
   - ./postgres.yaml
   - ./prometheus.yaml
+  - ./victoria-logs.yaml
