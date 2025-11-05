@@ -10,6 +10,7 @@ resources:
   - ./alloy/ks.yaml
   - ./blackbox-exporter/ks.yaml
   - ./blackbox-exporter/probes.yaml
+  - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana-operator/ks.yaml
   - ./grafana/ks.yaml
