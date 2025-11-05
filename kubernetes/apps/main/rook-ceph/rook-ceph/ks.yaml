@@ -13,7 +13,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/apps/base/rook-ceph/operator
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -34,19 +34,32 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   dependsOn:
-    - name: external-secrets-store-onepassword
-      namespace: external-secrets
-  interval: 30m
+    - name: rook-ceph
+    - name: volsync
+      namespace: volsync-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: rook-ceph-cluster
+      namespace: rook-ceph
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      namespace: rook-ceph
+      name: rook-ceph
+  healthCheckExprs:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      failed: status.ceph.health == 'HEALTH_ERR'
+      current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
+  interval: 1h
   path: ./kubernetes/apps/base/rook-ceph/cluster
   postBuild:
     substitute:
       APP: *app
       SUBDOMAIN: rook
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: rook-ceph
-  timeout: 15m
-  wait: false
