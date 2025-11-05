@@ -13,7 +13,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/apps/base/rook-ceph/operator
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -42,7 +42,7 @@ spec:
     substitute:
       APP: *app
       SUBDOMAIN: rook
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
