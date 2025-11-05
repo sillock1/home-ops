@@ -34,7 +34,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   dependsOn:
-    - name: rook-ceph
+    - name: rook-ceph-operator
     - name: volsync
       namespace: volsync-system
   healthChecks:
