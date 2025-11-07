@@ -5,7 +5,6 @@ kind: ResourceSet
 metadata:
   name: dotbot
 spec:
-  serviceAccountName: flux-opentoucan
   inputsFrom:
     - apiVersion: fluxcd.controlplane.io/v1
       kind: ResourceSetInputProvider
@@ -129,8 +128,8 @@ spec:
       spec:
         instances: 1
         enableSuperuserAccess: true
-      storage:
-        size: 10Gi
+        storage:
+          size: 10Gi
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
       metadata:
