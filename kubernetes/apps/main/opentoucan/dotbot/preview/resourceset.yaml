@@ -33,7 +33,7 @@ spec:
       spec:
         chartRef:
           kind: OCIRepository
-          name: << inputs.id >>-dotbot-pr-versitygw
+          name: dotbot-pr-<< inputs.id >>-versitygw
         interval: 1h
         values:
           controllers:
@@ -301,7 +301,7 @@ spec:
             cache:
               type: emptyDir
               advancedMounts:
-                migration:
+                dotbot-pr-migration:
                   init:
                     - path: /cache
                       subPath: cache
