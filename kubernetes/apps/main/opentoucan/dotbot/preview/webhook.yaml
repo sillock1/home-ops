@@ -33,4 +33,4 @@ spec:
   resources:
     - apiVersion: fluxcd.controlplane.io/v1
       kind: ResourceSetInputProvider
-      name: dotbot-pull-requests
+      name: dotbot-github-prs
