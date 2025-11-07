@@ -14,7 +14,7 @@ spec:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
       metadata:
-        name: << inputs.id >>-dotbot-pr-versitygw
+        name: dotbot-pr-<< inputs.id >>-versitygw
         namespace: opentoucan
       spec:
         interval: 1h
@@ -29,7 +29,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       metadata:
-        name: << inputs.id >>-dotbot-pr-versitygw
+        name: dotbot-pr-<< inputs.id >>-versitygw
         namespace: opentoucan
       spec:
         chartRef:
@@ -89,7 +89,7 @@ spec:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
       metadata:
-        name: << inputs.id >>-dotbot-pr-dragonfly
+        name: dotbot-pr-<< inputs.id >>-dragonfly
         namespace: opentoucan
       spec:
         image: ghcr.io/dragonflydb/dragonfly:v1.34.2
@@ -124,11 +124,13 @@ spec:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
       metadata:
-        name: << inputs.id >>-dotbot-pr-database
+        name: dotbot-pr-<< inputs.id >>--database
         namespace: opentoucan
       spec:
         instances: 1
         enableSuperuserAccess: true
+      storage:
+        size: 10Gi
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
       metadata:
@@ -171,22 +173,22 @@ spec:
                     - name: DB_HOSTNAME
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: host
                     - name: DB_USER
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: user
                     - name: DB_PASSWORD
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: password
                     - name: DB_DATABASE_NAME
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: dbname
                     - name: CONNECTIONSTRING
                       value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
@@ -219,22 +221,22 @@ spec:
                     - name: DB_HOSTNAME
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: host
                     - name: DB_USER
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: user
                     - name: DB_PASSWORD
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: password
                     - name: DB_DATABASE_NAME
                       valueFrom:
                         secretKeyRef:
-                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: dbname
                     - name: CONNECTION_STRING
                       value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
