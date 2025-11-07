@@ -15,6 +15,7 @@ spec:
       kind: OCIRepository
       metadata:
         name: << inputs.id >>-dotbot-pr-versitygw
+        namespace: opentoucan
       spec:
         interval: 1h
         layerSelector:
@@ -29,6 +30,7 @@ spec:
       kind: HelmRelease
       metadata:
         name: << inputs.id >>-dotbot-pr-versitygw
+        namespace: opentoucan
       spec:
         chartRef:
           kind: OCIRepository
@@ -88,6 +90,7 @@ spec:
       kind: Dragonfly
       metadata:
         name: << inputs.id >>-dotbot-pr-dragonfly
+        namespace: opentoucan
       spec:
         image: ghcr.io/dragonflydb/dragonfly:v1.34.2
         replicas: 2
@@ -122,6 +125,7 @@ spec:
       kind: Cluster
       metadata:
         name: << inputs.id >>-dotbot-pr-database
+        namespace: opentoucan
       spec:
         instances: 1
         enableSuperuserAccess: true
@@ -129,6 +133,7 @@ spec:
       kind: OCIRepository
       metadata:
         name: dotbot-pr-<< inputs.id >>
+        namespace: opentoucan
       spec:
         interval: 1h
         layerSelector:
@@ -143,6 +148,7 @@ spec:
       kind: HelmRelease
       metadata:
         name: dotbot-pr-<< inputs.id >>
+        namespace: opentoucan
       spec:
         chartRef:
           kind: OCIRepository
