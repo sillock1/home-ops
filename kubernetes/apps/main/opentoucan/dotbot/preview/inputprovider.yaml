@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/fluxcd.controlplane.io/resourcesetinputprovider_v1.json
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSetInputProvider
+metadata:
+  name: dotbot-github-prs
+  annotations:
+    fluxcd.controlplane.io/reconcileEvery: "5m"
+spec:
+  type: GitHubPullRequest
+  url: https://github.com/opentoucan/dotbot
+  secretRef:
+    name: flux-opentoucan
+  filter:
+    labels:
+      - "deploy/flux-preview"

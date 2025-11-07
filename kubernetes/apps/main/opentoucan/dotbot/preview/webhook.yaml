@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: dotbot-pr-receiver-token
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  target:
+    name: dotbot-pr-receiver-token
+    template:
+      data:
+        token: "{{ .GITHUB_WEBHOOK_TOKEN }}"
+  dataFrom:
+    - extract:
+        key: dotbot-pr
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/notification.toolkit.fluxcd.io/receiver_v1.json
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Receiver
+metadata:
+  name: dotbot-pr-webhook
+spec:
+  type: github
+  events:
+    - ping
+    - push
+    - pull_request
+  secretRef:
+    name: dotbot-pr-receiver-token
+  resources:
+    - apiVersion: fluxcd.controlplane.io/v1
+      kind: ResourceSetInputProvider
+      name: dotbot-pull-requests

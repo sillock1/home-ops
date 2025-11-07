@@ -1,0 +1,307 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/fluxcd.controlplane.io/resourceset_v1.json
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSet
+metadata:
+  name: dotbot
+spec:
+  serviceAccountName: flux-opentoucan
+  inputsFrom:
+    - apiVersion: fluxcd.controlplane.io/v1
+      kind: ResourceSetInputProvider
+      name: dotbot-pull-requests
+  resources:
+    - apiVersion: source.toolkit.fluxcd.io/v1
+      kind: OCIRepository
+      metadata:
+        name: << inputs.id >>-dotbot-pr-versitygw
+      spec:
+        interval: 1h
+        layerSelector:
+          mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+          operation: copy
+        ref:
+          tag: 4.4.0
+        url: oci://ghcr.io/bjw-s-labs/helm/app-template
+        verify:
+          provider: cosign
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      metadata:
+        name: << inputs.id >>-dotbot-pr-versitygw
+      spec:
+        chartRef:
+          kind: OCIRepository
+          name: << inputs.id >>-dotbot-pr-versitygw
+        interval: 1h
+        values:
+          controllers:
+            dotbot-pr-versitygw:
+              annotations:
+                reloader.stakater.com/auto: 'true'
+              containers:
+                app:
+                  image:
+                    repository: docker.io/versity/versitygw
+                    tag: v1.0.18@sha256:90f8280610a889d705ae93ae4b4064d74ffa9f3b565aacf2e3372b0614d7a796
+                  env:
+                    - name: ROOT_ACCESS_KEY
+                      valueFrom:
+                        secretKeyRef:
+                          name: dotbot-pr
+                          key: AWS_ACCESS_KEY_ID
+                    - name: ROOT_SECRET_KEY
+                      valueFrom:
+                        secretKeyRef:
+                          name: dotbot-pr
+                          key: AWS_SECRET_ACCESS_KEY
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    readOnlyRootFilesystem: false
+                    capabilities: { drop: ["ALL"] }
+                  resources:
+                    requests:
+                      cpu: 10m
+                      memory: 256Mi
+                    limits:
+                      memory: 500Mi
+                  probes:
+                    liveness: &probes
+                      enabled: false
+                    readiness: *probes
+          defaultPodOptions:
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 2048
+              runAsGroup: 2048
+              fsGroup: 2048
+              fsGroupChangePolicy: OnRootMismatch
+              seccompProfile: { type: RuntimeDefault }
+          service:
+            dotbot-pr-versitygw:
+              controller: dotbot-pr-versitygw
+              ports:
+                http:
+                  port: 80
+                  targetPort: 7070
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      metadata:
+        name: << inputs.id >>-dotbot-pr-dragonfly
+      spec:
+        image: ghcr.io/dragonflydb/dragonfly:v1.34.2
+        replicas: 2
+        authentication:
+          passwordFromSecret:
+            name: dotbot-pr
+            key: password
+        env:
+          - name: MAX_MEMORY
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: 1Mi
+        args:
+          - --maxmemory=$(MAX_MEMORY)Mi
+          - --proactor_threads=2
+          - --cluster_mode=emulated
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 512Mi
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: "kubernetes.io/hostname"
+            whenUnsatisfiable: "DoNotSchedule"
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/part-of: dotbot-pr-<< inputs.id >>
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      metadata:
+        name: << inputs.id >>-dotbot-pr-database
+      spec:
+        instances: 1
+        enableSuperuserAccess: true
+    - apiVersion: source.toolkit.fluxcd.io/v1
+      kind: OCIRepository
+      metadata:
+        name: dotbot-pr-<< inputs.id >>
+      spec:
+        interval: 1h
+        layerSelector:
+          mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+          operation: copy
+        ref:
+          tag: 4.4.0
+        url: oci://ghcr.io/bjw-s-labs/helm/app-template
+        verify:
+          provider: cosign
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      metadata:
+        name: dotbot-pr-<< inputs.id >>
+      spec:
+        chartRef:
+          kind: OCIRepository
+          name: dotbot-pr-<< inputs.id >>
+        interval: 1h
+        values:
+          controllers:
+            dotbot-pr-migration:
+              type: job
+              job:
+                backoffLimit: 5
+                parallelism: 1
+                ttlSecondsAfterFinished: 3600
+              containers:
+                init:
+                  image:
+                    repository: ghcr.io/opentoucan/dotbot.migrator
+                    tag: << inputs.sha >>
+                  env:
+                    - name: DB_HOSTNAME
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: host
+                    - name: DB_USER
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: user
+                    - name: DB_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: password
+                    - name: DB_DATABASE_NAME
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: dbname
+                    - name: CONNECTIONSTRING
+                      value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
+                    - name: DOTNET_BUNDLE_EXTRACT_BASE_DIR
+                      value: /cache
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    readOnlyRootFilesystem: true
+                    capabilities: { drop: ["ALL"] }
+                  resources:
+                    requests:
+                      cpu: 10m
+                      memory: 256Mi
+                    limits:
+                      memory: 512Mi
+              pod:
+                restartPolicy: Never
+            dotbot-pr:
+              annotations:
+                reloader.stakater.com/auto: 'true'
+              containers:
+                app:
+                  image:
+                    repository: ghcr.io/opentoucan/dotbot.api
+                    tag: << inputs.sha >>
+                  envFrom:
+                    - secretRef:
+                        name: dotbot-pr
+                  env:
+                    - name: DB_HOSTNAME
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: host
+                    - name: DB_USER
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: user
+                    - name: DB_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: password
+                    - name: DB_DATABASE_NAME
+                      valueFrom:
+                        secretKeyRef:
+                          name: << inputs.id >>-dotbot-pr-database-superuser
+                          key: dbname
+                    - name: CONNECTION_STRING
+                      value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
+                    - name: RabbitMQ__Endpoint
+                      value: rabbitmq.broker.svc.cluster.local
+                    - name: RabbitMQ__Port
+                      value: 5672
+                    - name: MoturUrl
+                      value: http://motur.opentoucan.svc.cluster.local
+                    - name: S3_URL
+                      value: http://dotbot-pr-versitygw.opentoucan.svc.cluster.local
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    readOnlyRootFilesystem: true
+                    capabilities: { drop: ["ALL"] }
+                  resources:
+                    requests:
+                      cpu: 10m
+                      memory: 256Mi
+                    limits:
+                      memory: 512Mi
+                  probes:
+                    liveness:
+                      enabled: false
+                    readiness:
+                      enabled: true
+                      custom: true
+                      spec:
+                        httpGet:
+                          path: /health
+                          port: &containerPort 8080
+                        initialDelaySeconds: 10
+                        periodSeconds: 10
+                        timeoutSeconds: 1
+                        failureThreshold: 3
+          service:
+            dotbot-pr:
+              controller: dotbot-pr
+              ports:
+                http:
+                  port: &servicePort 80
+                  targetPort: *containerPort
+          route:
+            dotbot-pr:
+              hostnames:
+                - "dotbot-pr-<< inputs.id >>.${DOMAIN}"
+              parentRefs:
+                - name: envoy-external
+                  namespace: network
+                  sectionName: https
+              rules:
+                - backendRefs:
+                    - name: dotbot-pr-<< inputs.id >>
+                      port: *servicePort
+                  matches:
+                    - path:
+                        type: PathPrefix
+                        value: /interactions
+                    - path:
+                        type: PathPrefix
+                        value: /health
+          persistence:
+            cache:
+              type: emptyDir
+              advancedMounts:
+                migration:
+                  init:
+                    - path: /cache
+                      subPath: cache
+          defaultPodOptions:
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 2048
+              runAsGroup: 2048
+              fsGroup: 2048
+              fsGroupChangePolicy: OnRootMismatch
+              seccompProfile: { type: RuntimeDefault }

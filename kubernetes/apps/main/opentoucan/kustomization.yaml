@@ -6,7 +6,9 @@ namespace: opentoucan
 components:
   - ../../../components/common
 resources:
+  - ./externalsecret.yaml
   - ./namespace.yaml
+  - ./serviceaccount.yaml
   - ./dotbot/ks.yaml
   - ./kobot/ks.yaml
   - ./grafana/ks.yaml
