@@ -8,7 +8,7 @@ components:
 resources:
   - ./externalsecret.yaml
   - ./namespace.yaml
-  - ./serviceaccount.yaml
+  - ./rbac.yaml
   - ./dotbot/ks.yaml
   - ./kobot/ks.yaml
   - ./grafana/ks.yaml
