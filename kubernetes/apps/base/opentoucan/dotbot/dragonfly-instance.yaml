@@ -3,13 +3,13 @@
 apiVersion: dragonflydb.io/v1alpha1
 kind: Dragonfly
 metadata:
-  name: dragonfly-instance
+  name: dotbot-dragonfly-cache
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.34.2
   replicas: 2
   authentication:
     passwordFromSecret:
-      name: dragonfly-secret
+      name: dotbot-dragonfly
       key: password
   env:
     - name: MAX_MEMORY
@@ -32,4 +32,4 @@ spec:
       whenUnsatisfiable: "DoNotSchedule"
       labelSelector:
         matchLabels:
-          app.kubernetes.io/part-of: dragonfly
+          app.kubernetes.io/part-of: dotbot
