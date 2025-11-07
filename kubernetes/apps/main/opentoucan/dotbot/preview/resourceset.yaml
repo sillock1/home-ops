@@ -9,7 +9,7 @@ spec:
   inputsFrom:
     - apiVersion: fluxcd.controlplane.io/v1
       kind: ResourceSetInputProvider
-      name: dotbot-pull-requests
+      name: dotbot-github-prs
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
