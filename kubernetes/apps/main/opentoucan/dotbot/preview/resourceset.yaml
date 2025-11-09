@@ -248,7 +248,7 @@ spec:
                         secretKeyRef:
                           name: dotbot-pr-<< inputs.id >>-database-superuser
                           key: dbname
-                    - name: CONNECTION_STRING
+                    - name: ConnectionStrings__dotbot
                       value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
                     - name: RabbitMQ__Endpoint
                       value: rabbitmq.broker.svc.cluster.local
