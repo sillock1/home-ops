@@ -14,7 +14,7 @@ spec:
       migration:
         type: job
         job:
-          backoffLimit: 5
+          backoffLimit: 10
           parallelism: 1
           ttlSecondsAfterFinished: 3600
         containers:
