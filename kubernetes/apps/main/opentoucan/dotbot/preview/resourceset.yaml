@@ -150,6 +150,11 @@ spec:
       metadata:
         name: dotbot-pr-<< inputs.id >>
         namespace: opentoucan
+        annotations:
+          event.toolkit.fluxcd.io/preview-url: "https://dotbot-pr-<< inputs.id >>.${DOMAIN}"
+          event.toolkit.fluxcd.io/pr-number: << inputs.id | quote >>
+          event.toolkit.fluxcd.io/branch: << inputs.branch | replace "/" "-" | quote >>
+          event.toolkit.fluxcd.io/author: << inputs.author | quote >>
       spec:
         chartRef:
           kind: OCIRepository
@@ -167,7 +172,7 @@ spec:
                 init:
                   image:
                     repository: ghcr.io/opentoucan/dotbot.migrator
-                    tag: << inputs.sha >>
+                    tag: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
                   env:
                     - name: DB_HOSTNAME
                       valueFrom:
@@ -212,7 +217,7 @@ spec:
                 app:
                   image:
                     repository: ghcr.io/opentoucan/dotbot.api
-                    tag: << inputs.sha >>
+                    tag: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
                   envFrom:
                     - secretRef:
                         name: dotbot-pr

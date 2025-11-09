@@ -14,3 +14,24 @@ spec:
   filter:
     labels:
       - "deploy/flux-preview"
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Provider
+metadata:
+  name: dotbot-github-dispatch
+spec:
+  type: githubdispatch
+  address: https://github.com/opentoucan/dotbot
+  secretRef:
+    name: flux-opentoucan
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: dotbot-github-pr-comment
+spec:
+  providerRef:
+    name: dotbot-github-dispatch
+  eventSources:
+    - kind: HelmRelease
+      name: '*'
