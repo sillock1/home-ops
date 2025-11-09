@@ -98,7 +98,7 @@ spec:
         namespace: opentoucan
       spec:
         image: ghcr.io/dragonflydb/dragonfly:v1.34.2
-        replicas: 1
+        replicas: 2
         serviceAccountName: flux-opentoucan
         authentication:
           passwordFromSecret:
@@ -259,7 +259,7 @@ spec:
                     - name: S3_URL
                       value: http://dotbot-pr-versitygw.opentoucan.svc.cluster.local
                     - name: ConnectionStrings__redis
-                      value: dotbot-pr-<< inputs.id >>.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD);
+                      value: dotbot-pr-<< inputs.id >>.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD)
                   securityContext:
                     allowPrivilegeEscalation: false
                     readOnlyRootFilesystem: true
