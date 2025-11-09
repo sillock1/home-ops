@@ -157,7 +157,7 @@ spec:
         name: dotbot-pr-<< inputs.id >>
         namespace: opentoucan
         annotations:
-          event.toolkit.fluxcd.io/preview-url: "https://dotbot-pr-<< inputs.id >>.${DOMAIN}"
+          event.toolkit.fluxcd.io/preview-url: "https://dotbot-pr-<< inputs.id >>.${DOMAIN}/interactions"
           event.toolkit.fluxcd.io/pr-number: << inputs.id | quote >>
           event.toolkit.fluxcd.io/branch: << inputs.branch | replace "/" "-" | quote >>
           event.toolkit.fluxcd.io/author: << inputs.author | quote >>
