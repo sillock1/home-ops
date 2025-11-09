@@ -45,7 +45,7 @@ spec:
                   image:
                     repository: docker.io/versity/versitygw
                     tag: v1.0.18@sha256:90f8280610a889d705ae93ae4b4064d74ffa9f3b565aacf2e3372b0614d7a796
-                  args: ["posix", "data"]
+                  args: ["posix", "/data"]
                   env:
                     - name: VGW_BACKEND
                       value: posix
