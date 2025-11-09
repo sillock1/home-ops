@@ -171,9 +171,9 @@ spec:
             dotbot-pr-migration:
               type: job
               job:
-                backoffLimit: 5
+                backoffLimit: 10
                 parallelism: 1
-                ttlSecondsAfterFinished: 3600
+                ttlSecondsAfterFinished: 100
               containers:
                 init:
                   image:
