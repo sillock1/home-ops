@@ -98,7 +98,7 @@ spec:
         namespace: opentoucan
       spec:
         image: ghcr.io/dragonflydb/dragonfly:v1.34.2
-        replicas: 2
+        replicas: 1
         serviceAccountName: flux-opentoucan
         authentication:
           passwordFromSecret:
