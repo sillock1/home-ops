@@ -97,7 +97,7 @@ spec:
         authentication:
           passwordFromSecret:
             name: dotbot-pr
-            key: password
+            key: REDIS_PASSWORD
         env:
           - name: MAX_MEMORY
             valueFrom:
