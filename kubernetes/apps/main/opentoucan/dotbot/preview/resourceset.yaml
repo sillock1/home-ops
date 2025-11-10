@@ -255,8 +255,10 @@ spec:
                       value: 5672
                     - name: MoturUrl
                       value: http://motur.opentoucan.svc.cluster.local
-                    - name: S3_URL
-                      value: http://dotbot-pr-<< inputs.id >>.opentoucan.svc.cluster.local
+                    - name: S3__ServiceURL
+                      value: http://dotbot-pr-<< inputs.id >>-versitygw.opentoucan.svc.cluster.local
+                    - name: S3__ForcePathStyle
+                      value: true
                     - name: ConnectionStrings__redis
                       value: dotbot-pr-<< inputs.id >>.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD)
                   securityContext:
