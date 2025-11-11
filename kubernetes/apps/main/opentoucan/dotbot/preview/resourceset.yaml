@@ -41,7 +41,7 @@ spec:
         path: ./kubernetes/apps/base/opentoucan/dotbot
         postBuild:
           substitute:
-            APP: dotbot-pr-<< inputs.id >>
+            APP: dotbot-preview
         prune: true
         sourceRef:
           kind: GitRepository
@@ -79,14 +79,14 @@ spec:
                     value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
             target:
               kind: Job
-              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >>
+              name: dotbot-preview-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/dataFrom/0/extract/key
                 value: dotbot-pr
             target:
               kind: ExternalSecret
-              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >>
+              name: dotbot-preview-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/env
@@ -121,7 +121,7 @@ spec:
                     value: dotbot-pr-<< inputs.id >>-dragonfly.opentoucan.svc.cluster.local:6379
             target:
               kind: Job
-              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >>
+              name: dotbot-preview-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/envFrom
@@ -130,11 +130,11 @@ spec:
                       name: dotbot-pr
             target:
               kind: Job
-              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >>
+              name: dotbot-preview-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/authentication/passwordFromSecret/name
                 value: dotbot-pr
             target:
               kind: Dragonfly
-              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >>
+              name: dotbot-preview-pr-<< inputs.id >>
