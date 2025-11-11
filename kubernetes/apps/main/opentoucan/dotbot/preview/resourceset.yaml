@@ -59,8 +59,7 @@ spec:
                 path: spec/template/spec/containers/0/env/0/envFrom/
             target:
               kind: Job
-              version: v1
-              name: ${APP}
+              labelSelector: app.kubernetes.io/app=${APP}
           - patch: |-
               - env:
                 - name: DB_HOSTNAME
@@ -87,8 +86,7 @@ spec:
                   value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
             target:
               kind: Job
-              version: v1
-              name: ${APP}
+              labelSelector: app.kubernetes.io/app=${APP}
           - patch: |-
               spec:
                 dataFrom:
@@ -96,14 +94,13 @@ spec:
                       key: dotbot-pr
             target:
               kind: ExternalSecret
-              name: ${APP}
+              labelSelector: app.kubernetes.io/app=${APP}
           - patch: |-
               - op: remove
                 path: spec/template/spec/containers/0/env/0/envFrom/
             target:
               kind: Deployment
-              version: v1
-              name: ${APP}
+              labelSelector: app.kubernetes.io/app=${APP}
           - patch: |-
               - env:
                 - name: DB_HOSTNAME
@@ -139,8 +136,7 @@ spec:
                     name: ${APP}
             target:
               kind: Job
-              version: v1
-              name: ${APP}
+              labelSelector: app.kubernetes.io/app=${APP}
           - patch: |-
               hostnames:
                 - "${APP}.${DOMAIN}"
