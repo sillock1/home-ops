@@ -59,35 +59,35 @@ spec:
             target:
               kind: Job
               version: v1
-              name: dotbot-pr-<< inputs.id >>
+              name: ${APP}
           - patch: |-
               - env:
                 - name: DB_HOSTNAME
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: host
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: user
                 - name: DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: password
                 - name: DB_DATABASE_NAME
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: dbname
                 - name: CONNECTIONSTRING
                   value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
             target:
               kind: Job
               version: v1
-              name: dotbot-pr-<< inputs.id >>
+              name: ${APP}
           - patch: |-
               spec:
                 dataFrom:
@@ -95,57 +95,57 @@ spec:
                       key: dotbot-pr
             target:
               kind: ExternalSecret
-              name: dotbot-pr-<< inputs.id >>
+              name: ${APP}
           - patch: |-
               - op: remove
                 path: spec/template/spec/containers/0/env/0/envFrom/
             target:
               kind: Deployment
               version: v1
-              name: dotbot-pr-<< inputs.id >>
+              name: ${APP}
           - patch: |-
               - env:
                 - name: DB_HOSTNAME
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: host
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: user
                 - name: DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: password
                 - name: DB_DATABASE_NAME
                   valueFrom:
                     secretKeyRef:
-                      name: dotbot-pr-<< inputs.id >>-database-app
+                      name: ${APP}-database-app
                       key: dbname
                 - name: ConnectionStrings__dotbot
                   value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
                 - name: S3__ServiceURL
-                  value: http://dotbot-pr-<< inputs.id >>-versitygw.opentoucan.svc.cluster.local
+                  value: ${APP}-versitygw.opentoucan.svc.cluster.local
                 - name: S3__ForcePathStyle
                   value: true
                 - name: ConnectionStrings__redis
-                  value: dotbot-pr-<< inputs.id >>-dragonfly.opentoucan.svc.cluster.local:6379
+                  value: ${APP}-dragonfly.opentoucan.svc.cluster.local:6379
                 envFrom:
                 - secretRef:
-                    name: dotbot-pr-<< inputs.id >
+                    name: ${APP}
             target:
               kind: Job
               version: v1
-              name: dotbot-pr-<< inputs.id >>
+              name: ${APP}
           - patch: |-
               hostnames:
-                - "dotbot-pr-<< inputs.id >>.${DOMAIN}"
+                - "${APP}.${DOMAIN}"
               rules:
                 - backendRefs:
-                  - name: dotbot-pr-<< inputs.id >>
+                  - name: ${APP}
             target:
               kind: HttpRoute
-              labelSelector: app.kubernetes.io/app=dotbot-pr-<< inputs.id >>
+              labelSelector: app.kubernetes.io/app=${APP}
