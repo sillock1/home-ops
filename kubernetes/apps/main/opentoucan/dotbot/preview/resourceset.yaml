@@ -42,8 +42,8 @@ spec:
         postBuild:
           substitute:
             APP: dotbot-pr-<< inputs.id >>
-            DRAGONFLY_REPLICAS: 1
-            POSTGRES_REPLICAS: 1
+            DRAGONFLY_REPLICAS: "1"
+            POSTGRES_REPLICAS: "1"
             POSTGRES_SIZE: 10Gi
         prune: true
         sourceRef:
