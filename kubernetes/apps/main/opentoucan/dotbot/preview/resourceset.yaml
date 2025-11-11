@@ -25,9 +25,9 @@ spec:
             event.toolkit.fluxcd.io/branch: << inputs.branch | replace "/" "-" | quote >>
             event.toolkit.fluxcd.io/author: << inputs.author | quote >>
         components:
-          - ../../../../components/dragonfly
-          - ../../../../components/postgres
-          - ../../../../components/s3
+          - ../../../../../../components/dragonfly
+          - ../../../../../../components/postgres
+          - ../../../../../../components/s3
         dependsOn:
           - name: external-secrets-store-onepassword
             namespace: external-secrets
