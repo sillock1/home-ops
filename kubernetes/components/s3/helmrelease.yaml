@@ -7,7 +7,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: ${APP}-versitygw
+    name: ${APP}-versitygw # overwritten by name reference transformer
   interval: 1h
   values:
     controllers:

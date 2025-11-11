@@ -1,5 +1,12 @@
+---
 nameReference:
   - kind: ExternalSecret
     fieldSpecs:
       - kind: Dragonfly
         path: spec/authentication/passwordFromSecret/name
+---
+nameReference:
+  - kind: OCIRepository
+    fieldSpecs:
+      - kind: HelmRelease
+        path: spec/chartRef/name

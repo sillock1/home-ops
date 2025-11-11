@@ -1,5 +1,12 @@
+---
 nameReference:
   - kind: PersistentVolumeClaim
     fieldSpecs:
       - kind: HelmRelease
         path: spec/values/persistence/data/existingClaim
+---
+nameReference:
+  - kind: OCIRepository
+    fieldSpecs:
+      - kind: HelmRelease
+        path: spec/chartRef/name
