@@ -58,35 +58,35 @@ spec:
                   - name: DB_HOSTNAME
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >-database-app
                         key: host
                   - name: DB_USER
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >-database-app
                         key: user
                   - name: DB_PASSWORD
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >>-database-app
                         key: password
                   - name: DB_DATABASE_NAME
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >>-database-app
                         key: dbname
                   - name: CONNECTIONSTRING
                     value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
             target:
               kind: Job
-              labelSelector: app.kubernetes.io/name=${APP}
+              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/dataFrom/0/extract/key
                 value: dotbot-pr
             target:
               kind: ExternalSecret
-              labelSelector: app.kubernetes.io/name=${APP}
+              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/env
@@ -94,34 +94,34 @@ spec:
                   - name: DB_HOSTNAME
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >-database-app
                         key: host
                   - name: DB_USER
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >-database-app
                         key: user
                   - name: DB_PASSWORD
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >-database-app
                         key: password
                   - name: DB_DATABASE_NAME
                     valueFrom:
                       secretKeyRef:
-                        name: ${APP}-database-app
+                        name: dotbot-pr-<< inputs.id >-database-app
                         key: dbname
                   - name: ConnectionStrings__dotbot
                     value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
                   - name: S3__ServiceURL
-                    value: ${APP}-versitygw.opentoucan.svc.cluster.local
+                    value: dotbot-pr-<< inputs.id >-versitygw.opentoucan.svc.cluster.local
                   - name: S3__ForcePathStyle
                     value: true
                   - name: ConnectionStrings__redis
-                    value: ${APP}-dragonfly.opentoucan.svc.cluster.local:6379
+                    value: dotbot-pr-<< inputs.id >-dragonfly.opentoucan.svc.cluster.local:6379
             target:
               kind: Job
-              labelSelector: app.kubernetes.io/name=${APP}
+              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/envFrom
@@ -130,11 +130,11 @@ spec:
                       name: dotbot-pr
             target:
               kind: Job
-              labelSelector: app.kubernetes.io/name=${APP}
+              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >
           - patch: |-
               - op: replace
                 path: /spec/authentication/passwordFromSecret/name
                 value: dotbot-pr
             target:
               kind: Dragonfly
-              labelSelector: app.kubernetes.io/name=${APP}
+              labelSelector: app.kubernetes.io/name=dotbot-pr-<< inputs.id >
