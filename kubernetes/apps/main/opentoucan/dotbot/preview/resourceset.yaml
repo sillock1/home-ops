@@ -86,7 +86,7 @@ spec:
                 value: dotbot-pr
             target:
               kind: ExternalSecret
-              labelSelector: app.kubernetes.io/app=${APP}
+              labelSelector: app.kubernetes.io/name=${APP}
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/env
