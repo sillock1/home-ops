@@ -19,6 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      DRAGONFLY_REPLICAS: "2"
       GATUS_PATH: /health
   prune: true
   sourceRef:
