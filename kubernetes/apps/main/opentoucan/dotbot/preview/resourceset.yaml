@@ -41,7 +41,7 @@ spec:
         path: ./kubernetes/apps/base/opentoucan/dotbot
         postBuild:
           substitute:
-            APP: dotbot-preview
+            APP: dotbot
         prune: true
         sourceRef:
           kind: GitRepository
@@ -79,14 +79,28 @@ spec:
                     value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
             target:
               kind: Job
-              name: dotbot-preview-pr-<< inputs.id >>
+              name: dotbot-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/dataFrom/0/extract/key
-                value: dotbot-pr
+                value: dotbot-preview
             target:
               kind: ExternalSecret
-              name: dotbot-preview-pr-<< inputs.id >>
+              name: dotbot-pr-<< inputs.id >>
+          - patch: |-
+              - op: replace
+                path: /spec/dataFrom/0/extract/key
+                value: dotbot-preview
+            target:
+              kind: ExternalSecret
+              name: dotbot-migration-pr-<< inputs.id >>
+          - patch: |-
+              - op: replace
+                path: /spec/dataFrom/0/extract/key
+                value: dotbot-preview
+            target:
+              kind: ExternalSecret
+              name: dotbot-dragonfly-pr-<< inputs.id >>
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/env
@@ -121,20 +135,20 @@ spec:
                     value: dotbot-pr-<< inputs.id >>-dragonfly.opentoucan.svc.cluster.local:6379
             target:
               kind: Job
-              name: dotbot-preview-pr-<< inputs.id >>
+              name: dotbot-pr-<< inputs.id >>-migration
           - patch: |-
               - op: replace
                 path: /spec/template/spec/containers/0/envFrom
                 value:
                   - secretRef:
-                      name: dotbot-pr
+                      name: dotbot-preview
             target:
               kind: Job
-              name: dotbot-preview-pr-<< inputs.id >>
+              name: dotbot-pr-<< inputs.id >>-migration
           - patch: |-
               - op: replace
                 path: /spec/authentication/passwordFromSecret/name
-                value: dotbot-pr
+                value: dotbot-preview
             target:
               kind: Dragonfly
-              name: dotbot-preview-pr-<< inputs.id >>
+              name: dotbot-dragonfly-pr-<< inputs.id >>
