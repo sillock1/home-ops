@@ -59,7 +59,7 @@ spec:
           type: RuntimeDefault
     persistence:
       data:
-        existingClaim: ${APP}-versitygw
+        existingClaim: ${APP}-versitygw # overwritten by kustomizeconfig
     service:
       versitygw:
         controller: versitygw
