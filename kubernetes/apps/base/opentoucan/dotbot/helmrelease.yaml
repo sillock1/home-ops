@@ -59,7 +59,7 @@ spec:
               - name: MoturUrl
                 value: http://motur.opentoucan.svc.cluster.local
               - name: ConnectionStrings__redis
-                value: dotbot-dragonfly-cache.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD)
+                value: dotbot-dragonfly.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD)
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
