@@ -14,6 +14,7 @@ spec:
       kind: Kustomization
       metadata:
         name: dotbot-pr-<< inputs.id >>
+        namespace: opentoucan
       spec:
         commonMetadata:
           labels:
