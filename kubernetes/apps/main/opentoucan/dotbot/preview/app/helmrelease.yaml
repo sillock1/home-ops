@@ -26,22 +26,22 @@ spec:
               - name: DB_HOSTNAME
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: host
               - name: DB_USER
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: user
               - name: DB_PASSWORD
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: password
               - name: DB_DATABASE_NAME
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: dbname
               - name: CONNECTIONSTRING
                 value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
@@ -74,22 +74,22 @@ spec:
               - name: DB_HOSTNAME
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: host
               - name: DB_USER
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: user
               - name: DB_PASSWORD
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: password
               - name: DB_DATABASE_NAME
                 valueFrom:
                   secretKeyRef:
-                    name: dotbot-preview-${PR_SUFFIX}-database-superuser
+                    name: dotbot-preview-database-${PR_SUFFIX}-app
                     key: dbname
               - name: ConnectionStrings__dotbot
                 value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
