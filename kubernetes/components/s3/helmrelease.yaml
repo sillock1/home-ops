@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://kubernetes.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ${APP}-versitygw
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: ${APP}-versitygw
+  interval: 1h
+  values:
+    controllers:
+      versitygw:
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          app:
+            args: ["posix", "/data"]
+            env:
+              - name: VGW_BACKEND
+                value: posix
+              - name: ROOT_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    key: AWS_ACCESS_KEY_ID
+                    name: ${APP}
+              - name: ROOT_SECRET_KEY
+                valueFrom:
+                  secretKeyRef:
+                    key: AWS_SECRET_ACCESS_KEY
+                    name: ${APP}
+            image:
+              repository: docker.io/versity/versitygw
+              tag: v1.0.18@sha256:90f8280610a889d705ae93ae4b4064d74ffa9f3b565aacf2e3372b0614d7a796
+            probes:
+              liveness: &ref_0
+                enabled: false
+              readiness: *ref_0
+            resources:
+              limits:
+                memory: 500Mi
+              requests:
+                cpu: 10m
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+              readOnlyRootFilesystem: false
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 2048
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 2048
+        runAsNonRoot: true
+        runAsUser: 2048
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      data:
+        existingClaim: ${APP}-versitygw
+    service:
+      versitygw:
+        controller: versitygw
+        ports:
+          http:
+            port: 80
+            targetPort: 7070

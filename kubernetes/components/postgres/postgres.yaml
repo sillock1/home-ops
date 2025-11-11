@@ -1,0 +1,8 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ${APP}-database
+spec:
+  instances: ${POSTGRES_REPLICAS}
+  storage:
+    size: ${POSTGRES_SIZE}

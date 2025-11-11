@@ -38,7 +38,7 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: pgbackrest
+  name: dotbot-pgbackrest
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
