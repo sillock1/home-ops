@@ -31,11 +31,6 @@ spec:
         dependsOn:
           - name: external-secrets-store-onepassword
             namespace: external-secrets
-        images:
-          - name: ghcr.io/opentoucan/dotbot.migrator
-            newTag: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
-          - name: ghcr.io/opentoucan/dotbot.api
-            newTag: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
         interval: 30m
         nameSuffix: -pr-<< inputs.id >>
         path: ./kubernetes/apps/main/opentoucan/dotbot/preview/app
@@ -44,6 +39,7 @@ spec:
             APP: dotbot-preview
             PR_SUFFIX: pr-<< inputs.id >>
             DOMAIN: sillock.com
+            IMAGE_SHA: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
         prune: true
         sourceRef:
           kind: GitRepository
