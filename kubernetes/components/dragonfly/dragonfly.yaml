@@ -9,7 +9,7 @@ spec:
   replicas: 2
   authentication:
     passwordFromSecret:
-      name: ${APP}
+      name: ${APP}-dragonfly
       key: REDIS_PASSWORD
   env:
     - name: MAX_MEMORY
