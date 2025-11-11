@@ -6,7 +6,7 @@ metadata:
   name: ${APP}-dragonfly
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.34.2
-  replicas: ${DRAGONFLY_REPLICAS}
+  replicas: 2
   authentication:
     passwordFromSecret:
       name: ${APP}

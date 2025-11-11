@@ -3,6 +3,6 @@ kind: Cluster
 metadata:
   name: ${APP}-database
 spec:
-  instances: ${POSTGRES_REPLICAS}
+  instances: 1
   storage:
-    size: ${POSTGRES_SIZE}
+    size: 10Gi
