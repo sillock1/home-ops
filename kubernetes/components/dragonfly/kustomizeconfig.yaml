@@ -4,8 +4,6 @@ nameReference:
     fieldSpecs:
       - kind: Dragonfly
         path: spec/authentication/passwordFromSecret/name
----
-nameReference:
   - kind: OCIRepository
     fieldSpecs:
       - kind: HelmRelease
