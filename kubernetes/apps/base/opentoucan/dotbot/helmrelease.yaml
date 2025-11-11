@@ -24,7 +24,7 @@ spec:
               tag: 3.4.6@sha256:2a9a589f49be2ed3ebd2e6d323610b7489fcfdfe1fcc542a6bf8417bd5f841a5
             envFrom:
               - secretRef:
-                  name: dotbot-migrator-secret
+                  name: dotbot-migrator
             env:
               - name: DOTNET_BUNDLE_EXTRACT_BASE_DIR
                 value: /cache
@@ -50,7 +50,7 @@ spec:
               tag: 3.4.6@sha256:53e295a8ee2ce2d1880ff7bc24c26fe8f7a2d81726eca5cb9572733b8505a1fb
             envFrom:
               - secretRef:
-                  name: dotbot-secret
+                  name: dotbot
             env:
               - name: RabbitMQ__Endpoint
                 value: rabbitmq.broker.svc.cluster.local
@@ -58,6 +58,8 @@ spec:
                 value: 5672
               - name: MoturUrl
                 value: http://motur.opentoucan.svc.cluster.local
+              - name: ConnectionStrings__redis
+                value: dotbot-dragonfly-cache.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD)
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
