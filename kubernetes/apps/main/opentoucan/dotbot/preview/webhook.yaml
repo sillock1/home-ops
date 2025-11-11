@@ -3,25 +3,24 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: dotbot-pr-receiver-token
+  name: dotbot-preview-receiver-token
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: dotbot-pr-receiver-token
     template:
       data:
         token: "{{ .GITHUB_WEBHOOK_TOKEN }}"
   dataFrom:
     - extract:
-        key: dotbot-pr
+        key: dotbot-preview
 ---
 # yaml-language-server: $schema=https://kubernetes.pages.dev/notification.toolkit.fluxcd.io/receiver_v1.json
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:
-  name: dotbot-pr-webhook
+  name: dotbot-preview-webhook
 spec:
   type: github
   events:
@@ -29,7 +28,7 @@ spec:
     - push
     - pull_request
   secretRef:
-    name: dotbot-pr-receiver-token
+    name: dotbot-preview-receiver-token
   resources:
     - apiVersion: fluxcd.controlplane.io/v1
       kind: ResourceSetInputProvider
