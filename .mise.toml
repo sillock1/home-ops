@@ -3,6 +3,9 @@
 KUBECONFIG = "{{config_root}}/kubernetes/clusters/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
+BOOTSTRAP_DIR = "{{config_root}}/bootstrap"
+KUBERNETES_DIR = "{{config_root}}/kubernetes"
+
 # Included file paths
 _.file = [
   "{{config_root}}/onepassword.env"

@@ -38,7 +38,7 @@ tasks:
       - until kubectl --context {{.CLUSTER}} wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
       - for: { var: NAMESPACES }
         cmd: kubectl create namespace {{ .ITEM }} --dry-run=client -o yaml | kubectl apply --server-side -f -
-      - minijinja-cli {{.BOOSTRAP_DIR}}/resources/{{.CLUSTER}} | op inject | kubectl --context {{.CLUSTER}} apply --server-side --filename -
+      - minijinja-cli {{.BOOSTRAP_DIR}}/resources/{{.CLUSTER}}.yaml.j2 | op inject | kubectl --context {{.CLUSTER}} apply --server-side --filename -
       - helmfile --file {{.BOOTSTRAP_DIR}}/helmfile.d/00-crds.yaml template | kubectl --context {{.CLUSTER}} apply --server-side --filename -
       - helmfile --kube-context {{.CLUSTER}} --file {{.BOOTSTRAP_DIR}}/helmfile.d/01-apps.yaml sync --hide-notes
     requires:
