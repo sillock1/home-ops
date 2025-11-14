@@ -13,5 +13,5 @@ spec:
     - kind: ConfigMap
       name: dotbot-helm-values
     - kind: ConfigMap
-      name: ${OVERLAY_CONFIGMAP_NAME}
+      name: ${OVERLAY_CONFIGMAP_NAME:=dotbot-${CLUSTER}-helm-values}
       optional: true
