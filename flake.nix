@@ -27,6 +27,7 @@
           cilium-cli
           hubble
           fluxcd
+          fluxcd-operator
           chart-testing
           opentofu
           minijinja
