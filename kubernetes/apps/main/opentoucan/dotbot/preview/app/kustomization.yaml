@@ -10,14 +10,14 @@ configMapGenerator:
       - values.yaml=./helm/values-template.yaml
 generatorOptions:
   disableNameSuffixHash: true
-replacements:
-- source:
-    kind: ConfigMap
-    name: dotbot-override-helm-values${PREVIEW_SUFFIX}
-    fieldPath: metadata.name
-  targets:
-  - select:
-      kind: HelmRelease
-      name: dotbot-${PREVIEW_SUFFIX}
-    fieldPaths:
-    - spec.valuesFrom.[name=dotbot-override-helm-values].name
+# replacements:
+# - source:
+#     kind: ConfigMap
+#     name: dotbot-override-helm-values${PREVIEW_SUFFIX}
+#     fieldPath: metadata.name
+#   targets:
+#   - select:
+#       kind: HelmRelease
+#       name: dotbot-${PREVIEW_SUFFIX}
+#     fieldPaths:
+#     - spec.valuesFrom.[name=dotbot-override-helm-values].name
