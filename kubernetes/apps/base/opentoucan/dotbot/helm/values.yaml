@@ -1,0 +1,126 @@
+---
+controllers:
+  migration:
+    type: job
+    job:
+      backoffLimit: 10
+      parallelism: 1
+      ttlSecondsAfterFinished: 3600
+    containers:
+      init:
+        image:
+          repository: ghcr.io/opentoucan/dotbot.migrator
+          tag: 3.4.6@sha256:2a9a589f49be2ed3ebd2e6d323610b7489fcfdfe1fcc542a6bf8417bd5f841a5
+        envFrom:
+          - secretRef:
+              name: dotbot-migrator
+        env:
+          - name: DOTNET_BUNDLE_EXTRACT_BASE_DIR
+            value: /cache
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+        resources:
+          requests:
+            cpu: 10m
+            memory: 256Mi
+          limits:
+            memory: 512Mi
+    pod:
+      restartPolicy: Never
+  dotbot:
+    annotations:
+      reloader.stakater.com/auto: 'true'
+    containers:
+      app:
+        image:
+          repository: ghcr.io/opentoucan/dotbot.api
+          tag: 3.4.6@sha256:53e295a8ee2ce2d1880ff7bc24c26fe8f7a2d81726eca5cb9572733b8505a1fb
+        envFrom:
+          - secretRef:
+              name: dotbot
+        env:
+          - name: RabbitMQ__Endpoint
+            value: rabbitmq.broker.svc.cluster.local
+          - name: RabbitMQ__Port
+            value: 5672
+          - name: MoturUrl
+            value: http://motur.opentoucan.svc.cluster.local
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+        resources:
+          requests:
+            cpu: 10m
+            memory: 256Mi
+          limits:
+            memory: 512Mi
+        probes:
+          liveness:
+            enabled: false
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: 8080
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 1
+              failureThreshold: 3
+service:
+  dotbot:
+    controller: dotbot
+    ports:
+      http:
+        port: &servicePort 80
+        targetPort: *containerPort
+route:
+  dotbot:
+    hostnames:
+      - "{{ .Release.Name }}.${DOMAIN}"
+    parentRefs:
+      - name: envoy-external
+        namespace: network
+        sectionName: https
+    rules:
+      - backendRefs:
+          - name: *app
+            port: *servicePort
+        matches:
+          - path:
+              type: PathPrefix
+              value: /interactions
+          - path:
+              type: PathPrefix
+              value: /health
+persistence:
+  cache:
+    type: emptyDir
+    advancedMounts:
+      migration:
+        init:
+          - path: /cache
+            subPath: cache
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 2048
+    runAsGroup: 2048
+    fsGroup: 2048
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile: { type: RuntimeDefault }
+serviceMonitor:
+  dotbot:
+    serviceName: *app
+    endpoints:
+      - path: /metrics
+        scheme: http
+        port: http
+        interval: 1m
+        scrapeTimeout: 30s
