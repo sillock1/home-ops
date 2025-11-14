@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ../../../../../base/opentoucan/dotbot
 configMapGenerator:
-  - name: dotbot-preview-pr-<< inputs.id >>-override-helm-values
+  - name: dotbot-override-helm-values-${PREVIEW_SUFFIX}
     files:
       - values.yaml=./helm/values-template.yaml
 generatorOptions:
@@ -13,11 +13,11 @@ generatorOptions:
 replacements:
 - source:
     kind: ConfigMap
-    name: dotbot-preview-pr-<< inputs.id >>-override-helm-values
+    name: dotbot-override-helm-values-${PREVIEW_SUFFIX}
     fieldPath: metadata.name
   targets:
   - select:
       kind: HelmRelease
-      name: dotbot-pr-<< inputs.id >>
+      name: dotbot-${PREVIEW_SUFFIX}
     fieldPaths:
     - spec.valuesFrom.[name=dotbot-override-helm-values].name
