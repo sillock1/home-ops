@@ -13,7 +13,7 @@ generatorOptions:
 replacements:
 - source:
     kind: ConfigMap
-    name: app-preview-pr-<< inputs.id >>-override-helm-values
+    name: dotbot-preview-pr-<< inputs.id >>-override-helm-values
     fieldPath: metadata.name
   targets:
   - select:
