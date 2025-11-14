@@ -90,7 +90,7 @@ route:
         sectionName: https
     rules:
       - backendRefs:
-          - name: *app
+          - name: "{{ .Release.Name }}"
             port: *servicePort
         matches:
           - path:
@@ -117,7 +117,7 @@ defaultPodOptions:
     seccompProfile: { type: RuntimeDefault }
 serviceMonitor:
   dotbot:
-    serviceName: *app
+    serviceName: "{{ .Release.Name }}"
     endpoints:
       - path: /metrics
         scheme: http
