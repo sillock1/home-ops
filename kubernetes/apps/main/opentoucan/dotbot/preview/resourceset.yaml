@@ -14,6 +14,7 @@ spec:
       kind: ConfigMap
       metadata:
         name: dotbot-override-helm-values
+        namespace: opentoucan
       data:
         values.yaml: |-
           controllers:
