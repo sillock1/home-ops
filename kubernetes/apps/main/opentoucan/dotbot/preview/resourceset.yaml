@@ -10,86 +10,6 @@ spec:
       kind: ResourceSetInputProvider
       name: dotbot-github-prs
   resources:
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: dotbot-preview-pr-<< inputs.id >>-override-helm-values
-        namespace: opentoucan
-      data:
-        values.yaml: |-
-          controllers:
-            migration:
-              containers:
-                init:
-                  image:
-                    tag: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
-                  env:
-                    - name: DB_HOSTNAME
-                      valueFrom:
-                        secretKeyRef:
-                          name: dotbot-preview-database-pr-<< inputs.id >>-app
-                          key: host
-                    - name: DB_USER
-                      valueFrom:
-                        secretKeyRef:
-                          name: dotbot-preview-database-pr-<< inputs.id >>-app
-                          key: user
-                    - name: DB_PASSWORD
-                      valueFrom:
-                        secretKeyRef:
-                          name: dotbot-preview-database-pr-<< inputs.id >>-app
-                          key: password
-                    - name: DB_DATABASE_NAME
-                      valueFrom:
-                        secretKeyRef:
-                          name: dotbot-preview-database-pr-<< inputs.id >>-app
-                          key: dbname
-                    - name: CONNECTIONSTRING
-                      value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
-          dotbot:
-            containers:
-              app:
-                image:
-                  tag: << inputs.branch | replace "/" "-" >>-<< inputs.sha >>
-                envFrom:
-                  - secretRef:
-                      name: dotbot-preview
-                env:
-                  - name: DB_HOSTNAME
-                    valueFrom:
-                      secretKeyRef:
-                        name: dotbot-preview-database-pr-<< inputs.id >>-app
-                        key: host
-                  - name: DB_USER
-                    valueFrom:
-                      secretKeyRef:
-                        name: dotbot-preview-database-pr-<< inputs.id >>-app
-                        key: user
-                  - name: DB_PASSWORD
-                    valueFrom:
-                      secretKeyRef:
-                        name: dotbot-preview-database-pr-<< inputs.id >>-app
-                        key: password
-                  - name: DB_DATABASE_NAME
-                    valueFrom:
-                      secretKeyRef:
-                        name: dotbot-preview-database-pr-<< inputs.id >>-app
-                        key: dbname
-                  - name: ConnectionStrings__dotbot
-                    value: Host=$(DB_HOSTNAME);Port=5432;Database=$(DB_DATABASE_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);
-                  - name: S3__ServiceURL
-                    value: http://dotbot-preview-versitygw-pr-<< inputs.id >>.opentoucan.svc.cluster.local
-                  - name: S3__ForcePathStyle
-                    value: true
-                  - name: ConnectionStrings__redis
-                    value: dotbot-preview-dragonfly-pr-<< inputs.id >>.opentoucan.svc.cluster.local:6379,password=$(REDIS_PASSWORD)
-          route:
-            dotbot:
-              hostnames:
-                - "dotbot-preview-<< inputs.id >>.sillock.com"
-              rules:
-                - backendRefs:
-                    - name: dotbot-preview-<< inputs.id >>
     - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
       metadata:
@@ -113,7 +33,7 @@ spec:
             namespace: external-secrets
         interval: 30m
         nameSuffix: -pr-<< inputs.id >>
-        path: ./kubernetes/apps/base/opentoucan/dotbot
+        path: ./kubernetes/apps/main/opentoucan/dotbot/preview/app
         postBuild:
           substitute:
             APP: dotbot-preview
@@ -126,11 +46,3 @@ spec:
         targetNamespace: opentoucan
         timeout: 5m
         wait: false
-        patches:
-          - patch: |-
-              - op: replace
-                path: /spec/valuesFrom/1/name
-                value: dotbot-preview-pr-<< inputs.id >>-override-helm-values
-            target:
-              kind: HelmRelease
-              name: dotbot-pr-<< inputs.id >>

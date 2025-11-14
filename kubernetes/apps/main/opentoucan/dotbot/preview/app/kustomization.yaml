@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../../base/opentoucan/dotbot
+configMapGenerator:
+  - name: dotbot-preview-pr-<< inputs.id >>-override-helm-values
+    files:
+      - values.yaml=./helm/values-template.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+replacements:
+- source:
+    kind: ConfigMap
+    name: app-preview-pr-<< inputs.id >>-override-helm-values
+    fieldPath: metadata.name
+  targets:
+  - select:
+      kind: HelmRelease
+      name: dotbot-pr-<< inputs.id >>
+    fieldPaths:
+    - spec.valuesFrom.[name=dotbot-override-helm-values].name
