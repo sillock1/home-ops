@@ -13,7 +13,7 @@ spec:
     - apiVersion: v1
       kind: ConfigMap
       metadata:
-        name: dotbot-override-helm-values
+        name: dotbot-preview-pr-<< inputs.id >>-override-helm-values
         namespace: opentoucan
       data:
         values.yaml: |-
@@ -126,3 +126,11 @@ spec:
         targetNamespace: opentoucan
         timeout: 5m
         wait: false
+        patches:
+          - patch: |-
+              - op: replace
+                path: /spec/valuesFrom/1/name
+                value: dotbot-preview-pr-<< inputs.id >>-override-helm-values
+            target:
+              kind: HelmRelease
+              name: dotbot-pr-<< inputs.id >>
