@@ -13,5 +13,5 @@ spec:
     - kind: ConfigMap
       name: dotbot-helm-values
     - kind: ConfigMap
-      name: dotbot-override-helm-values
+      name: ${OVERLAY_CONFIGMAP_NAME}
       optional: true
