@@ -13,7 +13,7 @@ generatorOptions:
 replacements:
 - source:
     kind: ConfigMap
-    name: dotbot-override-helm-values-${PREVIEW_SUFFIX}
+    name: dotbot-override-helm-values${PREVIEW_SUFFIX}
     fieldPath: metadata.name
   targets:
   - select:
