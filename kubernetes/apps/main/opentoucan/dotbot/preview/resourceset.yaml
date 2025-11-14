@@ -10,6 +10,25 @@ spec:
       kind: ResourceSetInputProvider
       name: dotbot-github-prs
   resources:
+    - apiVersion: kustomize.config.k8s.io/v1beta1
+      kind: Kustomization
+      configMapGenerator:
+        - name: dotbot-override-helm-values-pr-<< inputs.id >>
+          files:
+            - values.yaml=./helm/values-template.yaml
+      generatorOptions:
+        disableNameSuffixHash: true
+      replacements:
+      - source:
+          kind: ConfigMap
+          name: dotbot-override-helm-values-pr-<< inputs.id >>
+          fieldPath: metadata.name
+        targets:
+        - select:
+            kind: HelmRelease
+            name: dotbot-pr-<< inputs.id >>
+          fieldPaths:
+          - spec.valuesFrom.[name=dotbot-override-helm-values].name
     - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
       metadata:
@@ -25,20 +44,19 @@ spec:
             event.toolkit.fluxcd.io/branch: << inputs.branch | replace "/" "-" | quote >>
             event.toolkit.fluxcd.io/author: << inputs.author | quote >>
         components:
-          - ../../../../../../components/dragonfly
-          - ../../../../../../components/postgres
-          - ../../../../../../components/s3
+          - ../../../../components/dragonfly
+          - ../../../../components/postgres
+          - ../../../../components/s3
         dependsOn:
           - name: external-secrets-store-onepassword
             namespace: external-secrets
         interval: 30m
         nameSuffix: -pr-<< inputs.id >>
-        path: ./kubernetes/apps/main/opentoucan/dotbot/preview/app
+        path: ./kubernetes/apps/base/opentoucan/dotbot
         postBuild:
           substitute:
             APP: dotbot
             DOMAIN: sillock.com
-            PREVIEW_SUFFIX: -pr-<< inputs.id >>
         prune: true
         sourceRef:
           kind: GitRepository
