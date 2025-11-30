@@ -37,6 +37,11 @@ spec:
       enabled: false
     hubble:
       enabled: true
+      relay:
+        enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true
     ipam:
       mode: kubernetes
     kubeProxyReplacement: true
