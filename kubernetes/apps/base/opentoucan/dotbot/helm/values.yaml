@@ -82,6 +82,9 @@ service:
         targetPort: *containerPort
 route:
   dotbot:
+    annotations:
+      gatus.home-operations.com/endpoint: |-
+        conditions: ["[STATUS] == 404"]
     hostnames:
       - "{{ .Release.Name }}.${DOMAIN}"
     parentRefs:
