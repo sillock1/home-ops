@@ -3,17 +3,16 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: grafana-opentoucan
+  name: grafana-cluster
 spec:
-  hostnames: ["opentoucan-dashboard.${DOMAIN}"]
+  hostnames: ["grafana.${DOMAIN}"]
   parentRefs:
-    - name: envoy-external
+    - name: envoy-internal
       namespace: network
-      sectionName: https
   rules:
     - backendRefs:
-        - name: grafana-opentoucan-service
-          namespace: opentoucan
+        - name: grafana-cluster-service
+          namespace: observability
           port: 3000
       matches:
         - path:

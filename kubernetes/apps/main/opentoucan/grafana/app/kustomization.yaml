@@ -6,4 +6,4 @@ resources:
   - ./datasources
   - ./externalsecret.yaml
   - ./instance.yaml
-  - ./route.yaml
+  - ./httproute.yaml
