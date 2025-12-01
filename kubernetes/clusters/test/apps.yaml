@@ -27,10 +27,6 @@ spec:
             substitute:
               CLUSTER: test
               DOMAIN: sillock.com
-            substituteFrom:
-              - kind: Secret
-                name: cluster-secrets-shared
-                optional: true
           patches:
             - patch: |-
                 apiVersion: helm.toolkit.fluxcd.io/v2

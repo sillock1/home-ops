@@ -4,7 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: broker
 components:
-  - ../../../components/common
+  - ../../../components/alerts
 resources:
   - ./namespace.yaml
   - ./rabbitmq/ks.yaml
