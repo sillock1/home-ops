@@ -1,10 +1,9 @@
 ---
 originRequest:
+  http2Origin: true
   originServerName: ${EXTERNAL_SUBDOMAIN}.${DOMAIN}
 
 ingress:
-  - hostname: ${DOMAIN}
-    service: &svc https://envoy-external.network.svc.cluster.local
   - hostname: "*.${DOMAIN}"
-    service: *svc
+    service: https://envoy-external.network.svc.cluster.local
   - service: http_status:404
