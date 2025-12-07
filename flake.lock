@@ -2,15 +2,15 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751984180,
-        "narHash": "sha256-LwWRsENAZJKUdD3SpLluwDmdXY9F45ZEgCb0X+xgOL0=",
-        "owner": "nixos",
+        "lastModified": 1764950072,
+        "narHash": "sha256-BmPWzogsG2GsXZtlT+MTcAWeDK5hkbGRZTeZNW42fwA=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9807714d6944a957c2e036f84b0ff8caf9930bc0",
+        "rev": "f61125a668a320878494449750330ca58b78c557",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -18,20 +18,7 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
-        "zarf": "zarf"
-      }
-    },
-    "zarf": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-tq58sZhtMYyZ52g1dOd6QyYk49k1+LDqP82gzVVf8c4=",
-        "type": "file",
-        "url": "https://github.com/zarf-dev/zarf/releases/download/v0.58.0/zarf_v0.58.0_Linux_amd64"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/zarf-dev/zarf/releases/download/v0.58.0/zarf_v0.58.0_Linux_amd64"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

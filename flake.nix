@@ -2,18 +2,25 @@
   description = "Home ops flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-
-    # Ancient version in nixpkgs
-    zarf = {
-      url = "https://github.com/zarf-dev/zarf/releases/download/v0.58.0/zarf_v0.58.0_Linux_amd64";
-      flake = false;
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = { nixpkgs, ... } @ inputs:
     let
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      hauler = pkgs.buildGoModule {
+        name = "hauler";
+        vesion = "1.3.1";
+        vendorHash = "sha256-qGvKUEZqk7b7BLK9XmZyloYT5q68mfmfVreg6RmK2PQ=";
+        doCheck = false;
+        src = pkgs.fetchFromGitHub {
+          owner = "hauler-dev";
+          repo = "hauler";
+          rev = "v1.3.1";
+          sha256 = "sha256-bKr6LgBVUmalZcagGKMM/KaHnDmN6Mf6Midba/XfV3Q=";
+        };
+
+      };
     in
     {
       devShells."x86_64-linux".default = with pkgs; mkShell {
@@ -40,6 +47,7 @@
           act
           mise
           yq-go
+          hauler
         ];
 
       };
