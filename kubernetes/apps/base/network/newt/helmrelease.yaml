@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: docker.io/fosrl/newt
-              tag: 1.6.0@sha256:18ec2c3646d09f2dc2bc4b764cb2d625d822d5dadfaeae07c9a021ae89b564c3
+              tag: 1.6.1@sha256:7afd3bddf06519c20ba8f6450932d511e2b88fc042bd435eebdb60ba15033fc5
             envFrom:
               - secretRef:
                   name: newt-secret
