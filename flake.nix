@@ -48,6 +48,7 @@
           mise
           yq-go
           hauler
+          crane
         ];
 
       };
