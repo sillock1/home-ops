@@ -1,3 +1,8 @@
+> [!IMPORTANT]  
+> This repository has been migrated to Forgejo here https://codeberg.org/sillock/home-ops
+> 
+> GitHub has been lacking in features, taking years to fix glaringly single bugs, focusing heavily on AI integration, and pushing for more monetisation with the charging of self hosted runners in private repos
+
 <div align="center">
 
 <img src="https://github.com/sillock1/home-ops/assets/26411663/dff5e9bb-5c40-4e46-9c36-57f5cefca98c" align="center" width="144px" height="144px"/>
